@@ -1,6 +1,6 @@
 # Domain Generalisation via Imprecise Learning
 
-This repository contains the code base for the paper "Domain Generalization via Imprecsie Learning" accepted at ICML 2024. 
+This repository contains the code base for the paper "Domain Generalization via Imprecise Learning" accepted at ICML 2024. 
 ## Table of Contents
 - [Overview](#overview)
 - [Installation](#installation)
@@ -50,13 +50,13 @@ To run the experiments, you can use the provided scripts. Below is an example of
     ```
 
 ## Datasets
-The codebase supports benchmarking on CMNSIT and some more simulations.
+The codebase supports benchmarking on CMNIST and some more simulations.
 
 ## Contributing
 We welcome contributions from the community. If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request.
 
 ## Results 
-We performed experiment on modified version of CMNIST where we design our experimental setup as shown below
+We performed experiments on modified version of CMNIST where we design our experimental setup as shown below
 
 ![Overview of DGIL](assets/cmnist_setup.png)
 
