@@ -23,6 +23,8 @@ parser = argparse.ArgumentParser(description='Colored MNIST')
 parser.add_argument('--train_envs', type=str, default='0.01, 0.12, 0.0, 0.0, 0.99, 0.5, 0.7, 0.01, 0.0, 0.0, 0.14')
 parser.add_argument('--test_envs', type=str, default='0.1,0.5,0.9')     # test envs to log/print
 parser.add_argument('--test_env_ms', type=str, default='0.9')               # test env for selecting best model
+parser.add_argument('--train_env_sizes', type=str, default='')
+parser.add_argument('--train_env_size_mode', type=str, default='random', choices=['random', 'first'])
 parser.add_argument('--full_resolution', action='store_true')
 
 # Network architecture
@@ -60,7 +62,7 @@ parser.add_argument('--n_workers', type=int, default=0)
 
 # --------  SETUP --------
 default_args = argparse.Namespace(n_workers=0, other_arg='default')
-args = parser.parse_args(args=[], namespace=default_args)
+args = parser.parse_args(namespace=default_args)
 md5_fname = hashlib.md5(str(args).encode('utf-8')).hexdigest()
 
 # +
@@ -86,6 +88,18 @@ else:
 args.train_env_ps = train_env_ps
 train_env_names = [str(p) for p in train_env_ps]
 test_env_names = [str(p) for p in test_env_ps]
+
+if args.train_env_sizes:
+    train_env_sizes = tuple(int(size) for size in args.train_env_sizes.split(","))
+    if len(train_env_sizes) != len(train_env_ps):
+        raise ValueError(
+            "train_env_sizes must match the number of train_envs. "
+            f"Got {len(train_env_sizes)} sizes for {len(train_env_ps)} train environments."
+        )
+else:
+    train_env_sizes = None
+
+args.train_env_sizes_parsed = train_env_sizes
 
 # --------  LOGGING --------
 logs_dir = os.path.join(args.output_dir, "logs", args.exp_name)
@@ -120,11 +134,14 @@ else:
 
 # --------  DATA LOADING --------
 envs = get_cmnist_datasets(args.data_dir, train_envs=train_env_ps, test_envs=test_env_ps, label_noise_rate = 0.25, 
-                           cuda=(device == "cuda"), int_target=int_target, subsample=not args.full_resolution)
+                           cuda=(device == "cuda"), int_target=int_target, subsample=not args.full_resolution,
+                           train_env_sizes=train_env_sizes, train_env_size_mode=args.train_env_size_mode)
 train_envs, test_envs = envs[:len(train_env_ps)], envs[len(train_env_ps):]
 input_shape = train_envs[0].tensors[0].size()[1:]
-n_train_samples = train_envs[0].tensors[0].size()[0]
-steps_per_epoch = n_train_samples / args.batch_size
+train_env_sample_counts = [env.tensors[0].size()[0] for env in train_envs]
+n_train_samples = sum(train_env_sample_counts)
+steps_per_epoch = n_train_samples / (args.batch_size * len(train_envs))
+print(f"Train environment sample counts: {train_env_sample_counts}")
 
 train_loaders = [FastDataLoader(dataset=env, batch_size=args.batch_size, num_workers=args.n_workers)
                  for env in train_envs]

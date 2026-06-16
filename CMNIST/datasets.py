@@ -13,6 +13,31 @@ def torch_xor_(a, b):
     return (a - b).abs()
 
 
+def _subsample_tensor_dataset(dataset, size, mode="random"):
+    if size is None:
+        return dataset
+
+    dataset_size = len(dataset)
+    if size <= 0:
+        raise ValueError(f"Requested training environment size must be positive, got {size}.")
+    if size > dataset_size:
+        raise ValueError(
+            f"Requested training environment size {size} exceeds available samples {dataset_size}."
+        )
+    if size == dataset_size:
+        return dataset
+
+    if mode == "random":
+        indices = torch.randperm(dataset_size)[:size]
+    elif mode == "first":
+        indices = torch.arange(size)
+    else:
+        raise ValueError(f"Unknown train environment size mode: {mode}")
+
+    x, y = dataset.tensors
+    return TensorDataset(x[indices], y[indices])
+
+
 def color_dataset(images, labels, environment, label_noise_rate=0.25, subsample=True, int_target=False, cuda=True):
     if subsample:
         # Subsample 2x for computational convenience
@@ -43,9 +68,14 @@ def color_dataset(images, labels, environment, label_noise_rate=0.25, subsample=
 
 def get_cmnist_datasets(root, train_envs=(0.1, 0.2), test_envs=(0.9,), label_noise_rate=0.25,
                         dataset_transform=color_dataset, subsample=True, int_target=False, cuda=True,
-                        use_test_set=False):
+                        use_test_set=False, train_env_sizes=None, train_env_size_mode="random"):
     if root is None:
         raise ValueError('Data directory not specified!')
+    if train_env_sizes is not None and len(train_env_sizes) != len(train_envs):
+        raise ValueError(
+            "train_env_sizes must have the same length as train_envs. "
+            f"Got {len(train_env_sizes)} sizes for {len(train_envs)} environments."
+        )
 
     orig_data_tr = MNIST(root, train=True, download=True)
     perm_inds_tr = torch.randperm(len(orig_data_tr.data))        # permute / shuffle
@@ -67,8 +97,15 @@ def get_cmnist_datasets(root, train_envs=(0.1, 0.2), test_envs=(0.9,), label_noi
         # Divide original train set into non-overlapping image sets
         images = train_images[i::len(train_envs)]
         labels = train_labels[i::len(train_envs)]
-        datasets.append(dataset_transform(images, labels, train_envs[i],
-                                          label_noise_rate, subsample, int_target, cuda))
+        train_dataset = dataset_transform(images, labels, train_envs[i],
+                                          label_noise_rate, subsample, int_target, cuda)
+        if train_env_sizes is not None:
+            train_dataset = _subsample_tensor_dataset(
+                train_dataset,
+                train_env_sizes[i],
+                mode=train_env_size_mode,
+            )
+        datasets.append(train_dataset)
 
     for i in range(len(test_envs)):
         # Use entire test set for each test domain (different image transformations)
