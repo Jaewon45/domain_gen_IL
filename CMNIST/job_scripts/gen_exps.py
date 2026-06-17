@@ -107,8 +107,10 @@ def generate_domain_stress_commands(args, base_call, seeds):
     }
     phase3_imbalance_budgets = {
         "balanced": "2000,2000,2000,2000",
-        "mild": "2000,2000,2000,8000",
-        "strong": "2000,2000,2000,12000",
+        "last_domain_heavy_mild": "2000,2000,2000,8000",
+        "last_domain_heavy_strong": "2000,2000,2000,12000",
+        "first_domain_heavy_mild": "8000,2000,2000,2000",
+        "first_domain_heavy_strong": "12000,2000,2000,2000",
     }
 
     for seed in seeds:

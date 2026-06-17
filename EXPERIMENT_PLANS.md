@@ -317,3 +317,458 @@ For each experiment, the recommended final deliverables are:
 ## Summary
 
 The strongest low-friction extension in this repository is a CMNIST stress test on domain count and imbalance. The $\lambda$ study is also well-supported if framed as robustness to risk-preference uncertainty. The real-world dataset extension is feasible, but it should ideally include a strong domain-shift story and at least one additional stress condition to make the contribution substantial.
+
+
+
+## UPDATE
+
+============================================================
+PART A — CURRENT STATUS IN REPO
+============================================================
+
+The current repository already supports the CMNIST stress-test foundation that was previously only planned.
+
+Implemented now
+---------------
+The codebase currently supports:
+
+- varying the number of CMNIST training domains,
+- explicit per-domain sample-size control,
+- domain imbalance schedules through `train_env_sizes`,
+- CLI flags `--train_env_sizes` and `--train_env_size_mode`,
+- a generated `domain_stress` experiment mode,
+- the algorithms `erm`, `irm`, `groupdro`, `iro`, and `inftask`,
+- smoke-test runs for domain count, sample size, and imbalance.
+
+Current implementation notes
+----------------------------
+The existing implementation is enough to launch controlled CMNIST stress-test runs, but not enough yet for the final analysis workflow described below.
+
+What is already wired:
+
+- `CMNIST/train_sandbox.py` accepts explicit `train_envs`, `train_env_sizes`, and `train_env_size_mode`.
+- `CMNIST/datasets.py` subsamples training environments after dataset creation when per-domain sizes are passed.
+- `CMNIST/job_scripts/gen_exps.py` generates a `domain_stress` command grid.
+- Smoke outputs already exist for domain-count, balanced-size, and imbalance checks.
+
+What is not finished yet:
+
+- result records are not yet normalized around stress-test-specific grouping fields such as `phase`, `n_train_domains`, `sample_size_per_domain`, `imbalance_type`, or `lambda_eval`,
+- result aggregation is still basic and centered around existing CMNIST tables,
+- there is no dedicated small command file for the reduced first-pass sweep,
+- there is no dedicated λ-grid evaluation script or saved λ-specific result table,
+- there is no plotting script for the new stress-test figures,
+- the README has not yet been expanded into a clean reproduction workflow for the new experiments.
+
+Current caveats
+---------------
+Some parts of the current implementation differ from the idealized experimental design below.
+
+- The current `domain_stress` generator uses its own predefined train-environment sets, so any final write-up should document those exact settings if they are used directly.
+- The current imbalance sweep only includes balanced and last-domain-heavy schedules; mirrored majority-heavy schedules still need to be added if that distinction matters for interpretation.
+- Final CMNIST evaluation currently uses the existing evaluation path and CVaR helper, but there is not yet a saved λ-grid evaluation artifact for E4.
+
+============================================================
+PART B — PLANNED NEXT IMPLEMENTATION
+============================================================
+
+This section narrows the earlier plan to the next concrete implementation steps.
+
+Execution defaults
+------------------
+Use a reduced first pass before any large sweep:
+
+- 1 seed,
+- 3 algorithms first: ERM, GroupDRO, IRO,
+- INF-TASK and IRM only after the first reduced runs are interpretable,
+- 1 phase at a time,
+- the full CMNIST test grid `e ∈ {0.0, 0.1, ..., 1.0}` when runtime allows,
+- a fixed 4-domain base setup such as `[0.1, 0.2, 0.5, 0.9]` unless the current generated sweep is being used directly.
+
+Core metrics to add in the analysis layer:
+
+- per-test-environment accuracy,
+- average test accuracy,
+- worst-domain accuracy,
+- CVaR or related aggregated risk across test domains over λ,
+- maximum regret or clearly labeled approximate regret,
+- runtime or wall-clock time when easy to collect.
+
+
+------------------------------------------------------------
+E0 — Small reproduction of CMNIST behavior
+------------------------------------------------------------
+
+Goal:
+Confirm that the repo and analysis pipeline reproduce the qualitative behavior of the paper.
+
+Main question:
+Can I reproduce the expected CMNIST pattern where IRO is competitive across test environments and avoids very high regret?
+
+What to run:
+- Dataset: CMNIST
+- Train environments: start with the repo’s default or [0.1, 0.2, 0.5, 0.9]
+- Test environments: [0.0, 0.1, ..., 1.0]
+- Algorithms: ERM, GroupDRO, IRO first; then INF-TASK and IRM if feasible
+- Seeds: start with 1 seed, then increase to 3 if runtime allows
+- Steps: use the paper/repo default if feasible; otherwise use a smaller setting and clearly label it as a reduced reproduction
+
+What to implement:
+1. A small config or command list for reproduction runs.
+2. Result aggregation for:
+   - algorithm,
+   - seed,
+   - train environments,
+   - test environment,
+   - accuracy,
+   - risk/loss if available,
+   - λ if applicable.
+3. A reproduction plot:
+   - x-axis: test environment e
+   - y-axis: accuracy
+   - one line per algorithm
+4. A reproduction table:
+   - average accuracy,
+   - worst-domain accuracy,
+   - max/approx regret if available.
+
+Expected output:
+- One plot of accuracy across test environments.
+- One small table comparing algorithms.
+- A short paragraph: “The reproduction is approximate/reduced, but it confirms the expected pattern...” or honestly explain if it does not.
+
+Decision rule:
+Only proceed to larger stress tests after E0 produces understandable result files and plots.
+
+
+------------------------------------------------------------
+E1 — Training domain-count stress test
+------------------------------------------------------------
+
+Goal:
+Test whether IRO still helps when the learner observes fewer source domains.
+
+Main question:
+Does IRO need many source domains to construct a useful imprecise risk profile?
+
+Suggested domain-count grid:
+- 2 training domains
+- 4 training domains
+- 6 training domains
+- 8 training domains
+
+Current generator-compatible train environment sets:
+- 2 domains: [0.1, 0.2]
+- 4 domains: [0.01, 0.12, 0.5, 0.99]
+- 6 domains: [0.01, 0.12, 0.0, 0.5, 0.7, 0.99]
+- 8 domains: [0.01, 0.12, 0.0, 0.0, 0.14, 0.5, 0.7, 0.99]
+
+Optional later comparison set:
+- 2 domains: [0.1, 0.9]
+- 4 domains: [0.1, 0.2, 0.5, 0.9]
+- 6 domains: [0.1, 0.2, 0.3, 0.5, 0.7, 0.9]
+- 8 domains: [0.1, 0.2, 0.3, 0.4, 0.6, 0.7, 0.8, 0.9]
+
+If using the current generated sweep, document the exact train environments above rather than the cleaner comparison set.
+
+What to run:
+- Algorithms first: ERM, GroupDRO, IRO
+- Add later: INF-TASK, IRM
+- Seeds: 1 first, then 3 if feasible
+- Sample size per domain: keep fixed, e.g. 2000 or 4000, to isolate the effect of domain count
+
+What to implement:
+1. Ensure `train_envs` can be passed explicitly.
+2. Ensure the number of training domains is saved in each JSONL result record.
+3. Add an analysis grouping field:
+   - `phase = domain_count`
+   - `n_train_domains = 2/4/6/8`
+4. Add a plot:
+   - x-axis: number of training domains
+   - y-axis: worst-domain accuracy or max regret
+   - separate lines/bars per algorithm
+5. Add a second plot or appendix plot:
+   - accuracy across test environments for each domain-count condition.
+
+Expected interpretation:
+- If IRO improves with more domains, argue that the imprecise learner needs enough domain evidence to construct a useful risk profile.
+- If IRO is robust even with few domains, that supports the method.
+- If ERM or GroupDRO wins in low-domain settings, discuss the limits of imprecision under insufficient domain diversity.
+
+
+------------------------------------------------------------
+E2 — Per-domain sample-size stress test
+------------------------------------------------------------
+
+Goal:
+Test whether IRO needs many samples within each source domain.
+
+Main question:
+Does IRO become unstable when each source domain is represented by few samples?
+
+Suggested sample-size grid:
+- 2000 samples/domain
+- 4000 samples/domain
+- 8000 samples/domain
+
+Optional smoke grid:
+- 128 or 512 samples/domain for quick validation only, not final results unless clearly labeled as toy-scale.
+
+Fixed train environments:
+- [0.1, 0.2, 0.5, 0.9]
+
+What to run:
+- Algorithms first: ERM, GroupDRO, IRO
+- Add later: INF-TASK and IRM
+- Seeds: 1 first, then 3 if feasible
+
+What to implement:
+1. Ensure `train_env_sizes` is saved in the result record.
+2. Add analysis grouping fields:
+   - `phase = sample_size`
+   - `sample_size_per_domain = 2000/4000/8000`
+3. Add a plot:
+   - x-axis: samples per domain
+   - y-axis: worst-domain accuracy or max regret
+   - separate lines/bars per algorithm
+4. Add optional runtime table:
+   - samples/domain,
+   - algorithm,
+   - runtime,
+   - final metric.
+
+Expected interpretation:
+- If IRO needs more samples than ERM/GroupDRO, discuss the cost of learning across λ.
+- If IRO remains stable at low sample size, that is strong evidence of practical robustness.
+- If all methods fail at low sample size, emphasize data uncertainty rather than generalisation uncertainty.
+
+
+------------------------------------------------------------
+E3 — Domain/sample imbalance stress test
+------------------------------------------------------------
+
+Goal:
+Test what happens when risky or minority domains are underrepresented.
+
+Main question:
+Does IRO still help when the training data is dominated by one domain regime?
+
+Fixed train environments:
+- [0.1, 0.2, 0.5, 0.9]
+
+Important implementation detail:
+Clarify which environment receives extra samples. This affects the interpretation.
+
+Recommended imbalance schedules:
+
+A. Current generator-supported schedules:
+- [2000, 2000, 2000, 2000]
+- [2000, 2000, 2000, 8000]
+- [2000, 2000, 2000, 12000]
+
+B. Planned mirrored extension for majority-heavy imbalance:
+- [8000, 2000, 2000, 2000]
+- [12000, 2000, 2000, 2000]
+
+C. Interpretation note:
+- the currently generated imbalance schedules overweight the last listed training environment,
+- if that environment is treated as the minority or opposite regime, the current sweep is not yet a true minority-underrepresentation test,
+- add the mirrored majority-heavy schedules in B before making that stronger claim.
+
+This phase should therefore be reported as a last-domain-heavy imbalance sweep unless the mirrored schedules are added.
+
+What to run:
+- Algorithms: ERM, GroupDRO, IRO, INF-TASK
+- Optional: IRM
+- Seeds: 1 first, then 3 if feasible
+
+What to implement:
+1. Add imbalance type labels:
+   - `balanced`
+   - `majority_heavy_mild`
+   - `majority_heavy_strong`
+   - `minority_heavy_mild`
+   - `minority_heavy_strong`
+2. Save the exact `train_envs` and `train_env_sizes` in every result file.
+3. Add analysis grouping fields:
+   - `phase = imbalance`
+   - `imbalance_type`
+   - `train_env_sizes`
+4. Add plot:
+   - x-axis: imbalance condition
+   - y-axis: worst-domain accuracy or max regret
+   - separate bars/lines per algorithm
+5. Add plot:
+   - test-environment accuracy curves for balanced vs strong imbalance.
+
+Expected interpretation:
+- If IRO fails when minority domains are underrepresented, this is an important limitation: imprecision cannot recover information that is absent or severely underweighted.
+- If IRO remains robust, this is a strong positive result.
+- If GroupDRO beats IRO under severe imbalance, discuss whether explicit worst-case training is better when the operator is strongly risk-averse and the minority domain is visible.
+
+
+------------------------------------------------------------
+E4 — λ-sensitivity analysis
+------------------------------------------------------------
+
+Goal:
+Analyze how stable IRO is when the operator’s risk preference λ is unclear or difficult to specify.
+
+Main question:
+If the operator does not know the correct λ, how sensitive are the results to λ?
+
+Use the models trained in E0–E3 where possible.
+
+λ grid:
+- λ ∈ {0.0, 0.1, 0.2, ..., 1.0}
+
+Current status note:
+The repository does not yet save a λ-grid evaluation table or `lambda_eval` records automatically. This remains planned follow-up work.
+
+What to compute:
+1. For IRO:
+   - evaluate h(x, λ) across the λ grid.
+   - calculate accuracy per test environment.
+   - calculate CVaR/aggregated risk across test environments.
+
+2. For INF-TASK:
+   - evaluate if the augmented hypothesis supports λ-conditioned predictions.
+   - compare its risk curve to IRO.
+
+3. For ERM and GroupDRO:
+   - they may not depend on λ in prediction.
+   - evaluate their fixed predictions under different λ-based risk aggregation over test-domain losses.
+   - This gives λ-dependent evaluation curves even if the model is not λ-conditioned.
+
+What to implement:
+1. Add or verify an evaluation mode that loops over λ values.
+2. Save λ-specific results:
+   - `lambda_eval`
+   - `algorithm`
+   - `seed`
+   - `test_env`
+   - `accuracy`
+   - `loss`
+   - `aggregated_risk`
+3. Add plots:
+   - λ on x-axis, aggregated risk on y-axis.
+   - λ on x-axis, worst-domain accuracy or selected-domain accuracy on y-axis.
+   - optional: heatmap with λ on x-axis and test environment e on y-axis.
+4. Add a “λ robustness” summary:
+   - best λ,
+   - worst λ,
+   - range of performance across λ,
+   - sensitivity score = max(metric over λ) - min(metric over λ).
+
+Expected interpretation:
+- If IRO is relatively flat across λ, it is robust to operator preference uncertainty.
+- If IRO strongly changes across λ, the method may require careful preference elicitation.
+- If high λ improves minority/opposite domains but hurts majority domains, this supports the paper’s risk-preference interpretation.
+- If λ has little meaningful effect, question whether the augmented hypothesis is actually using λ in the tested setting.
+
+
+============================================================
+PART C — IMMEDIATE NEXT TASKS
+============================================================
+
+1. Check result schema
+   Ensure each JSONL result contains or derives the fields needed for the stress analysis:
+   - algorithm,
+   - seed,
+   - train environments,
+   - train environment sizes,
+   - test environments,
+   - per-test-environment accuracy,
+   - loss/risk if available,
+   - λ-specific evaluation fields if applicable,
+   - steps,
+   - batch size,
+   - output directory,
+   - experiment-phase metadata.
+
+2. Update result aggregation
+   Add or update `CMNIST/collect_results.py` so it can group by:
+   - phase,
+   - algorithm,
+   - seed,
+   - n_train_domains,
+   - sample_size_per_domain,
+   - imbalance_type,
+   - lambda_eval.
+
+3. Create a small command file
+   Create something like:
+   - `CMNIST/job_scripts/domain_stress_small.txt`
+
+   It should include:
+   - E0 reduced reproduction,
+   - E1 one seed for ERM, GroupDRO, IRO,
+   - E2 one seed for ERM, GroupDRO, IRO,
+   - E3 one seed for ERM, GroupDRO, IRO, INF-TASK.
+
+4. Add λ evaluation script
+   Add a script such as:
+   - `CMNIST/evaluate_lambda_grid.py`
+   or extend the existing evaluation script.
+
+   It should:
+   - load trained models,
+   - evaluate λ grid from 0.0 to 1.0,
+   - save λ-specific metrics.
+
+5. Add plotting script
+   Add:
+   - `analysis/plot_domain_stress.py`
+   or
+   - `CMNIST/plot_domain_stress.py`
+
+   Required figures:
+   - accuracy by test environment for E0,
+   - worst-domain accuracy or regret by number of domains for E1,
+   - worst-domain accuracy or regret by sample size for E2,
+   - worst-domain accuracy or regret by imbalance condition for E3,
+   - aggregated risk over λ for E4.
+
+6. Add a reproducibility README section
+   Include:
+   - environment setup,
+   - how to run small subset,
+   - how to run full sweep,
+   - how to collect results,
+   - how to generate plots.
+
+============================================================
+PART D — RUN ORDER AND MINIMUM DELIVERABLES
+============================================================
+
+Run order
+---------
+Step 1:
+Run E0 with one seed and three algorithms.
+
+Step 2:
+Run E1 with one seed and three algorithms.
+
+Step 3:
+Run E2 with one seed and three algorithms.
+
+Step 4:
+Run E3 with one seed and four algorithms.
+
+Step 5:
+Run E4 on the trained IRO/INF-TASK models.
+
+Step 6:
+Only then expand to more seeds or more algorithms.
+
+Minimum final result set
+------------------------
+If time is short, final seminar can still work with:
+
+- E0: small reproduction
+- E1: domain-count sweep
+- E3: imbalance sweep
+- E4: λ-sensitivity on E0/E3
+
+E2 can be shortened or moved to appendix if runtime is tight.
+

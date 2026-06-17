@@ -12,3 +12,11 @@ dgil_env/
 
 # Local experiment outputs
 cmnist_exp_smoke/
+
+# Transient run logs
+**/out.txt
+**/err.txt
+
+# Downloaded raw datasets
+data/MNIST/raw/
+**/MNIST/raw/
