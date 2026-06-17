@@ -10,6 +10,9 @@ __pycache__/
 dgil_env/
 .venv/
 
+**/*.pyc
+**/*.pkl
+
 # Local experiment outputs
 cmnist_exp_smoke/
 

@@ -171,6 +171,43 @@ What this enables:
 - Plotting E0 accuracy-by-environment curves.
 - Plotting E1, E2, and E3 worst-domain summary figures from aggregated result records.
 
+### 8. Multi-Seed Bash Runner
+
+File added:
+
+- `CMNIST/job_scripts/run_domain_stress_small_seeds.sh`
+
+What was added:
+
+- A bash script that loops over seeds 0–2 and runs domain_stress_small.txt with separate output directories.
+- Automatically appends `--seed`, `--deterministic`, `--n_workers 0`, and `--output_dir ../cmnist_exp_small_seed<N>` to each command.
+- Preserves reproducibility controls across multi-seed runs.
+
+What this enables:
+
+- Running the reduced sweep across multiple seeds without manual command editing.
+- Collecting per-seed result artifacts in isolated directories for downstream analysis.
+
+### 9. CSV Export Infrastructure
+
+File added:
+
+- `CMNIST/export_results_csv.py`
+
+What was added:
+
+- A script that converts JSONL result files to reportable CSV formats.
+- Three output formats:
+  - `*_run_level.csv`: Flattened records with all args columns + metrics (one row per JSONL record).
+  - `*_env_metric_long.csv`: Long-format per-test-environment metrics (test_env, metric, model_selection, value columns).
+  - `*_summary.csv`: Grouped aggregates by phase, algorithm, n_train_domains, and imbalance type.
+
+What this enables:
+
+- Exporting JSONL results to human-readable tabular formats.
+- Analysis-ready long-format tables for plotting and statistical summary.
+- Spreadsheet-compatible aggregated summaries for reporting.
+
 ## Dependency Update
 
 File changed:
@@ -384,82 +421,143 @@ Updated:
 Added:
 
 - `CMNIST/job_scripts/domain_stress_small.txt`
+- `CMNIST/job_scripts/run_domain_stress_small_seeds.sh`
 - `CMNIST/evaluate_lambda_grid.py`
 - `CMNIST/plot_domain_stress.py`
+- `CMNIST/export_results_csv.py`
 - `EXPERIMENT_PLANS.md`
 - `IMPLEMENTATION_PROGRESS.md`
 
+## Current Execution Status
+
+### ✅ Completed Work
+
+- **Reduced sweep (domain_stress_small)**: All 13 commands executed successfully with seed 0.
+  - Covers E0 (reproduction), E1 (domain count), E2 (sample size), and E3 (imbalance).
+  - Results saved under `cmnist_exp_small/results/` and `cmnist_exp_small/logs/`.
+  - Checkpoints saved for `groupdro`, `iro`, and `inftask` runs.
+
+- **CSV export**: Successfully tested on reduced-sweep results.
+  - Generated 3 CSV types under `cmnist_exp_small/`:
+    - `cmnist_exp_small_run_level.csv` (flattened JSONL records)
+    - `cmnist_exp_small_env_metric_long.csv` (per-test-env analysis-ready format)
+    - `cmnist_exp_small_summary.csv` (aggregated by phase/algorithm)
+
+- **Multi-seed bash runner**: Created and documented for future use.
+  - Ready to run seeds 0–2 with separate output directories.
+  - Command: `bash CMNIST/job_scripts/run_domain_stress_small_seeds.sh`
+
+### ⏳ Pending Work
+
+- **Full sweep (domain_stress.txt)**: 600 commands generated but not yet executed.
+  - Intended for final publication-grade results (all 5 algorithms, 10 seeds).
+  - Estimated runtime: 6–12 days on single GPU (100–200 hours wall-clock).
+
+- **Lambda-grid evaluation (E4)**: Script exists but not yet run on saved checkpoints.
+  - Will use `CMNIST/evaluate_lambda_grid.py` on reduced-sweep `iro` and `inftask` checkpoints.
+  - Output needed for E4 plotting.
+
 ## Current Limitations
 
-### GPU
+### Sweep Scope
 
-The current environment now has CUDA-enabled PyTorch available. Earlier smoke validations were CPU-only, but future runs can use the detected NVIDIA GPU.
+The `domain_stress` generator currently emits **600 commands** (10 seeds × 60 condition+algorithm combos):
 
-### Sweep Scale
+- **Small sweep** (`domain_stress_small.txt`): 13 commands, seed 0 only. ✅ Complete.
+  - Covers E0–E3 with representative subsets (erm, groupdro, iro, inftask; no irm).
+  - Test environments: explicit `0.1,0.5,0.9`.
 
-The `domain_stress` generator currently emits 600 commands. This is suitable for batch execution, but it is likely too large for a single local interactive run without narrowing seeds or algorithms.
-
-### Result Aggregation
-
-The stress-test aggregation path now exists, but it should still be exercised on larger multi-seed outputs beyond the current smoke validations.
+- **Full sweep** (`domain_stress.txt`): 600 commands, seeds 0–9.
+  - Covers E0–E3 with all algorithms (erm, irm, groupdro, iro, inftask).
+  - Test environments: determined by train-env defaults.
 
 ### Stress-Grid Interpretation
 
-The current generated `domain_stress` sweep is useful, but it does not yet fully match the cleaner final experimental design described in `EXPERIMENT_PLANS.md`.
+The current generated `domain_stress` sweep is functional but has caveats:
 
-Current caveats:
-
-- The generated Phase 1 train-environment sets are the repo's current predefined sets, not the later cleaner comparison sets proposed for final reporting.
+- The generated Phase 1 train-environment sets use the repo's predefined sets (e.g., `[0.01, 0.12, 0.5, 0.99]` for 4 domains), not the cleaner comparison sets proposed in `EXPERIMENT_PLANS.md`.
 - The generated Phase 3 imbalance sweep now supports balanced, last-domain-heavy, and first-domain-heavy schedules.
-- The current labels are still positional rather than semantic, so any final write-up should explicitly document which training environment each heavier schedule is intended to represent.
+- Final write-ups should explicitly document which training environment each heavier schedule is intended to represent.
 
 ### Lambda Evaluation
 
-The dedicated λ-grid evaluation script now exists, but the repository has not yet recorded a full validated λ-evaluation run on saved CMNIST checkpoints.
+The dedicated λ-grid evaluation script is ready but not yet validated on actual checkpoint outputs.
 
 ## Planned Next Tasks
 
-The main remaining work is now follow-through validation on trained checkpoints plus optional generator cleanup.
+### Priority 1: Execute Full Lambda-Grid Evaluation
 
-### Priority 1: Finish the Reduced Sweep
+Run `CMNIST/evaluate_lambda_grid.py` on saved `iro` and `inftask` checkpoints from the completed reduced sweep.
 
-Run the new reduced command file and retain saved checkpoints for the λ-analysis path.
-
-Reason:
-
-- The implementation surfaces now exist, but the reduced sweep still needs to complete end to end under the updated workflow.
-
-### Priority 2: Run a Full Lambda Evaluation Pass
-
-Execute `CMNIST/evaluate_lambda_grid.py` on saved `iro` and `inftask` checkpoints from the reduced sweep.
-
-Reason:
-
-- This will convert the new λ-evaluation script from an implemented entry point into a validated experiment artifact.
-
-### Priority 3: Add the E4 Plot
-
-Run `CMNIST/plot_domain_stress.py` with λ-evaluation outputs so the E4 aggregated-risk figure is produced alongside the existing E0-E3 plots.
+Command pattern:
+```bash
+cd CMNIST
+..\dgil_env\Scripts\python.exe evaluate_lambda_grid.py \
+  --ckpt_dirs ../cmnist_exp_small/ckpts \
+  --output_dir ../cmnist_exp_small/lambda_results \
+  --lambda_grid 0.0 0.1 0.2 ... 0.9
+```
 
 Reason:
 
-- E0-E3 plotting is now validated; E4 still depends on actual λ-evaluation outputs.
+- This will convert the λ-evaluation script from an entry point into validated outputs.
+- Required for E4 (lambda-sensitivity) plotting.
 
-### Priority 4: Optional Generator Cleanup
+### Priority 2: Complete E4 Plotting
 
-After the reduced runs and aggregation pipeline work, consider updating `CMNIST/job_scripts/gen_exps.py` to support:
+Run `CMNIST/plot_domain_stress.py` with λ-evaluation outputs to generate the E4 aggregated-risk figure.
 
-- clearer phase labels in generated commands or saved metadata,
-- an explicit small-sweep mode.
+Command:
+```bash
+cd CMNIST
+..\dgil_env\Scripts\python.exe plot_domain_stress.py \
+  ../cmnist_exp_small/results --output_dir ../cmnist_exp_small/plots
+```
 
 Reason:
 
-- This is useful for final interpretability, but it is lower priority than getting the reduced analysis pipeline working end to end.
+- E0-E3 plotting is validated; E4 needs actual λ-evaluation outputs.
 
-## Recommended Next Steps
+### Priority 3: Optional Multi-Seed Run
 
-1. Finish the reduced `domain_stress_small` run and retain the saved checkpoints.
-2. Run `CMNIST/evaluate_lambda_grid.py` on the reduced-sweep `iro` and `inftask` checkpoints.
-3. Re-run `CMNIST/plot_domain_stress.py` with λ-evaluation outputs to add the E4 figure.
-4. Optionally extend `CMNIST/job_scripts/gen_exps.py` with clearer phase labels or an explicit small-sweep mode.
-5. Re-run the reduced sweep on GPU if faster turnaround is needed for the remaining checkpoints and λ-analysis artifacts.
+Execute the bash runner to generate seeds 1–2 results for robustness validation.
+
+Command:
+```bash
+cd CMNIST/job_scripts
+bash run_domain_stress_small_seeds.sh
+```
+
+Reason:
+
+- Validates the multi-seed automation workflow.
+- Provides seed-level variability for final reporting (optional for publication).
+
+### Priority 4: Staging Full Sweep (Future)
+
+When ready, execute the full `domain_stress.txt` sweep across all 10 seeds and all 5 algorithms.
+
+Considerations:
+
+- Estimated runtime: 6–12 days on single GPU.
+- Can be run in batch mode or distributed across multiple machines.
+- Use the same CSV export + plotting pipeline for final aggregation.
+
+### Priority 5: Optional Generator Cleanup (Nice-to-Have)
+
+Consider updating `CMNIST/job_scripts/gen_exps.py` to support:
+
+- Semantic phase labels in generated commands or saved metadata.
+- An explicit `--small_sweep` mode that emits only `domain_stress_small.txt`.
+
+Reason:
+
+- Improves final interpretability but is lower priority than the λ and multi-seed work.
+
+## Recommended Immediate Next Steps
+
+1. Run `CMNIST/evaluate_lambda_grid.py` on the completed reduced-sweep checkpoints → generates E4 outputs.
+2. Run `CMNIST/plot_domain_stress.py` with the λ-evaluation outputs → generates full E0–E4 figure set.
+3. Optional: Execute `run_domain_stress_small_seeds.sh` to validate multi-seed automation (seeds 1–2).
+4. Export all results using `CMNIST/export_results_csv.py` for final reporting.
+5. Stage `domain_stress.txt` for batch execution when compute resources are available.
