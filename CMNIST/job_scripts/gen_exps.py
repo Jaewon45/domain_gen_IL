@@ -85,6 +85,12 @@ def generate_reproduce_commands(args, base_call, seeds):
 
 
 def generate_domain_stress_commands(args, base_call, seeds):
+    # Phase intent mapping used across the stress sweep:
+    # E0 reproduction -> baseline reduced reproduction setting
+    # E1 domain_count -> vary number of train environments
+    # E2 sample_size -> vary per-domain sample budget (balanced)
+    # E3 imbalance -> vary per-domain size skew pattern
+    # E4 lambda_eval -> executed post-training via evaluate_lambda_grid.py
     commands = []
     algorithms = [
         ("erm", 600, "--erm_pretrain_iters 0"),
@@ -162,7 +168,12 @@ if __name__ == "__main__":
     # Flags
     parser = argparse.ArgumentParser(description='Generate commands for CMNIST experiments.')
     parser.add_argument('--data_dir', type=str, required=True, help="Absolute path to data directory.")
-    parser.add_argument('--output_dir', type=str, required=True, help="Absolute path to output directory.")
+    parser.add_argument(
+        '--output_dir',
+        type=str,
+        default='../results/cmnist_exp',
+        help="Output directory root for experiment artifacts.",
+    )
     parser.add_argument('--exp_name', type=str, default="reproduce")
     args = parser.parse_args()
 

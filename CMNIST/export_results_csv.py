@@ -14,6 +14,18 @@ from collect_results import load_records
 
 ENV_METRIC_RE = re.compile(r"^(?P<env>.+)_(?P<metric>acc|loss)_(?P<ms_type>best|final)$")
 EXP_E_TAG_RE = re.compile(r"(?:^|[_-])e(?P<idx>[0-4])(?:$|[_-])", re.IGNORECASE)
+MISSING_GROUP_VALUE = "__na__"
+
+DEDUP_IDENTITY_COLS = [
+    "algorithm",
+    "seed",
+    "exp_name",
+    "phase",
+    "n_train_domains",
+    "sample_size_per_domain",
+    "imbalance_type",
+    "args_id",
+]
 
 
 PHASE_TO_E_TAG = {
@@ -114,8 +126,64 @@ def flatten_args_column(df: pd.DataFrame) -> pd.DataFrame:
                 row[f"arg_{key}"] = value
         args_rows.append(row)
 
-    args_df = pd.DataFrame(args_rows)
+    args_df = pd.DataFrame(args_rows, index=df.index)
     return pd.concat([df.drop(columns=["args"]), args_df], axis=1)
+
+
+def add_run_status(df: pd.DataFrame) -> pd.DataFrame:
+    if "run_status" in df.columns:
+        return df
+
+    acc_cols = [
+        col for col in df.columns
+        if isinstance(col, str) and (col.endswith("_acc_best") or col.endswith("_acc_final"))
+    ]
+    if not acc_cols:
+        df["run_status"] = "unknown"
+        return df
+
+    has_any_metric = df[acc_cols].notna().any(axis=1)
+    df["run_status"] = has_any_metric.map({True: "ok", False: "incomplete"})
+    return df
+
+
+def normalize_grouping_columns(df: pd.DataFrame) -> pd.DataFrame:
+    phase_defaults = {
+        "reproduction": (MISSING_GROUP_VALUE, MISSING_GROUP_VALUE),
+        "domain_count": (MISSING_GROUP_VALUE, MISSING_GROUP_VALUE),
+        "sample_size": (MISSING_GROUP_VALUE, "balanced"),
+        "imbalance": (MISSING_GROUP_VALUE, MISSING_GROUP_VALUE),
+        "lambda_eval": (MISSING_GROUP_VALUE, MISSING_GROUP_VALUE),
+    }
+
+    if "phase" in df.columns:
+        df["phase"] = df["phase"].fillna("unknown").astype(str)
+
+    if "sample_size_per_domain" in df.columns:
+        df["sample_size_per_domain"] = df["sample_size_per_domain"].astype(object)
+    if "imbalance_type" in df.columns:
+        df["imbalance_type"] = df["imbalance_type"].astype(object)
+
+    for idx, row in df.iterrows():
+        phase = str(row.get("phase", "unknown")).lower()
+        sample_default, imbalance_default = phase_defaults.get(
+            phase, (MISSING_GROUP_VALUE, MISSING_GROUP_VALUE)
+        )
+
+        if "sample_size_per_domain" in df.columns and pd.isna(row.get("sample_size_per_domain")):
+            df.at[idx, "sample_size_per_domain"] = sample_default
+
+        if "imbalance_type" in df.columns and pd.isna(row.get("imbalance_type")):
+            df.at[idx, "imbalance_type"] = imbalance_default
+
+    return df
+
+
+def deduplicate_records(df: pd.DataFrame) -> pd.DataFrame:
+    dedup_cols = [col for col in DEDUP_IDENTITY_COLS if col in df.columns]
+    if not dedup_cols:
+        return df
+    return df.drop_duplicates(subset=dedup_cols, keep="first").copy().reset_index(drop=True)
 
 
 def build_env_metric_long(df: pd.DataFrame) -> pd.DataFrame:
@@ -183,6 +251,7 @@ def build_summary(df: pd.DataFrame) -> pd.DataFrame:
         c for c in [
             "phase",
             "algorithm",
+            "seed",
             "exp_name",
             "n_train_domains",
             "sample_size_per_domain",
@@ -205,13 +274,17 @@ def build_summary(df: pd.DataFrame) -> pd.DataFrame:
     return grouped
 
 
-def export_results(input_dir: str, output_dir: str, prefix: str) -> Tuple[str, List[str]]:
+def export_results(input_dir: str, output_dir: str, prefix: str, deduplicate: bool = True) -> Tuple[str, List[str]]:
     os.makedirs(output_dir, exist_ok=True)
     records = load_records(input_dir)
     if not records:
         raise ValueError(f"No JSONL records found under: {input_dir}")
 
     df = pd.DataFrame.from_records(records)
+    df = add_run_status(df)
+    df = normalize_grouping_columns(df)
+    if deduplicate:
+        df = deduplicate_records(df)
 
     if "train_envs" in df.columns:
         df["train_envs"] = df["train_envs"].apply(
@@ -251,7 +324,7 @@ def main() -> None:
     parser.add_argument(
         "input_dir",
         nargs="?",
-        default="../cmnist_exp_small/results",
+        default="../results/cmnist_exp_small/results",
         help="Path to results root containing phase subfolders with JSONL files.",
     )
     parser.add_argument(
@@ -264,9 +337,19 @@ def main() -> None:
         default="cmnist_exp_small",
         help="Filename prefix for generated CSVs.",
     )
+    parser.add_argument(
+        "--no_dedup",
+        action="store_true",
+        help="Disable deduplication by identity columns before export.",
+    )
     args = parser.parse_args()
 
-    _, written_paths = export_results(args.input_dir, args.output_dir, args.prefix)
+    _, written_paths = export_results(
+        args.input_dir,
+        args.output_dir,
+        args.prefix,
+        deduplicate=not args.no_dedup,
+    )
     print("Wrote CSV files:")
     for path in written_paths:
         print(path)

@@ -133,6 +133,10 @@ else:
     device = "cpu"
 
 # --------  DATA LOADING --------
+# Training entry point supports E0-E3 stress phases through CLI configuration:
+# E0 reproduction: fixed reduced setup; E1 domain_count via --train_envs;
+# E2 sample_size via balanced --train_env_sizes; E3 imbalance via skewed --train_env_sizes.
+# E4 lambda sensitivity is evaluated post-training from checkpoints.
 envs = get_cmnist_datasets(args.data_dir, train_envs=train_env_ps, test_envs=test_env_ps, label_noise_rate = 0.25, 
                            cuda=(device == "cuda"), int_target=int_target, subsample=not args.full_resolution,
                            train_env_sizes=train_env_sizes, train_env_size_mode=args.train_env_size_mode)

@@ -349,7 +349,7 @@ The repository now contains a complete, tested implementation of the CMNIST stre
 **Validation Status:**
 
 - ✅ Reduced sweep (`domain_stress_small.txt`): **All 13 commands completed** with seed 0.
-  - Results: `cmnist_exp_small/results/` and `cmnist_exp_small/logs/`
+   - Results: `results/cmnist_exp_small/results/` and `results/cmnist_exp_small/logs/`
   - Checkpoints saved for `groupdro`, `iro`, `inftask` runs.
   - CSV exports generated and validated.
 - ✅ Smoke tests: Domain-count, sample-size, and imbalance phases all validated.
@@ -381,7 +381,7 @@ UCI-Bike-Rental dataset infrastructure exists but no new datasets have been adde
 | **E1 (domain count)** | 1 variant (2 domains) | 4 variants (2, 4, 6, 8 domains) |
 | **E2 (sample size)** | 1 size (2k/domain) | 3 sizes (2k, 4k, 8k per domain) |
 | **E3 (imbalance)** | 1 schedule (last-heavy mild) | 5 schedules (balanced + 4 types) |
-| **Output dirs** | Relative `../cmnist_exp_small/` | Absolute `/c:/Users/.../cmnist_exp/` |
+| **Output dirs** | Relative `../results/cmnist_exp_small/` | Absolute `/c:/Users/.../results/cmnist_exp/` |
 | **Estimated runtime** | ~1 day | 6–12 days (single GPU) |
 
 **Purpose:**
@@ -416,13 +416,13 @@ The reduced sweep has been executed successfully. The following steps complete t
 ```bash
 cd CMNIST
 ..\dgil_env\Scripts\python.exe evaluate_lambda_grid.py \
-  --ckpt_dirs ../cmnist_exp_small/ckpts \
-  --output_dir ../cmnist_exp_small/lambda_results \
+   --ckpt_dirs ../results/cmnist_exp_small/ckpts \
+   --output_dir ../results/cmnist_exp_small/lambda_results \
   --lambda_grid 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
 ```
 
 **Outputs:**
-- JSONL files under `cmnist_exp_small/lambda_results/` with per-λ evaluation metrics.
+- JSONL files under `results/cmnist_exp_small/lambda_results/` with per-λ evaluation metrics.
 - Will include per-environment accuracy, aggregated risk, and summary statistics.
 
 **Status:** ✅ Script ready. Awaiting checkpoint execution.
@@ -435,9 +435,9 @@ cd CMNIST
 ```bash
 cd CMNIST
 ..\dgil_env\Scripts\python.exe plot_domain_stress.py \
-  ../cmnist_exp_small/results \
-  --output_dir ../cmnist_exp_small/plots \
-  --lambda_results ../cmnist_exp_small/lambda_results
+   ../results/cmnist_exp_small/results \
+   --output_dir ../results/cmnist_exp_small/plots \
+   --lambda_results ../results/cmnist_exp_small/lambda_results
 ```
 
 **Outputs:**
@@ -456,7 +456,7 @@ bash run_domain_stress_small_seeds.sh
 ```
 
 **Outputs:**
-- Results directories: `../cmnist_exp_small_seed1/` and `../cmnist_exp_small_seed2/`.
+- Results directories: `../results/cmnist_exp_small_seed1/` and `../results/cmnist_exp_small_seed2/`.
 
 **Status:** ✅ Script ready. Optional for robustness validation before full sweep.
 
@@ -468,8 +468,8 @@ bash run_domain_stress_small_seeds.sh
 ```bash
 cd CMNIST
 ..\dgil_env\Scripts\python.exe export_results_csv.py \
-  ../cmnist_exp_small/results \
-  --output_dir ../cmnist_exp_small \
+   ../results/cmnist_exp_small/results \
+   --output_dir ../results/export \
   --prefix cmnist_exp_small
 ```
 
@@ -493,11 +493,11 @@ cd CMNIST/job_scripts
 | Deliverable | Status | Location |
 |-------------|--------|----------|
 | Reduced command file | ✅ Complete | `domain_stress_small.txt` (13 commands) |
-| Execution (seed 0) | ✅ Complete | `cmnist_exp_small/results/`, `logs/` |
-| E0–E3 plots | ✅ Complete | `cmnist_exp_small/plots/e{0,1,2,3}_*.png` |
+| Execution (seed 0) | ✅ Complete | `results/cmnist_exp_small/results/`, `results/cmnist_exp_small/logs/` |
+| E0–E3 plots | ✅ Complete | `results/cmnist_exp_small/plots/e{0,1,2,3}_*.png` |
 | E4 λ-evaluation script | ✅ Ready | `evaluate_lambda_grid.py` |
 | E4 plots | ⏳ Pending Step 1 | Will be in `plots/` |
-| CSV exports | ✅ Complete | `cmnist_exp_small_*.csv` |
+| CSV exports | ✅ Complete | `results/export/cmnist_exp_small_*.csv` |
 | Multi-seed bash runner | ✅ Ready | `run_domain_stress_small_seeds.sh` |
 | Full sweep command file | ✅ Complete | `domain_stress.txt` (600 commands) |
 
