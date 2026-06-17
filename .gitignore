@@ -1,5 +1,6 @@
 # Python cache and bytecode
 __pycache__/
+**/__pycache__/
 *.pyc
 *.py[cod]
 
@@ -13,6 +14,7 @@ dgil_env/
 **/*.pyc
 **/*.pkl
 
+
 # Local experiment outputs
 cmnist_exp_smoke/
 
@@ -23,3 +25,4 @@ cmnist_exp_smoke/
 # Downloaded raw datasets
 data/MNIST/raw/
 **/MNIST/raw/
+results/

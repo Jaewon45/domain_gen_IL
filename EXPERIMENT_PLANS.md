@@ -322,9 +322,7 @@ The strongest low-friction extension in this repository is a CMNIST stress test 
 
 ## UPDATE — Current Implementation Status
 
-============================================================
-PART A — COMPLETED WORK
-============================================================
+## PART A — COMPLETED WORK
 
 ### Experiment 1: CMNIST Stress Test — ✅ Fully Implemented & Validated
 
@@ -406,9 +404,7 @@ Some aspects of the current implementation differ slightly from the idealized ex
 
 ---
 
-============================================================
-PART B — RECOMMENDED NEXT STEPS (Post-Reduced-Sweep)
-============================================================
+## PART B — RECOMMENDED NEXT STEPS (Post-Reduced-Sweep)
 
 The reduced sweep has been executed successfully. The following steps complete the analysis pipeline:
 
@@ -793,9 +789,7 @@ Expected interpretation:
 - If λ has little meaningful effect, question whether the augmented hypothesis is actually using λ in the tested setting.
 
 
-============================================================
-PART C — IMMEDIATE NEXT TASKS
-============================================================
+## PART C — IMMEDIATE NEXT TASKS
 
 1. Check result schema
    Ensure each JSONL result contains or derives the fields needed for the stress analysis:
@@ -863,9 +857,7 @@ PART C — IMMEDIATE NEXT TASKS
    - how to collect results,
    - how to generate plots.
 
-============================================================
-PART D — RUN ORDER AND MINIMUM DELIVERABLES
-============================================================
+## PART D — RUN ORDER AND MINIMUM DELIVERABLES
 
 Run order
 ---------

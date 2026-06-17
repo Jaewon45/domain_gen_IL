@@ -1,0 +1,601 @@
+algorithm,seed,exp_name,phase,args_id,n_train_domains,sample_size_per_domain,imbalance_type,train_envs,train_env_sizes,test_env,metric,model_selection,value
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.0,acc,best,0.7485
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.0,acc,final,0.7384
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.0,loss,best,0.49387481808662415
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.0,loss,final,0.5433683395385742
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.1,acc,best,0.7501
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.1,acc,final,0.7374
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.1,loss,best,0.5128834247589111
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.1,loss,final,0.5656082034111023
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.2,acc,best,0.7366
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.2,acc,final,0.7199
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.2,loss,best,0.5379906892776489
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.2,loss,final,0.591737300157547
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.3,acc,best,0.7257
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.3,acc,final,0.709
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.3,loss,best,0.5702797174453735
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.3,loss,final,0.6241747140884399
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.4,acc,best,0.7223
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.4,acc,final,0.7019
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.4,loss,best,0.5850648283958435
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.4,loss,final,0.6369031071662903
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.5,acc,best,0.71
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.5,acc,final,0.6851
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.5,loss,best,0.6194813549518585
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.5,loss,final,0.6731924712657928
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.6,acc,best,0.7121
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.6,acc,final,0.6883
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.6,loss,best,0.6292306482791901
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.6,loss,final,0.6849100887775421
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.7,acc,best,0.6984
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.7,acc,final,0.6772
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.7,loss,best,0.6629562079906464
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.7,loss,final,0.7150741815567017
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.8,acc,best,0.6846
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.8,acc,final,0.6603
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.8,loss,best,0.6908778250217438
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.8,loss,final,0.7417231798171997
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.9,acc,best,0.6723
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.9,acc,final,0.6453
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.9,loss,best,0.725504457950592
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.9,loss,final,0.7781716883182526
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,1.0,acc,best,0.6692
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,1.0,acc,final,0.6424
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,1.0,loss,best,0.7417880594730377
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,1.0,loss,final,0.7906194627285004
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,avg_domain,acc,best,0.7118
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,worst_domain,acc,best,0.6692
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,best_domain,acc,best,0.7501
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,avg_domain,acc,final,0.6913818181818182
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,worst_domain,acc,final,0.6424
+erm,1,e0_repro_small,reproduction,465f87468db1774cf04dfd38b990a68d,4,,,"[0.1, 0.2, 0.5, 0.9]",,best_domain,acc,final,0.7384
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.0,acc,best,0.6879
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.0,acc,final,0.6879
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.0,loss,best,0.6327430605888367
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.0,loss,final,0.6327430605888367
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.1,acc,best,0.6925
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.1,acc,final,0.6925
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.1,loss,best,0.6314139664173126
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.1,loss,final,0.6314139366149902
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.2,acc,best,0.6982
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.2,acc,final,0.6982
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.2,loss,best,0.6280660629272461
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.2,loss,final,0.6280660331249237
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.3,acc,best,0.6971
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.3,acc,final,0.6971
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.3,loss,best,0.6140806376934052
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.3,loss,final,0.6140806078910828
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.4,acc,best,0.7018
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.4,acc,final,0.7018
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.4,loss,best,0.6090794205665588
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.4,loss,final,0.6090794205665588
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.5,acc,best,0.6947
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.5,acc,final,0.6947
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.5,loss,best,0.6144210696220398
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.5,loss,final,0.6144210696220398
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.6,acc,best,0.6969
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.6,acc,final,0.6969
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.6,loss,best,0.6133268475532532
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.6,loss,final,0.6133268475532532
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.7,acc,best,0.6971
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.7,acc,final,0.6971
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.7,loss,best,0.6127512156963348
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.7,loss,final,0.6127512156963348
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.8,acc,best,0.6812
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.8,acc,final,0.6812
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.8,loss,best,0.6212736964225769
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.8,loss,final,0.6212737262248993
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.9,acc,best,0.6917
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.9,acc,final,0.6917
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.9,loss,best,0.6184906661510468
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.9,loss,final,0.6184906959533691
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,1.0,acc,best,0.69
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,1.0,acc,final,0.69
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,1.0,loss,best,0.6193161308765411
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,1.0,loss,final,0.6193161606788635
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,avg_domain,acc,best,0.6935545454545454
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,worst_domain,acc,best,0.6812
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,best_domain,acc,best,0.7018
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,avg_domain,acc,final,0.6935545454545454
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,worst_domain,acc,final,0.6812
+iro,1,e0_repro_small,reproduction,1d798d5783c0eea4eddae0cbb2e2ea85,4,,,"[0.1, 0.2, 0.5, 0.9]",,best_domain,acc,final,0.7018
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.0,acc,best,0.7142
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.0,acc,final,0.7084
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.0,loss,best,0.6102972030639648
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.0,loss,final,0.6233906149864197
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.1,acc,best,0.7151
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.1,acc,final,0.7064
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.1,loss,best,0.6110125780105591
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.1,loss,final,0.6299382448196411
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.2,acc,best,0.72
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.2,acc,final,0.7093
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.2,loss,best,0.6075044870376587
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.2,loss,final,0.6346561312675476
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.3,acc,best,0.7143
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.3,acc,final,0.7044
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.3,loss,best,0.6141875386238098
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.3,loss,final,0.6448626816272736
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.4,acc,best,0.716
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.4,acc,final,0.7014
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.4,loss,best,0.6119978427886963
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.4,loss,final,0.6447452902793884
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.5,acc,best,0.7116
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.5,acc,final,0.6955
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.5,loss,best,0.6318037509918213
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.5,loss,final,0.6759899258613586
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.6,acc,best,0.7067
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.6,acc,final,0.689
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.6,loss,best,0.6343954205513
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.6,loss,final,0.6865280568599701
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.7,acc,best,0.7167
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.7,acc,final,0.6957
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.7,loss,best,0.6254139840602875
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.7,loss,final,0.6787954866886139
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.8,acc,best,0.7031
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.8,acc,final,0.6788
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.8,loss,best,0.6429643630981445
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.8,loss,final,0.7078430354595184
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.9,acc,best,0.6956
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.9,acc,final,0.6701
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.9,loss,best,0.6514359712600708
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,0.9,loss,final,0.7213369607925415
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,1.0,acc,best,0.6976
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,1.0,acc,final,0.6715
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,1.0,loss,best,0.6517682373523712
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,1.0,loss,final,0.7239034175872803
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,avg_domain,acc,best,0.7100818181818181
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,worst_domain,acc,best,0.6956
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,best_domain,acc,best,0.72
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,avg_domain,acc,final,0.6936818181818182
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,worst_domain,acc,final,0.6701
+groupdro,1,e0_repro_small,reproduction,6a7e57a240d1f48c755b324c9edd43bb,4,,,"[0.1, 0.2, 0.5, 0.9]",,best_domain,acc,final,0.7093
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.0,acc,best,0.9655
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.0,acc,final,0.9655
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.0,loss,best,0.14715126901865005
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.0,loss,final,0.14715126156806946
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.1,acc,best,0.8821
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.1,acc,final,0.8821
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.1,loss,best,0.30861586332321167
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.1,loss,final,0.30861586332321167
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.2,acc,best,0.7947
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.2,acc,final,0.7947
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.2,loss,best,0.4780140519142151
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.2,loss,final,0.4780140519142151
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.3,acc,best,0.7081
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.3,acc,final,0.7081
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.3,loss,best,0.6545634269714355
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.3,loss,final,0.6545633673667908
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.4,acc,best,0.6243
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.4,acc,final,0.6243
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.4,loss,best,0.8018247783184052
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.4,loss,final,0.8018247783184052
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.5,acc,best,0.5294
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.5,acc,final,0.5294
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.5,loss,best,1.0043566524982452
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.5,loss,final,1.0043566823005676
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.6,acc,best,0.4446
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.6,acc,final,0.4446
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.6,loss,best,1.162314236164093
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.6,loss,final,1.162314236164093
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.7,acc,best,0.3528
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.7,acc,final,0.3528
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.7,loss,best,1.3358875513076782
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.7,loss,final,1.3358874917030334
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.8,acc,best,0.2702
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.8,acc,final,0.2702
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.8,loss,best,1.5068323612213135
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.8,loss,final,1.5068323016166687
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.9,acc,best,0.1781
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.9,acc,final,0.1781
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.9,loss,best,1.6955593824386597
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,0.9,loss,final,1.6955594420433044
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,1.0,acc,best,0.0927
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,1.0,acc,final,0.0927
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,1.0,loss,best,1.8491125702857971
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,1.0,loss,final,1.849112629890442
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,avg_domain,acc,best,0.5311363636363636
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,worst_domain,acc,best,0.0927
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,best_domain,acc,best,0.9655
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,avg_domain,acc,final,0.5311363636363636
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,worst_domain,acc,final,0.0927
+erm,1,e1_domain_count_small,domain_count,c91564d904e399904f7b42e39038b789,2,,,"[0.1, 0.2]",,best_domain,acc,final,0.9655
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.0,acc,best,0.9228
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.0,acc,final,0.924
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.0,loss,best,0.1967882215976715
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.0,loss,final,0.19325341284275055
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.1,acc,best,0.8516
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.1,acc,final,0.8519
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.1,loss,best,0.36107344925403595
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.1,loss,final,0.36267510056495667
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.2,acc,best,0.7897
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.2,acc,final,0.7901
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.2,loss,best,0.5096732527017593
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.2,loss,final,0.5159292817115784
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.3,acc,best,0.711
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.3,acc,final,0.7095
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.3,loss,best,0.6738864183425903
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.3,loss,final,0.6850423514842987
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.4,acc,best,0.6452
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.4,acc,final,0.6445
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.4,loss,best,0.811246931552887
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.4,loss,final,0.8267510533332825
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.5,acc,best,0.5606
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.5,acc,final,0.5594
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.5,loss,best,1.029310941696167
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.5,loss,final,1.0511795282363892
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.6,acc,best,0.4977
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.6,acc,final,0.4964
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.6,loss,best,1.1444865465164185
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.6,loss,final,1.1707132458686829
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.7,acc,best,0.4211
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.7,acc,final,0.4172
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.7,loss,best,1.325028896331787
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.7,loss,final,1.3569541573524475
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.8,acc,best,0.3474
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.8,acc,final,0.3431
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.8,loss,best,1.5085132718086243
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.8,loss,final,1.5457502007484436
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.9,acc,best,0.2781
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.9,acc,final,0.272
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.9,loss,best,1.6330496072769165
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,0.9,loss,final,1.6736825108528137
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,1.0,acc,best,0.2071
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,1.0,acc,final,0.2023
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,1.0,loss,best,1.810581624507904
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,1.0,loss,final,1.8575013875961304
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,avg_domain,acc,best,0.5665727272727273
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,worst_domain,acc,best,0.2071
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,best_domain,acc,best,0.9228
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,avg_domain,acc,final,0.5645818181818183
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,worst_domain,acc,final,0.2023
+groupdro,1,e1_domain_count_small,domain_count,56998415af14fba68abb7fe3bf9f79ae,2,,,"[0.1, 0.2]",,best_domain,acc,final,0.924
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.0,acc,best,0.9981
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.0,acc,final,0.9981
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.0,loss,best,0.25869083404541016
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.0,loss,final,0.25869084894657135
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.1,acc,best,0.897
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.1,acc,final,0.897
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.1,loss,best,0.3640502989292145
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.1,loss,final,0.3640502989292145
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.2,acc,best,0.7994
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.2,acc,final,0.7994
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.2,loss,best,0.46708783507347107
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.2,loss,final,0.46708783507347107
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.3,acc,best,0.7006
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.3,acc,final,0.7006
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.3,loss,best,0.5908405482769012
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.3,loss,final,0.5908405482769012
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.4,acc,best,0.6117
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.4,acc,final,0.6117
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.4,loss,best,0.7002459168434143
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.4,loss,final,0.7002458572387695
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.5,acc,best,0.5009
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.5,acc,final,0.5009
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.5,loss,best,0.8390413820743561
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.5,loss,final,0.8390414118766785
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.6,acc,best,0.4062
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.6,acc,final,0.4062
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.6,loss,best,0.958563894033432
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.6,loss,final,0.958563894033432
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.7,acc,best,0.3043
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.7,acc,final,0.3043
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.7,loss,best,1.0886093974113464
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.7,loss,final,1.0886092782020569
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.8,acc,best,0.2109
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.8,acc,final,0.2109
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.8,loss,best,1.2155070900917053
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.8,loss,final,1.2155070900917053
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.9,acc,best,0.1093
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.9,acc,final,0.1093
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.9,loss,best,1.344890534877777
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,0.9,loss,final,1.3448904752731323
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,1.0,acc,best,0.0122
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,1.0,acc,final,0.0122
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,1.0,loss,best,1.4638116955757141
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,1.0,loss,final,1.4638116955757141
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,avg_domain,acc,best,0.5045999999999999
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,worst_domain,acc,best,0.0122
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,best_domain,acc,best,0.9981
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,avg_domain,acc,final,0.5045999999999999
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,worst_domain,acc,final,0.0122
+iro,1,e1_domain_count_small,domain_count,a9cdb84b03801b26e0a1345e28a17641,2,,,"[0.1, 0.2]",,best_domain,acc,final,0.9981
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.0,acc,best,0.7208
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.0,acc,final,0.7211
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.0,loss,best,0.6126701533794403
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.0,loss,final,0.6111021339893341
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.1,acc,best,0.7126
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.1,acc,final,0.7134
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.1,loss,best,0.6176799237728119
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.1,loss,final,0.6162908673286438
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.2,acc,best,0.7071
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.2,acc,final,0.7081
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.2,loss,best,0.6217637062072754
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.2,loss,final,0.6203548312187195
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.3,acc,best,0.6991
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.3,acc,final,0.6979
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.3,loss,best,0.6128931939601898
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.3,loss,final,0.6125178039073944
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.4,acc,best,0.6914
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.4,acc,final,0.6907
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.4,loss,best,0.6200766861438751
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.4,loss,final,0.6201209127902985
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.5,acc,best,0.6929
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.5,acc,final,0.6927
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.5,loss,best,0.6150034666061401
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.5,loss,final,0.6147751212120056
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.6,acc,best,0.6746
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.6,acc,final,0.6748
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.6,loss,best,0.6282515227794647
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.6,loss,final,0.6287409067153931
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.7,acc,best,0.6716
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.7,acc,final,0.6713
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.7,loss,best,0.6376122236251831
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.7,loss,final,0.6384422481060028
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.8,acc,best,0.6535
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.8,acc,final,0.6545
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.8,loss,best,0.6489951312541962
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.8,loss,final,0.6503218114376068
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.9,acc,best,0.6552
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.9,acc,final,0.6547
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.9,loss,best,0.6436154842376709
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.9,loss,final,0.6448436975479126
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",1.0,acc,best,0.6483
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",1.0,acc,final,0.649
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",1.0,loss,best,0.6537905037403107
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",1.0,loss,final,0.6551682651042938
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",avg_domain,acc,best,0.6842818181818181
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",worst_domain,acc,best,0.6483
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",best_domain,acc,best,0.7208
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",avg_domain,acc,final,0.6843818181818182
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",worst_domain,acc,final,0.649
+iro,1,e2_sample_size_small,sample_size,cf2f9003258b81747cd521566c8dafb3,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",best_domain,acc,final,0.7211
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.0,acc,best,0.7776
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.0,acc,final,0.7494
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.0,loss,best,0.469279021024704
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.0,loss,final,0.7840173542499542
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.1,acc,best,0.7622
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.1,acc,final,0.7292
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.1,loss,best,0.5021029412746429
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.1,loss,final,0.8426766395568848
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.2,acc,best,0.7462
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.2,acc,final,0.7108
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.2,loss,best,0.5418379306793213
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.2,loss,final,0.9219646453857422
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.3,acc,best,0.7156
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.3,acc,final,0.6788
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.3,loss,best,0.5904715955257416
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.3,loss,final,1.0657156705856323
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.4,acc,best,0.6961
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.4,acc,final,0.6589
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.4,loss,best,0.6307691931724548
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.4,loss,final,1.1445372104644775
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.5,acc,best,0.6707
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.5,acc,final,0.6323
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.5,loss,best,0.67152538895607
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.5,loss,final,1.233062505722046
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.6,acc,best,0.6562
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.6,acc,final,0.6166
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.6,loss,best,0.6989296972751617
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.6,loss,final,1.2896002531051636
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.7,acc,best,0.6309
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.7,acc,final,0.5911
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.7,loss,best,0.7534447610378265
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.7,loss,final,1.3844082355499268
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.8,acc,best,0.6107
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.8,acc,final,0.5674
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.8,loss,best,0.7858588099479675
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.8,loss,final,1.4727630615234375
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.9,acc,best,0.5941
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.9,acc,final,0.5515
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.9,loss,best,0.8132832646369934
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.9,loss,final,1.5430877208709717
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",1.0,acc,best,0.5662
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",1.0,acc,final,0.525
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",1.0,loss,best,0.8677036464214325
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",1.0,loss,final,1.6655645966529846
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",avg_domain,acc,best,0.6751363636363636
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",worst_domain,acc,best,0.5662
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",best_domain,acc,best,0.7776
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",avg_domain,acc,final,0.6373636363636364
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",worst_domain,acc,final,0.525
+erm,1,e2_sample_size_small,sample_size,c61e8dae80915b9a9134c9a1518c211c,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",best_domain,acc,final,0.7494
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.0,acc,best,0.7256
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.0,acc,final,0.7311
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.0,loss,best,0.7506987452507019
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.0,loss,final,0.8604483306407928
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.1,acc,best,0.7086
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.1,acc,final,0.7116
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.1,loss,best,0.8055031001567841
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.1,loss,final,0.940302699804306
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.2,acc,best,0.6933
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.2,acc,final,0.6946
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.2,loss,best,0.8700788021087646
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.2,loss,final,1.0292000770568848
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.3,acc,best,0.6857
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.3,acc,final,0.6802
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.3,loss,best,0.880303293466568
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.3,loss,final,1.0530644059181213
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.4,acc,best,0.6682
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.4,acc,final,0.665
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.4,loss,best,0.9324023425579071
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.4,loss,final,1.1218956112861633
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.5,acc,best,0.6438
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.5,acc,final,0.638
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.5,loss,best,1.0374919772148132
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.5,loss,final,1.2644405364990234
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.6,acc,best,0.6332
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.6,acc,final,0.6223
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.6,loss,best,1.0637073516845703
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.6,loss,final,1.309942364692688
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.7,acc,best,0.6211
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.7,acc,final,0.6101
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.7,loss,best,1.1189926862716675
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.7,loss,final,1.391028881072998
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.8,acc,best,0.6062
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.8,acc,final,0.5927
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.8,loss,best,1.1617502570152283
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.8,loss,final,1.449929118156433
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.9,acc,best,0.5968
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.9,acc,final,0.5809
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.9,loss,best,1.2026515007019043
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",0.9,loss,final,1.5108168721199036
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",1.0,acc,best,0.5772
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",1.0,acc,final,0.5604
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",1.0,loss,best,1.251896619796753
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",1.0,loss,final,1.5773921012878418
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",avg_domain,acc,best,0.6508818181818182
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",worst_domain,acc,best,0.5772
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",best_domain,acc,best,0.7256
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",avg_domain,acc,final,0.6442636363636364
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",worst_domain,acc,final,0.5604
+groupdro,1,e2_sample_size_small,sample_size,e3dd2150b41346c4e66b53755c1dbad4,4,2000.0,balanced,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 2000]",best_domain,acc,final,0.7311
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.0,acc,best,0.67
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.0,acc,final,0.6734
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.0,loss,best,0.6472376883029938
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.0,loss,final,0.6446655988693237
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.1,acc,best,0.6749
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.1,acc,final,0.6772
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.1,loss,best,0.6445830464363098
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.1,loss,final,0.6422525644302368
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.2,acc,best,0.6788
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.2,acc,final,0.6807
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.2,loss,best,0.6432850956916809
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.2,loss,final,0.6411233842372894
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.3,acc,best,0.6697
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.3,acc,final,0.6723
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.3,loss,best,0.6331950426101685
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.3,loss,final,0.6310860812664032
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.4,acc,best,0.6718
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.4,acc,final,0.6731
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.4,loss,best,0.6290580928325653
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.4,loss,final,0.627528965473175
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.5,acc,best,0.6825
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.5,acc,final,0.6847
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.5,loss,best,0.6190784573554993
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.5,loss,final,0.6179279088973999
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.6,acc,best,0.6837
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.6,acc,final,0.6842
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.6,loss,best,0.6176442205905914
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.6,loss,final,0.6172572374343872
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.7,acc,best,0.6873
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.7,acc,final,0.6879
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.7,loss,best,0.6162514388561249
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.7,loss,final,0.6166433990001678
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.8,acc,best,0.6816
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.8,acc,final,0.6814
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.8,loss,best,0.6157947778701782
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.8,loss,final,0.6169497668743134
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.9,acc,best,0.7023
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.9,acc,final,0.7002
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.9,loss,best,0.601780116558075
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.9,loss,final,0.6032299101352692
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",1.0,acc,best,0.7025
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",1.0,acc,final,0.7005
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",1.0,loss,best,0.601628988981247
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",1.0,loss,final,0.6037146747112274
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",avg_domain,acc,best,0.6822818181818181
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",worst_domain,acc,best,0.6697
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",best_domain,acc,best,0.7025
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",avg_domain,acc,final,0.6832363636363635
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",worst_domain,acc,final,0.6723
+iro,1,e3_imbalance_small,imbalance,aee9a6c869c5d2e09a8e7c16a68e09aa,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",best_domain,acc,final,0.7005
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.0,acc,best,0.6748
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.0,acc,final,0.6748
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.0,loss,best,0.64291051030159
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.0,loss,final,0.64291051030159
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.1,acc,best,0.678
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.1,acc,final,0.678
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.1,loss,best,0.6425873339176178
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.1,loss,final,0.6425873935222626
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.2,acc,best,0.6844
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.2,acc,final,0.6844
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.2,loss,best,0.6388415396213531
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.2,loss,final,0.6388415396213531
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.3,acc,best,0.6719
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.3,acc,final,0.6719
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.3,loss,best,0.6305340230464935
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.3,loss,final,0.6305340528488159
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.4,acc,best,0.6684
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.4,acc,final,0.6684
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.4,loss,best,0.6279404163360596
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.4,loss,final,0.6279403865337372
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.5,acc,best,0.6775
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.5,acc,final,0.6775
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.5,loss,best,0.6220321357250214
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.5,loss,final,0.6220321357250214
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.6,acc,best,0.686
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.6,acc,final,0.686
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.6,loss,best,0.6166199445724487
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.6,loss,final,0.6166199445724487
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.7,acc,best,0.68
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.7,acc,final,0.68
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.7,loss,best,0.6185364723205566
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.7,loss,final,0.6185364723205566
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.8,acc,best,0.688
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.8,acc,final,0.688
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.8,loss,best,0.6171305775642395
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.8,loss,final,0.6171305179595947
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.9,acc,best,0.7015
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.9,acc,final,0.7015
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.9,loss,best,0.6031264960765839
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.9,loss,final,0.6031264960765839
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",1.0,acc,best,0.6965
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",1.0,acc,final,0.6965
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",1.0,loss,best,0.6067399680614471
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",1.0,loss,final,0.6067399680614471
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",avg_domain,acc,best,0.6824545454545454
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",worst_domain,acc,best,0.6684
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",best_domain,acc,best,0.7015
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",avg_domain,acc,final,0.6824545454545454
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",worst_domain,acc,final,0.6684
+inftask,1,e3_imbalance_small,imbalance,0377e3039303ff4a0b6e9c64a360782a,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",best_domain,acc,final,0.7015
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.0,acc,best,0.125
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.0,acc,final,0.4765
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.0,loss,best,0.9796282052993774
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.0,loss,final,1.5397688150405884
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.1,acc,best,0.2087
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.1,acc,final,0.515
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.1,loss,best,0.9209021031856537
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.1,loss,final,1.4164962768554688
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.2,acc,best,0.2971
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.2,acc,final,0.5425
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.2,loss,best,0.8626279234886169
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.2,loss,final,1.3146954774856567
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.3,acc,best,0.3729
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.3,acc,final,0.5665
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.3,loss,best,0.8087891340255737
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.3,loss,final,1.2507149577140808
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.4,acc,best,0.4561
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.4,acc,final,0.6042
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.4,loss,best,0.7509015500545502
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.4,loss,final,1.1340722441673279
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.5,acc,best,0.5401
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.5,acc,final,0.6354
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.5,loss,best,0.6953187882900238
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.5,loss,final,1.0295698642730713
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.6,acc,best,0.6227
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.6,acc,final,0.6711
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.6,loss,best,0.6395296156406403
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.6,loss,final,0.9150782525539398
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.7,acc,best,0.7082
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.7,acc,final,0.6976
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.7,loss,best,0.5775369703769684
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.7,loss,final,0.8111609518527985
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.8,acc,best,0.7946
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.8,acc,final,0.7344
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.8,loss,best,0.5218007266521454
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.8,loss,final,0.7160524725914001
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.9,acc,best,0.8797
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.9,acc,final,0.7672
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.9,loss,best,0.46172547340393066
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",0.9,loss,final,0.5983774065971375
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",1.0,acc,best,0.9555
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",1.0,acc,final,0.7887
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",1.0,loss,best,0.41111768782138824
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",1.0,loss,final,0.5226774513721466
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",avg_domain,acc,best,0.5418727272727273
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",worst_domain,acc,best,0.125
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",best_domain,acc,best,0.9555
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",avg_domain,acc,final,0.6362818181818182
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",worst_domain,acc,final,0.4765
+erm,1,e3_imbalance_small,imbalance,f6ac59cf711f6f49696c87a9137251bc,4,,last_domain_heavy_mild,"[0.01, 0.12, 0.5, 0.99]","[2000, 2000, 2000, 8000]",best_domain,acc,final,0.7887

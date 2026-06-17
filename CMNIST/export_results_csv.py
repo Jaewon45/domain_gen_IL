@@ -13,6 +13,90 @@ from collect_results import load_records
 
 
 ENV_METRIC_RE = re.compile(r"^(?P<env>.+)_(?P<metric>acc|loss)_(?P<ms_type>best|final)$")
+EXP_E_TAG_RE = re.compile(r"(?:^|[_-])e(?P<idx>[0-4])(?:$|[_-])", re.IGNORECASE)
+
+
+PHASE_TO_E_TAG = {
+    "reproduction": "E0",
+    "domain_count": "E1",
+    "sample_size": "E2",
+    "imbalance": "E3",
+    "lambda_eval": "E4",
+}
+
+
+def infer_e_tags(df: pd.DataFrame) -> List[str]:
+    tags = set()
+
+    if "phase" in df.columns:
+        for phase in df["phase"].dropna().astype(str).unique().tolist():
+            mapped = PHASE_TO_E_TAG.get(phase.lower())
+            if mapped is not None:
+                tags.add(mapped)
+
+    if "exp_name" in df.columns:
+        for exp_name in df["exp_name"].dropna().astype(str).unique().tolist():
+            for match in EXP_E_TAG_RE.finditer(exp_name):
+                tags.add(f"E{match.group('idx')}")
+
+            lowered = exp_name.lower()
+            if "phase1" in lowered:
+                tags.add("E1")
+            if "phase2" in lowered:
+                tags.add("E2")
+            if "phase3" in lowered:
+                tags.add("E3")
+            if "phase4" in lowered or "lambda" in lowered:
+                tags.add("E4")
+
+    return sorted(tags, key=lambda tag: int(tag[1:]))
+
+
+def infer_seed_tag(df: pd.DataFrame) -> str:
+    if "seed" not in df.columns:
+        return ""
+
+    seeds = []
+    for seed in df["seed"].dropna().tolist():
+        try:
+            seeds.append(int(seed))
+        except (TypeError, ValueError):
+            continue
+
+    if not seeds:
+        return ""
+
+    unique_sorted = sorted(set(seeds))
+    return f"seed_{''.join(str(seed) for seed in unique_sorted)}"
+
+
+def infer_e_compact_tag(df: pd.DataFrame) -> str:
+    e_tags = infer_e_tags(df)
+    if not e_tags:
+        return ""
+    return f"E_{''.join(tag[1:] for tag in e_tags)}"
+
+
+def with_standardized_prefix(prefix: str, df: pd.DataFrame) -> str:
+    # Strip trailing legacy tags so we can append canonical tags once.
+    cleaned = prefix
+    cleaned = re.sub(r"(?:_E\d+)+$", "", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"_E_\d+$", "", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"(?:_seed\d+)+$", "", cleaned, flags=re.IGNORECASE)
+    cleaned = re.sub(r"_seed_\d+$", "", cleaned, flags=re.IGNORECASE)
+
+    suffix_parts = []
+    seed_tag = infer_seed_tag(df)
+    if seed_tag:
+        suffix_parts.append(seed_tag)
+
+    e_tag = infer_e_compact_tag(df)
+    if e_tag:
+        suffix_parts.append(e_tag)
+
+    if not suffix_parts:
+        return cleaned
+    return f"{cleaned}_{'_'.join(suffix_parts)}"
 
 
 def flatten_args_column(df: pd.DataFrame) -> pd.DataFrame:
@@ -141,20 +225,21 @@ def export_results(input_dir: str, output_dir: str, prefix: str) -> Tuple[str, L
     flattened_df = flatten_args_column(df.copy())
     long_df = build_env_metric_long(df)
     summary_df = build_summary(df)
+    tagged_prefix = with_standardized_prefix(prefix, df)
 
     written_paths: List[str] = []
 
-    run_level_path = os.path.join(output_dir, f"{prefix}_run_level.csv")
+    run_level_path = os.path.join(output_dir, f"{tagged_prefix}_run_level.csv")
     flattened_df.to_csv(run_level_path, index=False)
     written_paths.append(run_level_path)
 
     if not long_df.empty:
-        long_path = os.path.join(output_dir, f"{prefix}_env_metric_long.csv")
+        long_path = os.path.join(output_dir, f"{tagged_prefix}_env_metric_long.csv")
         long_df.to_csv(long_path, index=False)
         written_paths.append(long_path)
 
     if not summary_df.empty:
-        summary_path = os.path.join(output_dir, f"{prefix}_summary.csv")
+        summary_path = os.path.join(output_dir, f"{tagged_prefix}_summary.csv")
         summary_df.to_csv(summary_path, index=False)
         written_paths.append(summary_path)
 
@@ -171,7 +256,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--output_dir",
-        default="../results",
+        default="../results/export",
         help="Directory where reportable CSV files are written.",
     )
     parser.add_argument(
