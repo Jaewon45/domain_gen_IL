@@ -40,7 +40,7 @@ parser.add_argument('--groupdro_eta', type=float, default=1.)               # gr
 # General hparams
 parser.add_argument('--steps', type=int, default=600)
 parser.add_argument('--batch_size', type=int, default=25000)
-parser.add_argument('--loss_fn', type=str, default='nll', choices=["nll, cross_ent"])
+parser.add_argument('--loss_fn', type=str, default='nll', choices=["nll", "cross_ent"])
 parser.add_argument('--lr', type=float, default=1e-4)
 parser.add_argument('--lr_factor_reduction', type=float, default=1)
 parser.add_argument('--lr_cos_sched', action='store_true')
