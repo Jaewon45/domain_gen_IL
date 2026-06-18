@@ -235,7 +235,7 @@ Completed:
 
 Interpreter path:
 
-- `C:\Users\320257223\PycharmProjects\domain_gen_IL\dgil_env\Scripts\python.exe`
+- `C:\Users\<USER_ID>\PycharmProjects\domain_gen_IL\dgil_env\Scripts\python.exe`
 
 ### 2. GPU Feasibility Check
 
@@ -299,8 +299,8 @@ Validation command:
 ```bash
 cd CMNIST
 ..\dgil_env\Scripts\python.exe job_scripts\gen_exps.py \
-  --data_dir c:/Users/320257223/PycharmProjects/domain_gen_IL/data \
-  --output_dir c:/Users/320257223/PycharmProjects/domain_gen_IL/cmnist_exp \
+  --data_dir c:/Users/<USER_ID>/PycharmProjects/domain_gen_IL/data \
+  --output_dir c:/Users/<USER_ID>/PycharmProjects/domain_gen_IL/cmnist_exp \
   --exp_name domain_stress
 ```
 

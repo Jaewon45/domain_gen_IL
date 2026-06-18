@@ -16,7 +16,7 @@ fi
 cd "${CMNIST_DIR}"
 
 for seed in 0 1 2; do
-  out_dir="../cmnist_exp_small_seed${seed}"
+  out_dir="../results/cmnist_exp_small_seed${seed}"
   echo "============================================================"
   echo "Running reduced sweep for seed=${seed}"
   echo "Output directory: ${out_dir}"
