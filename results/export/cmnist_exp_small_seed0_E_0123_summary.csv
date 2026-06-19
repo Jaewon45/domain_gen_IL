@@ -1,4 +1,0 @@
-phase,algorithm,exp_name,n_train_domains,sample_size_per_domain,imbalance_type,worst_domain_acc_best_mean,worst_domain_acc_best_std,worst_domain_acc_best_count,avg_domain_acc_best_mean,avg_domain_acc_best_std,avg_domain_acc_best_count,best_domain_acc_best_mean,best_domain_acc_best_std,best_domain_acc_best_count,worst_domain_acc_final_mean,worst_domain_acc_final_std,worst_domain_acc_final_count,avg_domain_acc_final_mean,avg_domain_acc_final_std,avg_domain_acc_final_count,best_domain_acc_final_mean,best_domain_acc_final_std,best_domain_acc_final_count
-sample_size,erm,e2_sample_size_small,4,2000.0,balanced,0.5824,,1,0.678190909090909,,1,0.7643,,1,0.5517,,1,0.6428181818181818,,1,0.725,,1
-sample_size,groupdro,e2_sample_size_small,4,2000.0,balanced,0.5977,,1,0.6511818181818181,,1,0.7063,,1,0.5807,,1,0.6446000000000001,,1,0.711,,1
-sample_size,iro,e2_sample_size_small,4,2000.0,balanced,0.668,,1,0.6826090909090909,,1,0.6968,,1,0.6653,,1,0.6829181818181819,,1,0.6986,,1
