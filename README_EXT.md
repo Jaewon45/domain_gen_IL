@@ -12,17 +12,18 @@ Write experiment folders under `results/` (not directly under repository root).
 Recommended roots:
 - Full sweep root: `results/cmnist_exp`
 - Reduced sweep root: `results/cmnist_exp_small`
-- Reduced multi-seed roots: `results/cmnist_exp_small_seed0`, `results/cmnist_exp_small_seed1`, `results/cmnist_exp_small_seed2`
+- Reduced multi-seed roots: `results/cmnist_exp_small_seed0`, `results/cmnist_exp_small_seed1`, `results/cmnist_exp_small_seed2`, `results/cmnist_exp_small_seed3`, `results/cmnist_exp_small_seed4`
 - Export root: `results/export`
 
 ## Commands
 
-### Full Sweep
+### Full Sweep (Generate + Run)
 
 1. Generate full sweep command file (`domain_stress.txt`):
-```bash
-cd CMNIST
-..\dgil_env\Scripts\python.exe job_scripts\gen_exps.py --exp_name domain_stress --data_dir c:/Users/<USER_ID>/PycharmProjects/domain_gen_IL/data --output_dir c:/Users/<USER_ID>/PycharmProjects/domain_gen_IL/results/cmnist_exp
+```cmd
+set REPO_ROOT=%USERPROFILE%\PycharmProjects\domain_gen_IL
+cd /d %REPO_ROOT%\CMNIST
+..\dgil_env\Scripts\python.exe job_scripts\gen_exps.py --exp_name domain_stress --data_dir %REPO_ROOT%\data --output_dir %REPO_ROOT%\results\cmnist_exp
 ```
 
 2. Run full sweep from generated command file (CMD, logs to `domain_stress_run.log`):
@@ -50,12 +51,38 @@ cd CMNIST
 ..\dgil_env\Scripts\python.exe evaluate_lambda_grid.py ../results/cmnist_exp/ckpts --output_dir ../results/cmnist_exp/lambda_results --lambda_grid 0.0:1.0:0.1
 ```
 
-### Reduced Multi-Seed Sweep (pipeline validation)
+### Per-Seed Reduced Main Run (Regenerate + Run)
 
-1. Run reduced multi-seed sweep (script already writes under `results/`):
-```bash
-cd CMNIST/job_scripts
-bash run_domain_stress_small_seeds.sh
+Use this when `domain_stress_main_seed*.txt` files were deleted or you want to refresh them.
+
+1. Regenerate full master command file first:
+```cmd
+set REPO_ROOT=%USERPROFILE%\PycharmProjects\domain_gen_IL
+cd /d %REPO_ROOT%\CMNIST
+..\dgil_env\Scripts\python.exe job_scripts\gen_exps.py --exp_name domain_stress --data_dir %REPO_ROOT%\data --output_dir %REPO_ROOT%\results\cmnist_exp
+```
+
+2. Regenerate per-seed command files (`seed0` through `seed4`):
+```cmd
+set REPO_ROOT=%USERPROFILE%\PycharmProjects\domain_gen_IL
+cd /d %REPO_ROOT%\CMNIST\job_scripts
+..\..\dgil_env\Scripts\python.exe gen_reduced_seed_files.py --source domain_stress.txt --seeds 0,1,2,3,4 --heavy_size 10000 --output_prefix domain_stress_main_seed
+```
+
+3. Run one seed file at a time (example: `seed0`):
+```cmd
+set REPO_ROOT=%USERPROFILE%\PycharmProjects\domain_gen_IL
+cd /d %REPO_ROOT%\CMNIST
+for /f "usebackq delims=" %i in ("%REPO_ROOT%\CMNIST\job_scripts\domain_stress_main_seed0.txt") do @echo Running: %i & cmd /c "%i" >> "%REPO_ROOT%\domain_stress_main_seed0.log" 2>&1
+```
+
+4. Repeat step 3 for seed1-seed4 by changing file/log suffix.
+
+Optional: CMD loop to run all seed files sequentially:
+```cmd
+set REPO_ROOT=%USERPROFILE%\PycharmProjects\domain_gen_IL
+cd /d %REPO_ROOT%\CMNIST
+for %s in (0 1 2 3 4) do @for /f "usebackq delims=" %i in ("%REPO_ROOT%\CMNIST\job_scripts\domain_stress_main_seed%s.txt") do @echo [seed%s] Running: %i & cmd /c "%i" >> "%REPO_ROOT%\domain_stress_main_seed%s.log" 2>&1
 ```
 
 ## Current Blockers (Tracking)
@@ -97,62 +124,74 @@ This scope is designed to keep the study publication/report oriented while reduc
 
 - Keep all 5 algorithms: ERM, IRM, GroupDRO, IRO, INF-TASK
 - Reduce seeds from 10 to 5: use seeds 0-4
-- Keep E1 domain-count conditions: all 4
+- Keep E1 domain-count conditions: all 3 (`2`, `4`, `8`)
 - Keep E2 sample-size conditions: all 3
 - Reduce E3 imbalance conditions from 5 to 3:
 	- balanced: `2000,2000,2000,2000`
-	- last-domain-heavy-strong: `2000,2000,2000,10000`
-	- first-domain-heavy-strong: `10000,2000,2000,2000`
+	- mild-imbalance: `2000,2000,2000,4000`
+	- strong-imbalance: `2000,2000,2000,10000`
 
 ### Staged Seed Runs (Recommended)
 
-Run seeds in two batches so you can validate intermediate outputs before committing the full reduced scope.
+Run seeds as separate files so you can execute `n=3` first and then add `n=2` without rerunning anything.
 
-- Batch A: seeds 0,1,2
-- Batch B: seeds 3,4
+Generated per-seed command files (under `CMNIST/job_scripts/`):
 
-Prepared command files (generated under `CMNIST/job_scripts/`):
+- `domain_stress_main_seed0.txt` (45 jobs)
+- `domain_stress_main_seed1.txt` (45 jobs)
+- `domain_stress_main_seed2.txt` (45 jobs)
+- `domain_stress_main_seed3.txt` (45 jobs)
+- `domain_stress_main_seed4.txt` (45 jobs)
 
-- `domain_stress_main_seed012.txt` (150 jobs)
-- `domain_stress_main_seed34.txt` (100 jobs)
+Generator command:
 
-CMD run commands:
+```cmd
+cd /d %USERPROFILE%\PycharmProjects\domain_gen_IL\CMNIST\job_scripts
+..\..\dgil_env\Scripts\python.exe gen_reduced_seed_files.py --source domain_stress.txt --seeds 0,1,2,3,4 --heavy_size 10000 --output_prefix domain_stress_main_seed
+```
+
+Run one seed file at a time (example: seed 0):
 
 ```cmd
 set REPO_ROOT=%USERPROFILE%\PycharmProjects\domain_gen_IL
 cd /d %REPO_ROOT%\CMNIST
-
-REM Batch A: seeds 0,1,2
-for /f "usebackq delims=" %i in ("%REPO_ROOT%\CMNIST\job_scripts\domain_stress_main_seed012.txt") do @echo Running: %i & cmd /c "%i" >> "%REPO_ROOT%\domain_stress_main_seed012.log" 2>&1
-
-REM Batch B: seeds 3,4
-for /f "usebackq delims=" %i in ("%REPO_ROOT%\CMNIST\job_scripts\domain_stress_main_seed34.txt") do @echo Running: %i & cmd /c "%i" >> "%REPO_ROOT%\domain_stress_main_seed34.log" 2>&1
+for /f "usebackq delims=" %i in ("%REPO_ROOT%\CMNIST\job_scripts\domain_stress_main_seed0.txt") do @echo Running: %i & cmd /c "%i" >> "%REPO_ROOT%\domain_stress_main_seed0.log" 2>&1
 ```
+
+Repeat for `seed1` through `seed4` by changing the filename/log suffix.
 
 ### Scope Comparison
 
 - Current full scope:
-	- jobs: 600
-	- total steps: 408000
+	- jobs: 450
+	- total steps: 306000
 	- previously projected remaining runtime: about 26 days (throughput-based)
 
 - Suggested reduced main scope:
-	- jobs: 250
-	- total steps: 170000
-	- relative compute: about 41.7% of full scope
+	- jobs: 225
+	- total steps: 153000
+	- relative compute: about 50.0% of full scope
 
 ### Estimated Runtime With Suggested Scope
 
-Using the same observed throughput baseline used for the full-sweep estimate, expected wall-clock runtime is:
+**Updated from clean seed 1 run (2026-06-19):** Seed 1 completed 45/45 jobs with 0 tracebacks in 3h56m54s, yielding ~5.26 min/job average. This supersedes prior throughput baseline.
 
-- about 10.8 to 11.0 days
+Expected wall-clock runtime for 225 jobs (5 seeds × 45 jobs):
+
+- About **19.7 to 23.7 hours** (about **0.82 to 0.99 days**)
 
 Practical planning range (to account for run-to-run variance and interruptions):
 
-- about 9 to 14 days
+- About **1 to 3 days**
 
-Per staged batch estimate (same baseline):
+Per-seed estimate:
 
-- Batch A (150 jobs): about 6.5 to 6.7 days
-- Batch B (100 jobs): about 4.3 to 4.5 days
+- Each seed file (45 jobs): about **3.9 to 4.7 hours**
+
+Staged plan estimate:
+
+- First pass (`n=3`, seeds 0/1/2): about **11.8 to 14.1 hours**
+- Additional pass (`n=2`, seeds 3/4): about **7.9 to 9.4 hours**
+
+**Note:** A previous estimate overstated total runtime due to an arithmetic error (using total log seconds instead of per-job seconds for scaling). The seed 1 measurement above is the current best baseline.
 

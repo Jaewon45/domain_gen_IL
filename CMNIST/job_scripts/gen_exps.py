@@ -103,7 +103,6 @@ def generate_domain_stress_commands(args, base_call, seeds):
     phase1_train_envs = {
         "2": "0.1,0.2",
         "4": "0.01,0.12,0.5,0.99",
-        "6": "0.01,0.12,0.0,0.5,0.7,0.99",
         "8": "0.01,0.12,0.0,0.0,0.14,0.5,0.7,0.99",
     }
     phase2_sample_budgets = {
@@ -113,10 +112,8 @@ def generate_domain_stress_commands(args, base_call, seeds):
     }
     phase3_imbalance_budgets = {
         "balanced": "2000,2000,2000,2000",
-        "last_domain_heavy_mild": "2000,2000,2000,8000",
-        "last_domain_heavy_strong": "2000,2000,2000,12000",
-        "first_domain_heavy_mild": "8000,2000,2000,2000",
-        "first_domain_heavy_strong": "12000,2000,2000,2000",
+        "mild_imbalance": "2000,2000,2000,4000",
+        "strong_imbalance": "2000,2000,2000,10000",
     }
 
     for seed in seeds:

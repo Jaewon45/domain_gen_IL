@@ -74,7 +74,6 @@ Current `domain_stress` coverage:
 - Phase 1 domain-count sweep:
   - 2 domains
   - 4 domains
-  - 6 domains
   - 8 domains
 - Phase 2 balanced sample-size sweep:
   - 2000 per domain
@@ -82,10 +81,8 @@ Current `domain_stress` coverage:
   - 8000 per domain
 - Phase 3 imbalance sweep on 4 domains:
   - balanced: `2000,2000,2000,2000`
-  - last-domain-heavy mild: `2000,2000,2000,8000`
-  - last-domain-heavy strong: `2000,2000,2000,12000`
-  - first-domain-heavy mild: `8000,2000,2000,2000`
-  - first-domain-heavy strong: `12000,2000,2000,2000`
+  - mild imbalance: `2000,2000,2000,4000`
+  - strong imbalance: `2000,2000,2000,10000`
 
 Algorithms currently included in the generated sweep:
 
@@ -109,7 +106,7 @@ What was added:
 
 What this enables:
 
-- Running the planned small subset before attempting the full 500-command sweep.
+- Running the planned small subset before attempting the full 450-command sweep.
 - Faster iteration on the analysis and reporting pipeline.
 
 ### 5. Stress-Aware Result Aggregation
@@ -307,7 +304,7 @@ cd CMNIST
 Result:
 
 - Generated `CMNIST/job_scripts/domain_stress.txt`
-- Total commands generated: `600`
+- Total commands generated: `450`
 
 This confirms that the batch entry point for the stress-test experiment is live.
 
@@ -449,35 +446,112 @@ Added:
 
 ### ⏳ Pending Work
 
-- **Full sweep (domain_stress.txt)**: 600 commands generated but not yet executed.
+- **Reduced-main staged sweep (domain_stress_main_seed0..4)**: in progress.
+  - `seed0`: completed after a restart/recovery pass (log includes old invalid 5-env errors plus successful rerun).
+  - `seed1`: completed successfully.
+  - `seed2`: completed successfully.
+  - `seed3`/`seed4`: pending.
+
+- **Full sweep (domain_stress.txt)**: 450 commands available as the current full-grid generator output (10 seeds × 45 jobs/seed).
   - Intended for final publication-grade results (all 5 algorithms, 10 seeds).
-  - Estimated runtime: 6–12 days on single GPU (100–200 hours wall-clock).
+  - Throughput-based runtime estimate is now much lower than earlier drafts; use recent per-seed log timing as the planning baseline.
 
 - **Lambda-grid evaluation (E4)**: Script exists but not yet run on saved checkpoints.
   - Will use `CMNIST/evaluate_lambda_grid.py` on reduced-sweep `iro` and `inftask` checkpoints.
   - Output needed for E4 plotting.
 
+## Experiment Budget & Scope
+
+### Jobs Per Seed Breakdown
+
+The full experiment sweep (`domain_stress.txt`) is organized as follows (time estimates use ~15-25 minutes per job from recent logs):
+
+| Experiment | Condition Variations | Algorithms | Jobs/Seed | Total Time/Seed | Notes |
+|---|---|---|---|---|---|
+| **E0** (Baseline/Reproduction) | 1 setting: default 4 domains, balanced | erm, irm, groupdro, iro, inftask | 5 | ~1.25-2.1 h | Baseline configuration; all algorithms tested |
+| **E1** (Domain Count) | 3 settings: n_train_domains = {2, 4, 8} | erm, irm, groupdro, iro, inftask | 15 | ~3.75-6.25 h | 3 conditions × 5 algorithms |
+| **E2** (Sample Size) | 3 settings: train_env_sizes = {2000,2000,2000,2000}, {4000,4000,4000,4000}, {8000,8000,8000,8000} | erm, irm, groupdro, iro, inftask | 15 | ~3.75-6.25 h | 4 domains, balanced sizes |
+| **E3** (Imbalance) | 3 settings: balanced {2000,2000,2000,2000}, mild {2000,2000,2000,4000}, strong {2000,2000,2000,10000} | erm, irm, groupdro, iro, inftask | 15 | ~3.75-6.25 h | 4 domains, severity-based imbalance |
+| **E4** (λ-Sensitivity)* | λ grid: 0.0, 0.1, ..., 1.0 (11 points), on selected checkpoints | iro, inftask | ~22-44* | ~5.5-18.3 h* | Separate λ-grid evaluation on E0-E3 checkpoints |
+| **TOTAL (E0-E3)** | 10 condition settings across E0-E3 | — | **45 per seed** | **~11.25-18.75 h** | Full sweep across all seeds |
+
+*E4 is evaluated separately post-hoc using saved checkpoints from E0–E3 runs; not included in the 450-command main sweep count.
+
+### Sweep Configurations
+
+#### Small Sweep (`domain_stress_small.txt`)
+- **Scope**: E0–E3 baseline validation
+- **Seeds**: 1 (seed 0 only)
+- **Algorithms**: 4 (erm, groupdro, iro, inftask; excludes irm)
+- **Total jobs**: 13
+- **Purpose**: Fast iteration, smoke testing, result pipeline validation
+- **Status**: ✅ Complete
+
+#### Reduced-Main Staged Sweep (`domain_stress_main_seed0..4.txt`)
+- **Scope**: E0–E3 with seed staging
+- **Seeds**: 5 (seeds 0–4, separate command files)
+- **Algorithms**: 5 (erm, irm, groupdro, iro, inftask)
+- **Jobs per seed**: 45
+- **Total jobs**: 225 (5 seeds × 45 jobs/seed)
+- **Purpose**: Intermediate robustness validation before full sweep
+- **Status**: 🟡 Partially complete (seeds 0–2 done, seeds 3–4 pending)
+
+#### Full Sweep (`domain_stress.txt`)
+- **Scope**: E0–E3 complete coverage
+- **Seeds**: 10 (seeds 0–9)
+- **Algorithms**: 5 (erm, irm, groupdro, iro, inftask)
+- **Jobs per seed**: 45
+- **Total jobs**: 450 (10 seeds × 45 jobs/seed)
+- **Purpose**: Publication-grade final results
+- **Status**: ⏳ Pending
+
+### Budget Summary
+
+| Milestone | Jobs | Seeds | Status |
+|---|---|---|---|
+| Smoke tests | ~26 | 1 (s0) | ✅ Complete |
+| Small sweep | 13 | 1 (s0) | ✅ Complete |
+| Reduced-main (staged) | 225 | 5 (s0–s4) | 🟡 135/225 (s0–s2) |
+| Full sweep | 450 | 10 (s0–s9) | ⏳ Pending |
+| **Grand total** | **~714** | **~13–26 total** | — |
+
+### Runtime Estimates
+
+Based on recent execution logs from seeds 1–2:
+
+- **Per-job average**: ~15–25 minutes (GPU-enabled, 1 seed)
+- **Per-seed (45 jobs)**: ~11–19 hours
+- **Full sweep (450 jobs, 10 seeds)**: ~110–190 hours (~5–8 days at continuous throughput)
+
+**Recommended strategy**:
+1. Complete reduced-main sweep (seeds 3–4) before staging full sweep.
+2. Use per-seed log timing to estimate total wallclock time accounting for system load.
+3. Consider distributed execution if multiple GPUs available.
+
 ## Current Limitations
 
 ### Sweep Scope
 
-The `domain_stress` generator currently emits **600 commands** (10 seeds × 60 condition+algorithm combos):
+The `domain_stress` generator currently emits **450 commands** (10 seeds × 45 condition+algorithm combos):
 
 - **Small sweep** (`domain_stress_small.txt`): 13 commands, seed 0 only. ✅ Complete.
   - Covers E0–E3 with representative subsets (erm, groupdro, iro, inftask; no irm).
   - Test environments: explicit `0.1,0.5,0.9`.
 
-- **Full sweep** (`domain_stress.txt`): 600 commands, seeds 0–9.
+- **Full sweep** (`domain_stress.txt`): 450 commands, seeds 0–9.
   - Covers E0–E3 with all algorithms (erm, irm, groupdro, iro, inftask).
   - Test environments: determined by train-env defaults.
+  - E1 domain-count conditions: 2, 4, 8.
+  - E2 sample-size conditions: 2000, 4000, 8000 per domain.
+  - E3 imbalance conditions: balanced, mild_imbalance, strong_imbalance.
 
 ### Stress-Grid Interpretation
 
 The current generated `domain_stress` sweep is functional but has caveats:
 
 - The generated Phase 1 train-environment sets use the repo's predefined sets (e.g., `[0.01, 0.12, 0.5, 0.99]` for 4 domains), not the cleaner comparison sets proposed in `EXPERIMENT_PLANS.md`.
-- The generated Phase 3 imbalance sweep now supports balanced, last-domain-heavy, and first-domain-heavy schedules.
-- Final write-ups should explicitly document which training environment each heavier schedule is intended to represent.
+- The generated Phase 3 sweep is currently severity-based (balanced/mild/strong) and does not include mirrored first-heavy/last-heavy directional variants.
+- If majority-vs-minority directional claims are needed, add mirrored schedules explicitly before final reporting.
 
 ### Lambda Evaluation
 
@@ -539,7 +613,8 @@ When ready, execute the full `domain_stress.txt` sweep across all 10 seeds and a
 
 Considerations:
 
-- Estimated runtime: 6–12 days on single GPU.
+- Current generated full sweep size: 450 jobs.
+- Runtime should be estimated from recent per-seed logs (seed1/seed2), rather than the older 6-12 day placeholder.
 - Can be run in batch mode or distributed across multiple machines.
 - Use the same CSV export + plotting pipeline for final aggregation.
 

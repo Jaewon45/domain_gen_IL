@@ -102,11 +102,22 @@ def _infer_phase(exp_name, train_env_sizes):
         return "imbalance"
     if any(token in exp_name for token in ["e4", "lambda"]):
         return "lambda_eval"
+    # Fallback for generic experiment names (e.g., "domain_stress"):
+    # - no explicit sizes -> E1 domain_count
+    # - uniform sizes: distinguish E2 (sample_size) vs E3 balanced (imbalance)
+    #   E2 uses 4000 or 8000 (in addition to 2000)
+    #   E3 balanced uses only 2000
+    # - non-uniform sizes -> E3 imbalance (mild/strong)
     if train_env_sizes is None:
         return "domain_count"
     if len(set(train_env_sizes)) == 1:
-        return "size_control_unspecified"
-    return "imbalance_unspecified"
+        # Uniform sizes: E2 if value is 4000+ (indicates sample_size sweep), 
+        # else E3 (balanced variant of imbalance)
+        size_val = train_env_sizes[0]
+        if size_val >= 4000:
+            return "sample_size"
+        return "imbalance"
+    return "imbalance"
 
 
 def _infer_sample_size_per_domain(train_env_sizes):
@@ -130,20 +141,14 @@ def _infer_imbalance_type(train_env_sizes):
         return "custom_imbalance"
 
     ratio = max_size / min_size
-    strength = None
-    if math.isclose(ratio, 4.0):
-        strength = "mild"
-    elif math.isclose(ratio, 6.0):
-        strength = "strong"
-
-    max_index = train_env_sizes.index(max_size)
-    if strength is None:
-        return "custom_imbalance"
-    if max_index == 0:
-        return f"first_domain_heavy_{strength}"
-    if max_index == len(train_env_sizes) - 1:
-        return f"last_domain_heavy_{strength}"
-    return f"interior_domain_heavy_{strength}"
+    # Current stress grid is severity-based and last-domain heavy:
+    # mild_imbalance: 2x (e.g., 2000,2000,2000,4000)
+    # strong_imbalance: 5x (e.g., 2000,2000,2000,10000)
+    if math.isclose(ratio, 2.0):
+        return "mild_imbalance"
+    if math.isclose(ratio, 5.0):
+        return "strong_imbalance"
+    return "custom_imbalance"
 
 
 def _derive_accuracy_summaries(record):
