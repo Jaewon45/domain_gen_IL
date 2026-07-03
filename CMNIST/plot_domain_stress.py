@@ -7,6 +7,77 @@ import pandas as pd
 from collect_results import load_records
 
 
+ALGORITHM_DISPLAY_NAMES = {
+    "erm": "ERM",
+    "irm": "IRM",
+    "groupdro": "GroupDRO",
+    "iro": "IRO",
+    "inftask": "InfTask",
+    "vrex": "VREx",
+    "iga": "IGA",
+    "sd": "SD",
+    "eqrm": "EQRM",
+}
+
+
+BRIGHT_BAR_COLORS = [
+    "#4C78A8",
+    "#F58518",
+    "#54A24B",
+    "#E45756",
+    "#72B7B2",
+    "#EECA3B",
+    "#B279A2",
+    "#FF9DA6",
+]
+
+
+def apply_plot_style():
+    # Use significantly larger defaults so exported figures are report-ready.
+    plt.rcParams.update({
+        "font.size": 22,
+        "axes.titlesize": 24,
+        "axes.labelsize": 22,
+        "xtick.labelsize": 18,
+        "ytick.labelsize": 18,
+        "legend.fontsize": 18,
+        "figure.titlesize": 24,
+    })
+
+
+def format_algorithm_name(name):
+    key = str(name).strip().lower()
+    return ALGORITHM_DISPLAY_NAMES.get(key, reportable_text(name))
+
+
+def reportable_text(value):
+    text = str(value).replace("_", " ").strip()
+    token_map = {
+        "acc": "accuracy",
+        "avg": "average",
+        "lambda": "Lambda",
+    }
+    words = []
+    for token in text.split():
+        lower = token.lower()
+        if lower in token_map:
+            words.append(token_map[lower])
+            continue
+        if lower in ALGORITHM_DISPLAY_NAMES:
+            words.append(ALGORITHM_DISPLAY_NAMES[lower])
+            continue
+        words.append(token.capitalize())
+    return " ".join(words)
+
+
+def format_tick_value(value):
+    if isinstance(value, str):
+        return reportable_text(value)
+    if isinstance(value, float) and value.is_integer():
+        return str(int(value))
+    return str(value)
+
+
 def build_frame(results_dir, algorithms=None):
     records = load_records(results_dir)
     frame = pd.DataFrame.from_records(records)
@@ -47,7 +118,7 @@ def plot_e0_accuracy(frame, output_dir):
         row = algorithm_frame.iloc[0]
         xs = [float(column.split("_")[0]) for column in acc_columns]
         ys = [row[column] for column in acc_columns]
-        plt.plot(xs, ys, marker="o", label=algorithm)
+        plt.plot(xs, ys, marker="o", label=format_algorithm_name(algorithm))
 
     plt.xlabel("Test environment e")
     plt.ylabel("Accuracy")
@@ -76,10 +147,20 @@ def plot_grouped_metric(frame, phase_name, x_column, y_column, output_name, titl
     if pivot.empty:
         return None
 
-    ax = pivot.plot(kind="bar", figsize=(9, 5))
-    ax.set_title(title)
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(y_column)
+    pivot.columns = [format_algorithm_name(column) for column in pivot.columns]
+
+    bar_colors = BRIGHT_BAR_COLORS[:len(pivot.columns)]
+    ax = pivot.plot(kind="bar", figsize=(11, 6), color=bar_colors)
+    ax.set_title(reportable_text(title))
+    ax.set_xlabel(reportable_text(xlabel))
+    ax.set_ylabel(reportable_text(y_column))
+    ax.set_xticklabels([format_tick_value(value) for value in pivot.index], rotation=0, ha="center")
+    if phase_name == "domain_count":
+        ax.legend(loc="lower right")
+    elif phase_name == "imbalance":
+        ax.legend(loc="lower left")
+    else:
+        ax.legend(loc="best")
     plt.tight_layout()
     output_path = os.path.join(output_dir, output_name)
     plt.savefig(output_path, dpi=200)
@@ -96,7 +177,12 @@ def plot_lambda_risk(lambda_results_dir, output_dir):
     plt.figure(figsize=(8, 5))
     for algorithm, algorithm_frame in frame.groupby("algorithm"):
         grouped = algorithm_frame.groupby("lambda_eval")["aggregated_risk"].mean().reset_index().sort_values("lambda_eval")
-        plt.plot(grouped["lambda_eval"], grouped["aggregated_risk"], marker="o", label=algorithm)
+        plt.plot(
+            grouped["lambda_eval"],
+            grouped["aggregated_risk"],
+            marker="o",
+            label=format_algorithm_name(algorithm),
+        )
 
     plt.xlabel("Lambda")
     plt.ylabel("Aggregated risk")
@@ -118,6 +204,7 @@ if __name__ == "__main__":
     parser.add_argument("--metric", default="worst_domain_acc_best")
     args = parser.parse_args()
 
+    apply_plot_style()
     ensure_output_dir(args.output_dir)
     frame = build_frame(args.results_dir, args.algorithms)
 

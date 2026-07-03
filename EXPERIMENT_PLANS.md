@@ -890,3 +890,65 @@ If time is short, final seminar can still work with:
 
 E2 can be shortened or moved to appendix if runtime is tight.
 
+
+## UPDATE — E3b/E2 Tail-Support / Missing-Support Stress Test (Main Presentation)
+
+This update replaces the seminar-facing E2 sample-size emphasis with a direct support-coverage test aligned with the theoretical failure set
+
+$$
+U_N=\{a\in\mathcal A:\pi_a^\star>0,\ n_a=0\}.
+$$
+
+The old E2 sample-size code remains available as backup, but the main presentation should use this tail-support experiment.
+
+### Experiment Name
+
+- Preferred: `E3b_tail_support`
+- Alternate numbering: `E2_tail_support`
+
+### Core Question
+
+Does IRO remain protective on tail-domain performance when tail groups are visible, near-missing, or completely missing in source-domain evidence?
+
+### Conditions (Fixed Source Budget Where Possible)
+
+Use 4 source environments (head → tail ordering), fixed test environments, and these train counts:
+
+1. `balanced_visible`: `[2000, 2000, 2000, 2000]`
+2. `long_tail_visible`: `[5000, 2000, 800, 200]`
+3. `near_missing_tail`: `[5800, 1800, 350, 50]`
+4. `missing_tail`: `[6000, 1500, 500, 0]`
+
+### Implementation Notes
+
+- For `missing_tail`, zero-size source domains are dropped from training loaders while still kept in evaluation/test domains.
+- Log per-domain sampled counts and empirical prior
+   $$\widehat\pi_a^{(N)}=n_a/N.$$
+- Missing source domains must get empirical prior mass `0` and positive deployment prior mass under uniform evaluation prior.
+
+### Algorithms and Seeds
+
+- Algorithms: `ERM`, `GroupDRO`, `INF-TASK`, `IRM`, `IRO`
+- Use existing seed set; default practical start is `0,1,2` via configurable seed list.
+
+### Required Outputs
+
+Save under `results/E3b_tail_support/`:
+
+- `raw_results.csv`
+- `summary_by_condition.csv`
+- `slide_table.csv`
+- `tail_accuracy_by_condition.png`
+- `worst_accuracy_by_condition.png`
+- `head_tail_gap_by_condition.png`
+- `cvar_gap_by_condition.png`
+- `iro_lambda_tail_accuracy_by_condition.png`
+- `iro_lambda_cvar_by_condition.png`
+
+### Practical Run Flow
+
+1. Generate commands via tail-support generator (`gen_exps.py`, `exp_name` containing `tail_support`).
+2. Train E3b runs.
+3. Run lambda-grid checkpoint evaluation.
+4. Run tail-support analyzer to export slide-ready CSVs/plots.
+

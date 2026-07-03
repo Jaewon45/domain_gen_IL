@@ -17,6 +17,69 @@ Recommended roots:
 
 ## Commands
 
+### E3b/E2 Tail-Support Stress Test (Main Presentation Experiment)
+
+This experiment replaces the prior E2 sample-size stress test in the seminar narrative while keeping E2 code available.
+
+- Experiment name options:
+	- `e3b_tail_support` (preferred)
+	- `e2_tail_support` (alternate slide numbering)
+- Conditions (fixed source budget where possible):
+	- `balanced_visible`: `2000,2000,2000,2000`
+	- `long_tail_visible`: `5000,2000,800,200`
+	- `near_missing_tail`: `5800,1800,350,50`
+	- `missing_tail`: `6000,1500,500,0`
+
+Generate command files:
+
+```cmd
+set REPO_ROOT=%USERPROFILE%\PycharmProjects\domain_gen_IL
+cd /d %REPO_ROOT%\CMNIST
+..\dgil_env\Scripts\python.exe job_scripts\gen_exps.py --exp_name e3b_tail_support --data_dir %REPO_ROOT%\data --output_dir %REPO_ROOT%\results\E3b_tail_support --seed_list 0,1,2
+```
+
+Run generated jobs:
+
+```cmd
+set REPO_ROOT=%USERPROFILE%\PycharmProjects\domain_gen_IL
+cd /d %REPO_ROOT%\CMNIST
+for /f "usebackq delims=" %i in ("%REPO_ROOT%\CMNIST\job_scripts\e3b_tail_support.txt") do @echo Running: %i & cmd /c "%i" >> "%REPO_ROOT%\e3b_tail_support_run.log" 2>&1
+```
+
+Evaluate lambda grid from checkpoints (IRO/INF-TASK + baseline-compatible risk aggregation):
+
+```cmd
+set REPO_ROOT=%USERPROFILE%\PycharmProjects\domain_gen_IL
+cd /d %REPO_ROOT%\CMNIST
+..\dgil_env\Scripts\python.exe evaluate_lambda_grid.py %REPO_ROOT%\results\E3b_tail_support\ckpts --output_dir %REPO_ROOT%\results\E3b_tail_support\lambda_results --lambda_grid 0.0:1.0:0.1
+```
+
+Build required CSV outputs and plots:
+
+```cmd
+set REPO_ROOT=%USERPROFILE%\PycharmProjects\domain_gen_IL
+cd /d %REPO_ROOT%\CMNIST
+..\dgil_env\Scripts\python.exe analyze_tail_support.py %REPO_ROOT%\results\E3b_tail_support\results --lambda_results_dir %REPO_ROOT%\results\E3b_tail_support\lambda_results --output_dir %REPO_ROOT%\results\E3b_tail_support
+```
+
+Expected artifacts under `results/E3b_tail_support/`:
+
+- `raw_results.csv`
+- `summary_by_condition.csv`
+- `slide_table.csv`
+- `tail_accuracy_by_condition.png`
+- `worst_accuracy_by_condition.png`
+- `head_tail_gap_by_condition.png`
+- `cvar_gap_by_condition.png`
+- `iro_lambda_tail_accuracy_by_condition.png`
+- `iro_lambda_cvar_by_condition.png`
+
+Important behavior for `missing_tail`:
+
+- The missing source domain receives zero empirical prior mass.
+- Zero-count source domains are removed from training loaders (to avoid empty-loader failures).
+- The same domain remains in the fixed test/evaluation set and gets positive deployment prior mass.
+
 ### Full Sweep (Generate + Run)
 
 1. Generate full sweep command file (`domain_stress.txt`):

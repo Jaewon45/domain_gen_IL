@@ -161,6 +161,69 @@ def generate_domain_stress_commands(args, base_call, seeds):
 
     return commands
 
+
+def parse_seed_list(seed_list_arg):
+    if not seed_list_arg:
+        return list(range(10))
+    return [int(seed.strip()) for seed in seed_list_arg.split(",") if seed.strip()]
+
+
+def _head_tail_envs(train_env_values, train_env_sizes):
+    pairs = list(zip(train_env_values, train_env_sizes))
+    min_count = min(train_env_sizes)
+    max_count = max(train_env_sizes)
+    tail_candidates = [env for env, count in pairs if count == min_count]
+    head_candidates = [env for env, count in pairs if count == max_count]
+    tail_env = max(tail_candidates)
+    head_env = min(head_candidates)
+    return head_env, tail_env
+
+
+def generate_tail_support_commands(args, base_call, seeds):
+    commands = []
+    algorithms = [
+        ("erm", 600, "--erm_pretrain_iters 0"),
+        ("irm", 600, "--erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts"),
+        ("groupdro", 1000, "--erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts"),
+        ("iro", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+        ("inftask", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+    ]
+
+    source_envs = [0.1, 0.2, 0.5, 0.9]
+    source_envs_text = ",".join(str(env) for env in source_envs)
+    fixed_test_envs = "0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0"
+
+    conditions = {
+        "balanced_visible": [2000, 2000, 2000, 2000],
+        "long_tail_visible": [5000, 2000, 800, 200],
+        "near_missing_tail": [5800, 1800, 350, 50],
+        "missing_tail": [6000, 1500, 500, 0],
+    }
+
+    for seed in seeds:
+        for condition_name, train_env_sizes in conditions.items():
+            head_env, tail_env = _head_tail_envs(source_envs, train_env_sizes)
+            sizes_text = ",".join(str(size) for size in train_env_sizes)
+            for algorithm, steps, extra_args in algorithms:
+                commands.append(
+                    (
+                        f"{base_call} "
+                        f"--seed {seed} "
+                        f"--algorithm {algorithm} "
+                        f"--steps {steps} "
+                        f"--train_envs {source_envs_text} "
+                        f"--train_env_sizes {sizes_text} "
+                        f"--test_envs {fixed_test_envs} "
+                        f"--tail_support_condition {condition_name} "
+                        f"--tail_support_source_envs {source_envs_text} "
+                        f"--tail_support_tail_env {tail_env} "
+                        f"--tail_support_head_env {head_env} "
+                        f"{extra_args}"
+                    ).strip()
+                )
+
+    return commands
+
 if __name__ == "__main__":
     # Flags
     parser = argparse.ArgumentParser(description='Generate commands for CMNIST experiments.')
@@ -172,17 +235,25 @@ if __name__ == "__main__":
         help="Output directory root for experiment artifacts.",
     )
     parser.add_argument('--exp_name', type=str, default="reproduce")
+    parser.add_argument(
+        '--seed_list',
+        type=str,
+        default='',
+        help='Comma-separated seed list (default: 0-9).',
+    )
     args = parser.parse_args()
 
     # Base settings
     lr = 1e-4
     batch_size = 25000
     dropout_p = 0.2
-    seeds = list(range(10))
+    seeds = parse_seed_list(args.seed_list)
     base_call = build_base_call(args, lr, batch_size, dropout_p)
 
     if args.exp_name == "domain_stress":
         commands = generate_domain_stress_commands(args, base_call, seeds)
+    elif "tail_support" in args.exp_name:
+        commands = generate_tail_support_commands(args, base_call, seeds)
     else:
         commands = generate_reproduce_commands(args, base_call, seeds)
 

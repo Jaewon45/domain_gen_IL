@@ -90,6 +90,8 @@ def _normalize_env_sizes(args_dict):
 
 def _infer_phase(exp_name, train_env_sizes):
     exp_name = (exp_name or "").lower()
+    if any(token in exp_name for token in ["e3b", "tail_support", "e2_tail_support"]):
+        return "tail_support"
     if "smoke_domain_stress" in exp_name:
         return "validation_smoke"
     if any(token in exp_name for token in ["e0", "repro"]):
@@ -175,6 +177,7 @@ def enrich_record(record):
     record["sample_size_per_domain"] = _infer_sample_size_per_domain(train_env_sizes)
     record["imbalance_type"] = _infer_imbalance_type(train_env_sizes)
     record["phase"] = _infer_phase(exp_name, train_env_sizes)
+    record["tail_support_condition"] = record.get("tail_support_condition") or args_dict.get("tail_support_condition")
 
     _derive_accuracy_summaries(record)
     return record

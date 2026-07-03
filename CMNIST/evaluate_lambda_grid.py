@@ -100,6 +100,20 @@ def evaluate_checkpoint(checkpoint_path, lambda_grid, batch_size, n_workers, eva
     loss_fn, int_target = build_loss_and_target_mode(args_dict)
     train_envs = tuple(args_dict.get("train_env_ps", []))
     train_env_sizes = normalize_train_env_sizes(args_dict)
+    tail_source_envs = tuple(args_dict.get("tail_support_source_envs_parsed", train_envs))
+
+    tail_count_map = {str(env): 0 for env in tail_source_envs}
+    if train_env_sizes is not None:
+        for env, count in zip(train_envs, train_env_sizes):
+            tail_count_map[str(env)] = int(count)
+    empirical_prior_denom = sum(tail_count_map.values())
+    if empirical_prior_denom > 0:
+        tail_empirical_prior_map = {
+            env: float(count) / float(empirical_prior_denom)
+            for env, count in tail_count_map.items()
+        }
+    else:
+        tail_empirical_prior_map = {env: 0.0 for env in tail_count_map}
 
     reference_envs = get_cmnist_datasets(
         args_dict["data_dir"],
@@ -153,6 +167,12 @@ def evaluate_checkpoint(checkpoint_path, lambda_grid, batch_size, n_workers, eva
             "checkpoint_path": checkpoint_path,
             "checkpoint_type": checkpoint_type,
             "lambda_eval": float(lambda_value),
+            "tail_support_condition": args_dict.get("tail_support_condition"),
+            "tail_support_source_envs": [float(env) for env in tail_source_envs],
+            "tail_support_train_count_map": tail_count_map,
+            "tail_support_empirical_prior_map": tail_empirical_prior_map,
+            "tail_support_tail_env": args_dict.get("tail_support_tail_env"),
+            "tail_support_head_env": args_dict.get("tail_support_head_env"),
         }
 
         for env_name, loader in zip([str(env) for env in eval_envs], loaders):

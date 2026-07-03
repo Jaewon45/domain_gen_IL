@@ -1,0 +1,1158 @@
+Args:
+	algorithm: iro
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 0
+	steps: 600
+	tail_support_condition: balanced_visible
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 2000,2000,2000,2000
+	train_env_sizes_parsed: (2000, 2000, 2000, 2000)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Train environment sample counts: [2000, 2000, 2000, 2000]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5, 0.9]
+Train domain count map: {'0.1': 2000, '0.2': 2000, '0.5': 2000, '0.9': 2000}
+Empirical training prior map: {'0.1': 0.25, '0.2': 0.25, '0.5': 0.25, '0.9': 0.25}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: a7d16a4b25984d2e03ba846ee5da8564.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.5450000000  0.6747384667  0.6681000000  0.6451547146  0.6709000000  0.6432259679  0.6614000000  0.6472545862  0.6586000000  0.6465353370  0.6569000000  0.6491451263  0.6602000000  0.6477450728  0.6445000000  0.6527550817  0.6517000000  0.6493514776  0.6517000000  0.6501781940  0.6381000000  0.6567536592  0.0656208822  5625.0000000  0.1921603978  1.4838452339  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6534000000  0.6441722512  0.6781000000  0.6201592684  0.6869000000  0.6153332591  0.6731000000  0.6255079508  0.6712000000  0.6260198355  0.6678000000  0.6328989267  0.6693000000  0.6312497854  0.6561000000  0.6431054473  0.6595000000  0.6361883879  0.6603000000  0.6382620335  0.6462000000  0.6522645354  13.816159380  6250.0000000  0.1746248901  1.4838452339  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6799000000  0.6303640008  0.6826000000  0.6176751852  0.6899000000  0.6118593812  0.6788000000  0.6230204105  0.6774000000  0.6233158112  0.6783000000  0.6326957941  0.6765000000  0.6287478209  0.6618000000  0.6429983377  0.6690000000  0.6344742775  0.6691000000  0.6366666555  0.6545000000  0.6528060436  0.0596151118  6875.0000000  0.1648801416  1.4838452339  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6828000000  0.6280167103  0.6840000000  0.6171873808  0.6898000000  0.6114196181  0.6797000000  0.6230263710  0.6785000000  0.6237320304  0.6781000000  0.6337204576  0.6747000000  0.6298453808  0.6623000000  0.6448509097  0.6689000000  0.6363111138  0.6694000000  0.6389215589  0.6532000000  0.6555008888  0.0615640930  7500.0000000  0.1639256477  1.4838452339  600          
+[0.64, 0.64, 0.63, 0.63, 0.63, 0.63, 0.63, 0.63, 0.64, 0.64, 0.65] [0.66, 0.67, 0.67, 0.67, 0.67, 0.67, 0.67, 0.67, 0.67, 0.66, 0.66]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.683  0.677  0.670  0.684  0.678  0.677  0.677  0.668  0.664  0.659  0.657 
+[0.64, 0.64, 0.63, 0.63, 0.63, 0.63, 0.63, 0.63, 0.64, 0.64, 0.65] [0.66, 0.67, 0.67, 0.67, 0.67, 0.67, 0.67, 0.67, 0.67, 0.66, 0.66]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.683  0.677  0.670  0.684  0.678  0.677  0.677  0.668  0.664  0.659  0.657 
+Args:
+	algorithm: inftask
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 0
+	steps: 600
+	tail_support_condition: balanced_visible
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 2000,2000,2000,2000
+	train_env_sizes_parsed: (2000, 2000, 2000, 2000)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Train environment sample counts: [2000, 2000, 2000, 2000]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5, 0.9]
+Train domain count map: {'0.1': 2000, '0.2': 2000, '0.5': 2000, '0.9': 2000}
+Empirical training prior map: {'0.1': 0.25, '0.2': 0.25, '0.5': 0.25, '0.9': 0.25}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: a7d16a4b25984d2e03ba846ee5da8564.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.5559000000  0.6757796407  0.6665000000  0.6522259712  0.6687000000  0.6516891718  0.6566000000  0.6551297307  0.6525000000  0.6550071239  0.6526000000  0.6577150226  0.6525000000  0.6567259431  0.6354000000  0.6614352465  0.6412000000  0.6593971252  0.6407000000  0.6606549025  0.6232000000  0.6665025949  0.0509297493  5625.0000000  0.1164953560  0.6655321121  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6285000000  0.6537387371  0.6706000000  0.6274830699  0.6803000000  0.6232731342  0.6681000000  0.6313115358  0.6647000000  0.6312742829  0.6622000000  0.6359095573  0.6637000000  0.6346927285  0.6507000000  0.6440041065  0.6556000000  0.6379926801  0.6545000000  0.6394893527  0.6414000000  0.6504911184  0.0437025142  6250.0000000  0.1058511883  0.6655321121  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6643000000  0.6409599185  0.6725000000  0.6264808774  0.6832000000  0.6198492050  0.6708000000  0.6284362078  0.6709000000  0.6271564960  0.6692000000  0.6324090958  0.6714000000  0.6287485957  0.6588000000  0.6392890215  0.6658000000  0.6303263307  0.6670000000  0.6306474805  0.6540000000  0.6429377794  0.0399912245  6875.0000000  0.1007884815  0.6655321121  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6692000000  0.6382545829  0.6772000000  0.6227077246  0.6860000000  0.6167300344  0.6740000000  0.6261901259  0.6729000000  0.6256124377  0.6710000000  0.6319633126  0.6717000000  0.6287343502  0.6592000000  0.6402872801  0.6662000000  0.6319196820  0.6665000000  0.6329928637  0.6525000000  0.6464293599  0.0366376849  7500.0000000  0.1003163978  0.6655321121  600          
+[0.65, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.63, 0.63, 0.64, 0.64] [0.64, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66, 0.67, 0.67, 0.66, 0.65]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.665  0.663  0.653  0.679  0.672  0.672  0.671  0.667  0.666  0.663  0.654 
+[0.65, 0.65, 0.64, 0.64, 0.64, 0.64, 0.63, 0.63, 0.63, 0.63, 0.64] [0.64, 0.65, 0.66, 0.66, 0.66, 0.66, 0.66, 0.67, 0.67, 0.66, 0.66]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.659  0.656  0.648  0.675  0.669  0.670  0.670  0.667  0.666  0.663  0.656 
+Args:
+	algorithm: iro
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 0
+	steps: 600
+	tail_support_condition: long_tail_visible
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 5000,2000,800,200
+	train_env_sizes_parsed: (5000, 2000, 800, 200)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Train environment sample counts: [5000, 2000, 800, 200]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5, 0.9]
+Train domain count map: {'0.1': 5000, '0.2': 2000, '0.5': 800, '0.9': 200}
+Empirical training prior map: {'0.1': 0.625, '0.2': 0.25, '0.5': 0.1, '0.9': 0.025}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: 34681a205bf5ef14c3cc0f32baa84045.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6945000000  0.6522663832  0.7429000000  0.6196482182  0.7251000000  0.6269505620  0.6917000000  0.6380071640  0.6690000000  0.6472847462  0.6393000000  0.6575887799  0.6158000000  0.6671293974  0.5843000000  0.6781179905  0.5638000000  0.6862436533  0.5421000000  0.6942625046  0.5039000000  0.7091937661  0.1353243770  5625.0000000  0.6746395230  1.5483479500  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7658000000  0.5903332829  0.7389000000  0.5549712181  0.7248000000  0.5692045093  0.6998000000  0.5958566666  0.6768000000  0.6173486114  0.6587000000  0.6381093264  0.6319000000  0.6598299742  0.6035000000  0.6855373979  0.5864000000  0.7025420666  0.5676000000  0.7194650769  0.5361000000  0.7530360818  0.1176836162  6250.0000000  0.5933180451  1.5483479500  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7829000000  0.5595551729  0.7469000000  0.5324707627  0.7303000000  0.5522145629  0.7031000000  0.5862420797  0.6820000000  0.6147772670  0.6600000000  0.6428053379  0.6341000000  0.6704789996  0.6043000000  0.7046836019  0.5855000000  0.7273232937  0.5638000000  0.7496961951  0.5331000000  0.7935959101  0.1067198879  6875.0000000  0.5471467376  1.5483479500  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7840000000  0.5542607307  0.7475000000  0.5293620825  0.7305000000  0.5500609279  0.7030000000  0.5853471756  0.6816000000  0.6151776314  0.6601000000  0.6444794536  0.6333000000  0.6732542515  0.6023000000  0.7090441585  0.5837000000  0.7326439023  0.5609000000  0.7560473680  0.5301000000  0.8015687466  0.0982925999  7500.0000000  0.5391035080  1.5483479500  600          
+[0.64, 0.65, 0.66, 0.67, 0.68, 0.7, 0.71, 0.73, 0.75, 0.77, 0.79] [0.64, 0.63, 0.62, 0.61, 0.6, 0.6, 0.59, 0.57, 0.56, 0.55, 0.54]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.784  0.752  0.722  0.699  0.681  0.659  0.640  0.608  0.586  0.561  0.540 
+[0.65, 0.66, 0.66, 0.67, 0.67, 0.68, 0.69, 0.7, 0.72, 0.73, 0.74] [0.63, 0.62, 0.61, 0.6, 0.59, 0.59, 0.58, 0.57, 0.56, 0.55, 0.54]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.767  0.738  0.709  0.693  0.678  0.655  0.637  0.608  0.589  0.566  0.543 
+Args:
+	algorithm: inftask
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 0
+	steps: 600
+	tail_support_condition: long_tail_visible
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 5000,2000,800,200
+	train_env_sizes_parsed: (5000, 2000, 800, 200)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Train environment sample counts: [5000, 2000, 800, 200]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5, 0.9]
+Train domain count map: {'0.1': 5000, '0.2': 2000, '0.5': 800, '0.9': 200}
+Empirical training prior map: {'0.1': 0.625, '0.2': 0.25, '0.5': 0.1, '0.9': 0.025}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: 34681a205bf5ef14c3cc0f32baa84045.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6629000000  0.6699897051  0.7257000000  0.6394723058  0.7115000000  0.6442101002  0.6810000000  0.6513335109  0.6584000000  0.6573268175  0.6349000000  0.6642912030  0.6194000000  0.6702365279  0.5899000000  0.6776853800  0.5705000000  0.6828494072  0.5550000000  0.6878732443  0.5194000000  0.6982176304  0.0553971407  5625.0000000  0.3285474777  0.6949858665  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7446000000  0.6159169078  0.7429000000  0.5729579926  0.7274000000  0.5855330825  0.6990000000  0.6072051525  0.6690000000  0.6248894930  0.6487000000  0.6425446868  0.6229000000  0.6609020829  0.5879000000  0.6815851331  0.5689000000  0.6963484883  0.5491000000  0.7111316919  0.5136000000  0.7380641103  0.0493087544  6250.0000000  0.2943386436  0.6949858665  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7695000000  0.5883142352  0.7418000000  0.5527486205  0.7261000000  0.5679052472  0.7019000000  0.5951390266  0.6770000000  0.6173488498  0.6575000000  0.6389493942  0.6300000000  0.6612997055  0.5998000000  0.6876847744  0.5825000000  0.7054666877  0.5623000000  0.7232441902  0.5289000000  0.7575113773  0.0340717043  6875.0000000  0.2757121325  0.6949858665  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7706000000  0.5856795907  0.7429000000  0.5501633883  0.7273000000  0.5657662153  0.7014000000  0.5937597752  0.6784000000  0.6166028976  0.6589000000  0.6388888955  0.6308000000  0.6617550850  0.6014000000  0.6889975667  0.5844000000  0.7072584629  0.5645000000  0.7254655361  0.5313000000  0.7608720660  0.0157831804  7500.0000000  0.2718124986  0.6949858665  600          
+[0.65, 0.65, 0.66, 0.67, 0.67, 0.68, 0.69, 0.71, 0.72, 0.74, 0.75] [0.63, 0.62, 0.61, 0.6, 0.59, 0.59, 0.58, 0.57, 0.56, 0.55, 0.54]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.774  0.745  0.716  0.699  0.678  0.654  0.638  0.603  0.589  0.566  0.539 
+[0.65, 0.65, 0.66, 0.67, 0.67, 0.68, 0.69, 0.71, 0.72, 0.74, 0.75] [0.63, 0.62, 0.61, 0.6, 0.59, 0.59, 0.58, 0.57, 0.56, 0.55, 0.54]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.774  0.745  0.716  0.699  0.678  0.654  0.638  0.603  0.589  0.566  0.539 
+Args:
+	algorithm: iro
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 0
+	steps: 600
+	tail_support_condition: missing_tail
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 6000,1500,500,0
+	train_env_sizes_parsed: (6000, 1500, 500, 0)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Dropped zero-sized training environments: [0.9]
+Train environment sample counts: [6000, 1500, 500]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5]
+Train domain count map: {'0.1': 6000, '0.2': 1500, '0.5': 500, '0.9': 0}
+Empirical training prior map: {'0.1': 0.75, '0.2': 0.1875, '0.5': 0.0625, '0.9': 0.0}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: 3b9c1d4d498a69dbdcc49f095f46348a.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9944000000  0.5418740511  0.8348000000  0.5754674673  0.7670000000  0.5994905233  0.6876000000  0.6296072602  0.6273000000  0.6541454196  0.5570000000  0.6796688437  0.5009000000  0.7004187107  0.4155000000  0.7326085567  0.3464000000  0.7583262324  0.2795000000  0.7828232050  0.2072000000  0.8084812164  0.0589315123  4218.7500000  0.0678796470  1.5152149200  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9473000000  0.4558469653  0.7641000000  0.5433391929  0.7331000000  0.5679832697  0.6852000000  0.6037141085  0.6537000000  0.6297236085  0.6114000000  0.6609635949  0.5892000000  0.6808413267  0.5421000000  0.7149121761  0.5040000000  0.7439437509  0.4745000000  0.7703932524  0.4328000000  0.8008638024  0.0506912618  4687.5000000  0.0571296588  1.5152149200  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9347000000  0.4117108285  0.7929000000  0.4840866029  0.7505000000  0.5289490819  0.6946000000  0.5876485109  0.6542000000  0.6328890920  0.5982000000  0.6862477064  0.5697000000  0.7213714719  0.5140000000  0.7801128030  0.4654000000  0.8285031319  0.4274000000  0.8746203184  0.3758000000  0.9272097349  0.0458968969  5156.2500000  0.0521526225  1.5152149200  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9268000000  0.4168613255  0.7852000000  0.4902509749  0.7474000000  0.5329625010  0.6938000000  0.5898309946  0.6562000000  0.6331871152  0.6044000000  0.6849348545  0.5757000000  0.7182031274  0.5262000000  0.7747309804  0.4778000000  0.8212537766  0.4453000000  0.8653410077  0.3952000000  0.9161306620  0.0415027614  5625.0000000  0.0511629917  1.5152149200  600          
+[0.68, 0.71, 0.73, 0.75, 0.78, 0.8, 0.82, 0.84, 0.87, 0.89, 0.92] [0.56, 0.53, 0.5, 0.48, 0.47, 0.46, 0.44, 0.43, 0.42, 0.41, 0.4]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.928  0.859  0.781  0.707  0.653  0.614  0.573  0.525  0.493  0.442  0.397 
+[0.68, 0.7, 0.72, 0.73, 0.75, 0.76, 0.77, 0.78, 0.79, 0.79, 0.8] [0.54, 0.51, 0.48, 0.46, 0.44, 0.44, 0.44, 0.44, 0.44, 0.44, 0.44]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.951  0.871  0.788  0.700  0.652  0.621  0.584  0.547  0.520  0.478  0.443 
+Args:
+	algorithm: inftask
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 0
+	steps: 600
+	tail_support_condition: missing_tail
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 6000,1500,500,0
+	train_env_sizes_parsed: (6000, 1500, 500, 0)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Dropped zero-sized training environments: [0.9]
+Train environment sample counts: [6000, 1500, 500]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5]
+Train domain count map: {'0.1': 6000, '0.2': 1500, '0.5': 500, '0.9': 0}
+Empirical training prior map: {'0.1': 0.75, '0.2': 0.1875, '0.5': 0.0625, '0.9': 0.0}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: 3b9c1d4d498a69dbdcc49f095f46348a.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9932000000  0.5574274063  0.8358000000  0.5809070468  0.7671000000  0.6034365296  0.6891000000  0.6317278743  0.6285000000  0.6547264457  0.5605000000  0.6788733006  0.5034000000  0.6980850101  0.4175000000  0.7283910513  0.3503000000  0.7526681423  0.2827000000  0.7756314874  0.2114000000  0.7999520898  0.0205021916  4218.7500000  0.0899261460  0.7034482956  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9569000000  0.4643433392  0.7750000000  0.5420901179  0.7381000000  0.5677045584  0.6864000000  0.6035578251  0.6528000000  0.6300778389  0.6055000000  0.6617037654  0.5814000000  0.6823584437  0.5302000000  0.7172344923  0.4881000000  0.7468162179  0.4543000000  0.7738182545  0.4090000000  0.8049805760  0.0190610070  4687.5000000  0.0772724822  0.7034482956  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9357000000  0.4329465330  0.7794000000  0.5082382560  0.7421000000  0.5439035296  0.6915000000  0.5922585130  0.6554000000  0.6284215450  0.6076000000  0.6723849177  0.5826000000  0.7001612186  0.5332000000  0.7476029396  0.4891000000  0.7873171568  0.4558000000  0.8243570328  0.4105000000  0.8675390482  0.0163952195  5156.2500000  0.0716337487  0.7034482956  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9341000000  0.4277461767  0.7819000000  0.5010025501  0.7443000000  0.5393643379  0.6932000000  0.5907859206  0.6563000000  0.6295275092  0.6073000000  0.6763585806  0.5795000000  0.7062791586  0.5322000000  0.7570390701  0.4841000000  0.7992768288  0.4510000000  0.8388792872  0.4036000000  0.8849152327  0.0148880645  5625.0000000  0.0699346066  0.7034482956  600          
+[0.68, 0.71, 0.73, 0.75, 0.77, 0.79, 0.81, 0.83, 0.84, 0.86, 0.88] [0.55, 0.52, 0.5, 0.48, 0.46, 0.45, 0.44, 0.44, 0.43, 0.42, 0.41]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.935  0.860  0.785  0.706  0.643  0.618  0.576  0.535  0.500  0.456  0.412 
+[0.68, 0.71, 0.72, 0.74, 0.76, 0.78, 0.8, 0.82, 0.83, 0.85, 0.87] [0.55, 0.52, 0.5, 0.47, 0.46, 0.45, 0.45, 0.44, 0.43, 0.43, 0.42]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.938  0.861  0.787  0.705  0.644  0.619  0.578  0.539  0.504  0.461  0.419 
+Args:
+	algorithm: iro
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 1
+	steps: 600
+	tail_support_condition: balanced_visible
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 2000,2000,2000,2000
+	train_env_sizes_parsed: (2000, 2000, 2000, 2000)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Train environment sample counts: [2000, 2000, 2000, 2000]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5, 0.9]
+Train domain count map: {'0.1': 2000, '0.2': 2000, '0.5': 2000, '0.9': 2000}
+Empirical training prior map: {'0.1': 0.25, '0.2': 0.25, '0.5': 0.25, '0.9': 0.25}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: 75153a2cb77e34bd6adb69c881ceb1ea.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6845000000  0.6679996848  0.6664000000  0.6401875019  0.6707000000  0.6384451985  0.6612000000  0.6430317163  0.6640000000  0.6403201222  0.6549000000  0.6477122307  0.6539000000  0.6482655406  0.6448000000  0.6520273089  0.6398000000  0.6537833810  0.6418000000  0.6530867219  0.6374000000  0.6561461091  0.0567636617  5625.0000000  0.0460813567  1.4838452339  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6914000000  0.6416112185  0.6761000000  0.6276858449  0.6814000000  0.6208450794  0.6753000000  0.6266731620  0.6756000000  0.6191107035  0.6722000000  0.6304350495  0.6695000000  0.6304779053  0.6674000000  0.6346250772  0.6690000000  0.6332445145  0.6674000000  0.6289350390  0.6652000000  0.6317785382  0.0495776496  6250.0000000  0.0421709307  1.4838452339  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7029000000  0.6282199025  0.6932000000  0.6099353433  0.6971000000  0.6059238315  0.6854000000  0.6162077188  0.6879000000  0.6129481196  0.6746000000  0.6308184266  0.6723000000  0.6348192096  0.6662000000  0.6440164447  0.6652000000  0.6459052563  0.6609000000  0.6455219388  0.6548000000  0.6525932550  0.0448345089  6875.0000000  0.0389714725  1.4838452339  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7049000000  0.6256706715  0.6939000000  0.6090933681  0.6978000000  0.6051350832  0.6881000000  0.6158159971  0.6885000000  0.6130307317  0.6748000000  0.6316501498  0.6728000000  0.6359530687  0.6665000000  0.6456046104  0.6645000000  0.6477382779  0.6614000000  0.6475732327  0.6540000000  0.6551341414  0.0410069525  7500.0000000  0.0401096568  1.4838452339  600          
+[0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.65, 0.65, 0.66] [0.68, 0.67, 0.67, 0.67, 0.67, 0.66, 0.66, 0.66, 0.65, 0.65, 0.65]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.708  0.710  0.703  0.696  0.686  0.688  0.677  0.677  0.659  0.659  0.648 
+[0.65, 0.65, 0.65, 0.65, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64] [0.66, 0.67, 0.67, 0.67, 0.67, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.693  0.697  0.686  0.683  0.679  0.683  0.674  0.678  0.661  0.665  0.658 
+Args:
+	algorithm: inftask
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 1
+	steps: 600
+	tail_support_condition: balanced_visible
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 2000,2000,2000,2000
+	train_env_sizes_parsed: (2000, 2000, 2000, 2000)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Train environment sample counts: [2000, 2000, 2000, 2000]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5, 0.9]
+Train domain count map: {'0.1': 2000, '0.2': 2000, '0.5': 2000, '0.9': 2000}
+Empirical training prior map: {'0.1': 0.25, '0.2': 0.25, '0.5': 0.25, '0.9': 0.25}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: 75153a2cb77e34bd6adb69c881ceb1ea.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6743000000  0.6681948304  0.6660000000  0.6417826414  0.6689000000  0.6400517225  0.6609000000  0.6443723440  0.6626000000  0.6419356465  0.6520000000  0.6489731669  0.6496000000  0.6493706107  0.6434000000  0.6530187130  0.6356000000  0.6547606587  0.6390000000  0.6539138556  0.6337000000  0.6570304632  0.0501248561  5625.0000000  0.0479759425  0.6655321121  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6991000000  0.6423588991  0.6685000000  0.6347680092  0.6749000000  0.6269419789  0.6680000000  0.6312212348  0.6720000000  0.6229220033  0.6673000000  0.6323361993  0.6689000000  0.6310527325  0.6623000000  0.6338306665  0.6652000000  0.6315162182  0.6681000000  0.6255239844  0.6634000000  0.6275376081  0.0444387541  6250.0000000  0.0427657142  0.6655321121  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7047000000  0.6305971742  0.6910000000  0.6127648354  0.6942000000  0.6087139845  0.6828000000  0.6186173558  0.6832000000  0.6151111722  0.6718000000  0.6319422126  0.6681000000  0.6356986165  0.6599000000  0.6445375681  0.6577000000  0.6467187405  0.6561000000  0.6453859210  0.6475000000  0.6526485085  0.0400430948  6875.0000000  0.0418187268  0.6655321121  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7032000000  0.6294644475  0.6916000000  0.6106569767  0.6949000000  0.6067705154  0.6840000000  0.6170907617  0.6855000000  0.6137867570  0.6740000000  0.6313576102  0.6705000000  0.6354244351  0.6630000000  0.6446292996  0.6623000000  0.6468243003  0.6588000000  0.6461346149  0.6522000000  0.6533671021  0.0370172111  7500.0000000  0.0415783674  0.6655321121  600          
+[0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.65, 0.65, 0.66] [0.67, 0.67, 0.67, 0.67, 0.67, 0.66, 0.66, 0.66, 0.65, 0.65, 0.65]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.700  0.700  0.689  0.690  0.681  0.689  0.669  0.676  0.662  0.659  0.648 
+[0.66, 0.65, 0.65, 0.65, 0.64, 0.64, 0.64, 0.64, 0.63, 0.63, 0.63] [0.67, 0.67, 0.67, 0.67, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.697  0.695  0.685  0.675  0.671  0.681  0.668  0.676  0.665  0.669  0.661 
+Args:
+	algorithm: iro
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 1
+	steps: 600
+	tail_support_condition: long_tail_visible
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 5000,2000,800,200
+	train_env_sizes_parsed: (5000, 2000, 800, 200)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Train environment sample counts: [5000, 2000, 800, 200]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5, 0.9]
+Train domain count map: {'0.1': 5000, '0.2': 2000, '0.5': 800, '0.9': 200}
+Empirical training prior map: {'0.1': 0.625, '0.2': 0.25, '0.5': 0.1, '0.9': 0.025}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: d7798454fbceb1e9faff6f50b17aa6a3.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7818000000  0.6511812806  0.7183000000  0.6125086546  0.7036000000  0.6179170012  0.6735000000  0.6308410764  0.6573000000  0.6395217776  0.6294000000  0.6530407667  0.6067000000  0.6626254916  0.5819000000  0.6737241745  0.5513000000  0.6862907410  0.5386000000  0.6922628880  0.5080000000  0.7039968967  0.1309602181  5625.0000000  0.1972621083  1.5483479500  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7726000000  0.5894570351  0.7477000000  0.5430918932  0.7294000000  0.5606715083  0.6987000000  0.5939401984  0.6738000000  0.6201190948  0.6429000000  0.6586403847  0.6143000000  0.6846318841  0.5872000000  0.7155513763  0.5518000000  0.7477827072  0.5344000000  0.7685024738  0.5036000000  0.7980282307  0.1176375742  6250.0000000  0.1710218340  1.5483479500  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7958000000  0.5517687798  0.7594000000  0.5168428421  0.7392000000  0.5439110994  0.7068000000  0.5877040029  0.6793000000  0.6273451447  0.6411000000  0.6792940497  0.6138000000  0.7150058150  0.5842000000  0.7582769990  0.5485000000  0.8008934259  0.5252000000  0.8328938484  0.4943000000  0.8734160066  0.0493306286  6875.0000000  0.1507863253  1.5483479500  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7961000000  0.5497728586  0.7577000000  0.5192067027  0.7370000000  0.5461999774  0.7054000000  0.5900042653  0.6780000000  0.6304647326  0.6397000000  0.6828694940  0.6148000000  0.7186576128  0.5839000000  0.7621803284  0.5500000000  0.8051835299  0.5263000000  0.8370259404  0.4949000000  0.8781704903  0.0434011543  7500.0000000  0.1580792814  1.5483479500  600          
+[0.65, 0.65, 0.66, 0.68, 0.69, 0.71, 0.74, 0.77, 0.81, 0.84, 0.88] [0.65, 0.63, 0.61, 0.6, 0.59, 0.58, 0.56, 0.55, 0.53, 0.51, 0.49]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.793  0.771  0.742  0.708  0.680  0.647  0.612  0.592  0.552  0.519  0.493 
+[0.68, 0.68, 0.68, 0.68, 0.68, 0.68, 0.68, 0.68, 0.69, 0.7, 0.7] [0.63, 0.61, 0.59, 0.58, 0.59, 0.6, 0.59, 0.58, 0.55, 0.53, 0.51]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.783  0.762  0.729  0.685  0.664  0.639  0.607  0.593  0.559  0.533  0.510 
+Args:
+	algorithm: inftask
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 1
+	steps: 600
+	tail_support_condition: long_tail_visible
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 5000,2000,800,200
+	train_env_sizes_parsed: (5000, 2000, 800, 200)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Train environment sample counts: [5000, 2000, 800, 200]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5, 0.9]
+Train domain count map: {'0.1': 5000, '0.2': 2000, '0.5': 800, '0.9': 200}
+Empirical training prior map: {'0.1': 0.625, '0.2': 0.25, '0.5': 0.1, '0.9': 0.025}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: d7798454fbceb1e9faff6f50b17aa6a3.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7739000000  0.6586752534  0.7057000000  0.6252179146  0.6930000000  0.6292110682  0.6645000000  0.6395937204  0.6505000000  0.6469636559  0.6222000000  0.6577045918  0.6032000000  0.6652641296  0.5761000000  0.6742864847  0.5476000000  0.6846871972  0.5350000000  0.6891061068  0.5063000000  0.6988450885  0.0208256669  5625.0000000  0.2158716917  0.6949858665  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7695000000  0.5996067524  0.7451000000  0.5523655415  0.7273000000  0.5670852065  0.6971000000  0.5958090425  0.6749000000  0.6171072125  0.6460000000  0.6492441893  0.6160000000  0.6712276340  0.5909000000  0.6974925399  0.5584000000  0.7242036462  0.5411000000  0.7421843410  0.5148000000  0.7664698362  0.0174889884  6250.0000000  0.1801332980  0.6949858665  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7771000000  0.5722263455  0.7528000000  0.5313722491  0.7341000000  0.5526216030  0.7037000000  0.5896909833  0.6780000000  0.6212655306  0.6433000000  0.6644334793  0.6151000000  0.6940864325  0.5863000000  0.7298170924  0.5532000000  0.7655051351  0.5311000000  0.7907873988  0.5019000000  0.8241536617  0.0158799050  6875.0000000  0.1750310659  0.6949858665  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7833000000  0.5667874813  0.7536000000  0.5296899080  0.7351000000  0.5517731905  0.7042000000  0.5898079276  0.6784000000  0.6228066087  0.6423000000  0.6673437357  0.6148000000  0.6979041100  0.5850000000  0.7348542809  0.5517000000  0.7716357112  0.5299000000  0.7977777123  0.5010000000  0.8323699832  0.0150740222  7500.0000000  0.1750852168  0.6949858665  600          
+[0.65, 0.66, 0.66, 0.67, 0.68, 0.7, 0.72, 0.74, 0.77, 0.8, 0.84] [0.65, 0.63, 0.62, 0.6, 0.6, 0.58, 0.57, 0.56, 0.54, 0.52, 0.5]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.788  0.766  0.730  0.701  0.674  0.647  0.618  0.596  0.554  0.528  0.500 
+[0.66, 0.66, 0.67, 0.67, 0.68, 0.68, 0.7, 0.71, 0.73, 0.75, 0.77] [0.64, 0.63, 0.61, 0.6, 0.6, 0.59, 0.58, 0.56, 0.55, 0.53, 0.51]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.774  0.751  0.718  0.697  0.674  0.648  0.620  0.602  0.561  0.541  0.514 
+Args:
+	algorithm: iro
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 1
+	steps: 600
+	tail_support_condition: missing_tail
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 6000,1500,500,0
+	train_env_sizes_parsed: (6000, 1500, 500, 0)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Dropped zero-sized training environments: [0.9]
+Train environment sample counts: [6000, 1500, 500]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5]
+Train domain count map: {'0.1': 6000, '0.2': 1500, '0.5': 500, '0.9': 0}
+Empirical training prior map: {'0.1': 0.75, '0.2': 0.1875, '0.5': 0.0625, '0.9': 0.0}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: 8928c6e86d49890b6e91b7d1c0af8229.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9735000000  0.5482975245  0.7548000000  0.5904899836  0.7283000000  0.6021950841  0.6872000000  0.6252690554  0.6588000000  0.6386064291  0.6206000000  0.6549121141  0.5896000000  0.6738634109  0.5511000000  0.6929435134  0.5146000000  0.7082645297  0.4805000000  0.7264401913  0.4473000000  0.7406694889  0.0582656341  4218.7500000  0.2066959143  1.5152149200  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9279000000  0.4285796881  0.7651000000  0.5101953149  0.7346000000  0.5420005322  0.6975000000  0.5981041193  0.6662000000  0.6308730841  0.6311000000  0.6751279235  0.5994000000  0.7180837989  0.5575000000  0.7682088017  0.5260000000  0.8058106899  0.4929000000  0.8523457050  0.4595000000  0.8873295784  0.0511670880  4687.5000000  0.1708770394  1.5152149200  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9231000000  0.3937096596  0.7861000000  0.4697459936  0.7471000000  0.5190821886  0.7009000000  0.5933350325  0.6621000000  0.6443557143  0.6222000000  0.7105830908  0.5785000000  0.7714449763  0.5351000000  0.8418607116  0.4940000000  0.8967660069  0.4520000000  0.9639002681  0.4110000000  1.0164810419  0.0533963130  5156.2500000  0.1513366252  1.5152149200  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9200000000  0.3915231228  0.7867000000  0.4678211808  0.7485000000  0.5183709860  0.7020000000  0.5939636827  0.6615000000  0.6463142633  0.6218000000  0.7143405676  0.5781000000  0.7764885426  0.5345000000  0.8484781981  0.4925000000  0.9047419429  0.4517000000  0.9734960794  0.4100000000  1.0272911787  20.311114912  5625.0000000  0.1538531184  1.5152149200  600          
+[0.69, 0.72, 0.75, 0.77, 0.8, 0.83, 0.86, 0.9, 0.94, 0.99, 1.04] [0.57, 0.55, 0.53, 0.51, 0.5, 0.48, 0.47, 0.46, 0.44, 0.42, 0.41]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.916  0.852  0.778  0.703  0.659  0.628  0.572  0.535  0.493  0.452  0.406 
+[0.68, 0.7, 0.72, 0.75, 0.77, 0.78, 0.8, 0.82, 0.84, 0.87, 0.9] [0.56, 0.54, 0.52, 0.5, 0.49, 0.49, 0.48, 0.48, 0.47, 0.47, 0.46]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.924  0.858  0.780  0.697  0.661  0.638  0.591  0.557  0.528  0.492  0.455 
+Args:
+	algorithm: inftask
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 1
+	steps: 600
+	tail_support_condition: missing_tail
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 6000,1500,500,0
+	train_env_sizes_parsed: (6000, 1500, 500, 0)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Dropped zero-sized training environments: [0.9]
+Train environment sample counts: [6000, 1500, 500]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5]
+Train domain count map: {'0.1': 6000, '0.2': 1500, '0.5': 500, '0.9': 0}
+Empirical training prior map: {'0.1': 0.75, '0.2': 0.1875, '0.5': 0.0625, '0.9': 0.0}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: 8928c6e86d49890b6e91b7d1c0af8229.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9739000000  0.5607374310  0.7499000000  0.5959467888  0.7216000000  0.6073019505  0.6847000000  0.6285383701  0.6568000000  0.6421412826  0.6218000000  0.6575242877  0.5883000000  0.6761947274  0.5514000000  0.6941251755  0.5206000000  0.7095172405  0.4882000000  0.7262024283  0.4554000000  0.7402343750  0.0152089871  4218.7500000  0.2154684961  0.7034482956  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9309000000  0.4368143380  0.7622000000  0.5217389464  0.7321000000  0.5489774942  0.6948000000  0.5996903777  0.6627000000  0.6276498437  0.6303000000  0.6660298109  0.5968000000  0.7041463852  0.5592000000  0.7481217384  0.5251000000  0.7809034586  0.4908000000  0.8219839931  0.4594000000  0.8522020578  0.0127702322  4687.5000000  0.1755530834  0.7034482956  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9210000000  0.4073926210  0.7740000000  0.4944868088  0.7377000000  0.5328049660  0.6997000000  0.5954564214  0.6641000000  0.6347133517  0.6314000000  0.6872676611  0.5944000000  0.7364621162  0.5523000000  0.7940770388  0.5167000000  0.8381666541  0.4823000000  0.8924567103  0.4449000000  0.9334967732  0.0160548873  5156.2500000  0.1650494188  0.7034482956  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9243000000  0.3972744048  0.7825000000  0.4795055687  0.7438000000  0.5239143372  0.7022000000  0.5925675631  0.6634000000  0.6383799911  0.6257000000  0.6981154680  0.5862000000  0.7538058162  0.5398000000  0.8180059195  0.5019000000  0.8680579662  0.4621000000  0.9291093349  0.4218000000  0.9765114784  0.0197504481  5625.0000000  0.1638216823  0.7034482956  600          
+[0.69, 0.72, 0.74, 0.77, 0.8, 0.82, 0.85, 0.88, 0.91, 0.95, 0.98] [0.57, 0.54, 0.52, 0.5, 0.49, 0.48, 0.47, 0.45, 0.44, 0.43, 0.42]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.923  0.852  0.782  0.709  0.657  0.620  0.583  0.539  0.494  0.458  0.422 
+[0.68, 0.7, 0.72, 0.74, 0.76, 0.78, 0.79, 0.81, 0.82, 0.84, 0.86] [0.56, 0.53, 0.51, 0.49, 0.48, 0.47, 0.47, 0.47, 0.47, 0.47, 0.46]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.931  0.856  0.786  0.705  0.656  0.625  0.593  0.559  0.519  0.492  0.460 
+Args:
+	algorithm: iro
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 2
+	steps: 600
+	tail_support_condition: balanced_visible
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 2000,2000,2000,2000
+	train_env_sizes_parsed: (2000, 2000, 2000, 2000)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Train environment sample counts: [2000, 2000, 2000, 2000]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5, 0.9]
+Train domain count map: {'0.1': 2000, '0.2': 2000, '0.5': 2000, '0.9': 2000}
+Empirical training prior map: {'0.1': 0.25, '0.2': 0.25, '0.5': 0.25, '0.9': 0.25}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: 2f02628af7c72d658ad873552021c1bb.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7158000000  0.6613481045  0.5846000000  0.6619583964  0.5823000000  0.6646375656  0.5885000000  0.6642668843  0.5942000000  0.6638058424  0.5966000000  0.6649357080  0.5994000000  0.6650013328  0.5996000000  0.6661846042  0.6004000000  0.6674578786  0.5998000000  0.6688460708  0.6058000000  0.6686520576  0.0771967618  5625.0000000  0.0182817262  1.4838452339  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7135000000  0.6249833107  0.6534000000  0.6309509873  0.6427000000  0.6377609968  0.6453000000  0.6402842999  0.6502000000  0.6380267739  0.6520000000  0.6398899555  0.6552000000  0.6404452920  0.6464000000  0.6437371969  0.6449000000  0.6466237307  0.6413000000  0.6524029970  0.6482000000  0.6505717635  0.0659365211  6250.0000000  0.0165023524  1.4838452339  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7138000000  0.6145300865  0.6752000000  0.6217538714  0.6644000000  0.6310273409  0.6630000000  0.6348966360  0.6697000000  0.6319320798  0.6686000000  0.6337773800  0.6696000000  0.6341025233  0.6609000000  0.6386179328  0.6589000000  0.6419385672  0.6526000000  0.6505801678  0.6577000000  0.6478484273  0.0584546917  6875.0000000  0.0157406088  1.4838452339  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7175000000  0.6111453772  0.6762000000  0.6207060814  0.6653000000  0.6306695938  0.6640000000  0.6348531842  0.6686000000  0.6320606470  0.6680000000  0.6343160272  0.6696000000  0.6348541379  0.6603000000  0.6397898793  0.6572000000  0.6433882713  0.6514000000  0.6527342796  0.6561000000  0.6502012610  0.0550812813  7500.0000000  0.0155767584  1.4838452339  600          
+[0.63, 0.63, 0.63, 0.64, 0.64, 0.64, 0.64, 0.65, 0.65, 0.65, 0.65] [0.68, 0.68, 0.67, 0.67, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.705  0.704  0.706  0.673  0.662  0.676  0.664  0.660  0.656  0.660  0.655 
+[0.63, 0.63, 0.63, 0.64, 0.64, 0.64, 0.64, 0.64, 0.65, 0.65, 0.65] [0.68, 0.68, 0.67, 0.67, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66, 0.66]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.704  0.702  0.704  0.671  0.661  0.676  0.663  0.660  0.657  0.661  0.656 
+Args:
+	algorithm: inftask
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 2
+	steps: 600
+	tail_support_condition: balanced_visible
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 2000,2000,2000,2000
+	train_env_sizes_parsed: (2000, 2000, 2000, 2000)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Train environment sample counts: [2000, 2000, 2000, 2000]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5, 0.9]
+Train domain count map: {'0.1': 2000, '0.2': 2000, '0.5': 2000, '0.9': 2000}
+Empirical training prior map: {'0.1': 0.25, '0.2': 0.25, '0.5': 0.25, '0.9': 0.25}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: 2f02628af7c72d658ad873552021c1bb.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6826000000  0.6672086716  0.5800000000  0.6683173776  0.5822000000  0.6691830158  0.5882000000  0.6674927473  0.5984000000  0.6658614874  0.6032000000  0.6650213599  0.6094000000  0.6638453007  0.6122000000  0.6634076238  0.6142000000  0.6631978154  0.6185000000  0.6629837751  0.6254000000  0.6612585783  0.0199240965  5625.0000000  0.0185869262  0.6655321121  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7262000000  0.6261902452  0.6534000000  0.6314316988  0.6428000000  0.6378884912  0.6442000000  0.6405317783  0.6482000000  0.6389068961  0.6503000000  0.6405912042  0.6517000000  0.6416358948  0.6411000000  0.6449949741  0.6404000000  0.6480787992  0.6353000000  0.6535165310  0.6413000000  0.6521023512  0.0167167010  6250.0000000  0.0169204511  0.6655321121  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7146000000  0.6180672646  0.6701000000  0.6236537695  0.6562000000  0.6322835088  0.6583000000  0.6359682679  0.6599000000  0.6337687373  0.6618000000  0.6357516646  0.6634000000  0.6367775202  0.6532000000  0.6411508918  0.6493000000  0.6448615789  0.6447000000  0.6525601149  0.6507000000  0.6505901814  0.0151162837  6875.0000000  0.0161167588  0.6655321121  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7171000000  0.6145338416  0.6732000000  0.6217508912  0.6589000000  0.6310107112  0.6604000000  0.6350837946  0.6631000000  0.6330460906  0.6645000000  0.6352860928  0.6644000000  0.6365287900  0.6545000000  0.6413319111  0.6505000000  0.6453458071  0.6450000000  0.6536830068  0.6517000000  0.6518819928  0.0139577989  7500.0000000  0.0159059502  0.6655321121  600          
+[0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.65, 0.65, 0.65, 0.66] [0.68, 0.67, 0.67, 0.66, 0.66, 0.65, 0.65, 0.66, 0.65, 0.65, 0.64]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.713  0.704  0.695  0.664  0.668  0.663  0.663  0.659  0.647  0.651  0.644 
+[0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.64, 0.65, 0.65, 0.65, 0.66] [0.68, 0.67, 0.67, 0.66, 0.66, 0.65, 0.65, 0.66, 0.65, 0.65, 0.64]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.713  0.704  0.695  0.664  0.668  0.663  0.663  0.659  0.647  0.651  0.644 
+Args:
+	algorithm: iro
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 2
+	steps: 600
+	tail_support_condition: long_tail_visible
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 5000,2000,800,200
+	train_env_sizes_parsed: (5000, 2000, 800, 200)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Train environment sample counts: [5000, 2000, 800, 200]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5, 0.9]
+Train domain count map: {'0.1': 5000, '0.2': 2000, '0.5': 800, '0.9': 200}
+Empirical training prior map: {'0.1': 0.625, '0.2': 0.25, '0.5': 0.1, '0.9': 0.025}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: c19a5d041c0ca5c69ae51a529ec00875.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7979000000  0.6172485352  0.7232000000  0.6189702749  0.7049000000  0.6286644936  0.6742000000  0.6406636238  0.6700000000  0.6457995176  0.6500000000  0.6535132527  0.6343000000  0.6613066196  0.6115000000  0.6714857221  0.5912000000  0.6800623536  0.5686000000  0.6900236011  0.5558000000  0.6963550448  0.1325838820  5625.0000000  0.1430506110  1.5483479500  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7919000000  0.5420958996  0.7396000000  0.5466054678  0.7145000000  0.5748943090  0.6866000000  0.6049622893  0.6738000000  0.6205611825  0.6557000000  0.6435879469  0.6354000000  0.6654239297  0.6110000000  0.6923965812  0.5900000000  0.7156537771  0.5646000000  0.7435554266  0.5465000000  0.7625752687  0.1072595601  6250.0000000  0.1219119132  1.5483479500  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.8019000000  0.5130675435  0.7490000000  0.5186598301  0.7241000000  0.5580643415  0.6949000000  0.5992993712  0.6792000000  0.6225010753  0.6587000000  0.6540667415  0.6356000000  0.6844471097  0.6100000000  0.7214966416  0.5868000000  0.7537034750  0.5594000000  0.7926627398  0.5388000000  0.8200173378  0.0978132391  6875.0000000  0.1141918153  1.5483479500  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7998000000  0.5116298795  0.7488000000  0.5175861716  0.7239000000  0.5578300953  0.6954000000  0.5999058485  0.6794000000  0.6235149503  0.6591000000  0.6556056738  0.6354000000  0.6865068078  0.6102000000  0.7242386341  0.5886000000  0.7569825649  0.5607000000  0.7967913151  0.5404000000  0.8246657848  0.0894992797  7500.0000000  0.1115170568  1.5483479500  600          
+[0.64, 0.65, 0.67, 0.68, 0.7, 0.71, 0.74, 0.76, 0.78, 0.8, 0.83] [0.65, 0.64, 0.63, 0.62, 0.6, 0.59, 0.58, 0.57, 0.56, 0.55, 0.54]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.786  0.762  0.738  0.704  0.672  0.665  0.633  0.605  0.585  0.567  0.541 
+[0.67, 0.67, 0.67, 0.68, 0.68, 0.68, 0.69, 0.7, 0.69, 0.7, 0.7] [0.62, 0.61, 0.59, 0.59, 0.58, 0.56, 0.54, 0.53, 0.55, 0.56, 0.56]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.781  0.753  0.727  0.686  0.663  0.659  0.636  0.607  0.591  0.582  0.559 
+Args:
+	algorithm: inftask
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 2
+	steps: 600
+	tail_support_condition: long_tail_visible
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 5000,2000,800,200
+	train_env_sizes_parsed: (5000, 2000, 800, 200)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Train environment sample counts: [5000, 2000, 800, 200]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5, 0.9]
+Train domain count map: {'0.1': 5000, '0.2': 2000, '0.5': 800, '0.9': 200}
+Empirical training prior map: {'0.1': 0.625, '0.2': 0.25, '0.5': 0.1, '0.9': 0.025}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: c19a5d041c0ca5c69ae51a529ec00875.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7701000000  0.6296707392  0.7116000000  0.6273380518  0.6938000000  0.6349821687  0.6723000000  0.6457483172  0.6620000000  0.6495296955  0.6486000000  0.6549403071  0.6342000000  0.6613999605  0.6126000000  0.6696912050  0.5990000000  0.6766770482  0.5733000000  0.6850272417  0.5641000000  0.6894890666  0.0333443414  5625.0000000  0.1980269700  0.6949858665  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7846000000  0.5631519556  0.7354000000  0.5570723414  0.7138000000  0.5812843442  0.6872000000  0.6078737378  0.6745000000  0.6209061742  0.6573000000  0.6400559545  0.6391000000  0.6592072248  0.6186000000  0.6825067401  0.5960000000  0.7027336955  0.5712000000  0.7268576026  0.5561000000  0.7425497174  0.0311262083  6250.0000000  0.1730289161  0.6949858665  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7905000000  0.5371650457  0.7431000000  0.5345138907  0.7185000000  0.5670213103  0.6923000000  0.6018691063  0.6787000000  0.6199907660  0.6590000000  0.6454554796  0.6393000000  0.6708284616  0.6161000000  0.7014752030  0.5943000000  0.7281832099  0.5701000000  0.7605658174  0.5513000000  0.7819529176  0.0264519219  6875.0000000  0.1606024355  0.6949858665  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.7967000000  0.5290905833  0.7459000000  0.5273345113  0.7213000000  0.5627250075  0.6928000000  0.6001232862  0.6788000000  0.6204671860  0.6579000000  0.6485449076  0.6373000000  0.6762700081  0.6127000000  0.7095510960  0.5908000000  0.7387496233  0.5630000000  0.7737836838  0.5423000000  0.7976703644  0.0256599561  7500.0000000  0.1565487981  0.6949858665  600          
+[0.64, 0.65, 0.66, 0.67, 0.69, 0.7, 0.72, 0.74, 0.76, 0.78, 0.8] [0.65, 0.64, 0.63, 0.62, 0.61, 0.6, 0.58, 0.57, 0.56, 0.55, 0.55]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.789  0.757  0.729  0.700  0.683  0.665  0.643  0.615  0.589  0.566  0.547 
+[0.67, 0.67, 0.67, 0.67, 0.68, 0.68, 0.69, 0.69, 0.69, 0.69, 0.69] [0.62, 0.6, 0.59, 0.59, 0.59, 0.57, 0.54, 0.54, 0.55, 0.56, 0.57]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.761  0.730  0.705  0.676  0.663  0.657  0.635  0.616  0.600  0.582  0.568 
+Args:
+	algorithm: iro
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 2
+	steps: 600
+	tail_support_condition: missing_tail
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 6000,1500,500,0
+	train_env_sizes_parsed: (6000, 1500, 500, 0)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Dropped zero-sized training environments: [0.9]
+Train environment sample counts: [6000, 1500, 500]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5]
+Train domain count map: {'0.1': 6000, '0.2': 1500, '0.5': 500, '0.9': 0}
+Empirical training prior map: {'0.1': 0.75, '0.2': 0.1875, '0.5': 0.0625, '0.9': 0.0}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: 1ae956611ab983bd39f9da436894b75f.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9675000000  0.5529497266  0.8075000000  0.5815916061  0.7548000000  0.6037337780  0.6916000000  0.6283805370  0.6331000000  0.6493069530  0.5659000000  0.6730550528  0.5098000000  0.6948280931  0.4657000000  0.7118585706  0.3834000000  0.7426047921  0.3244000000  0.7642359734  0.2577000000  0.7884683609  0.0578529363  4218.7500000  0.0489240065  1.5152149200  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9351000000  0.4526801109  0.7737000000  0.5168272853  0.7392000000  0.5533049703  0.6963000000  0.5985423923  0.6575000000  0.6369018555  0.6113000000  0.6784861684  0.5769000000  0.7166447639  0.5499000000  0.7422705293  0.4871000000  0.8045538664  0.4497000000  0.8404573798  0.4047000000  0.8828385472  0.0664207468  4687.5000000  0.0409989692  1.5152149200  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9133000000  0.4279187322  0.7797000000  0.4852660000  0.7438000000  0.5345286131  0.7011000000  0.5945624709  0.6592000000  0.6452441216  0.6109000000  0.7003657818  0.5757000000  0.7495691180  0.5469000000  0.7852275968  0.4854000000  0.8665469289  0.4434000000  0.9141716361  0.3990000000  0.9698891640  0.0604869496  5156.2500000  0.0379068889  1.5152149200  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9110000000  0.4233619869  0.7821000000  0.4792831540  0.7435000000  0.5311646461  0.7014000000  0.5944978595  0.6590000000  0.6475397348  0.6103000000  0.7053412199  0.5736000000  0.7569599152  0.5458000000  0.7948361039  0.4840000000  0.8797275424  0.4398000000  0.9298565984  0.3956000000  0.9880831838  0.0576402918  5625.0000000  0.0368879922  1.5152149200  600          
+[0.68, 0.71, 0.74, 0.77, 0.8, 0.83, 0.85, 0.88, 0.91, 0.95, 0.99] [0.57, 0.54, 0.52, 0.5, 0.48, 0.46, 0.44, 0.43, 0.42, 0.41, 0.38]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.918  0.851  0.777  0.709  0.662  0.619  0.561  0.527  0.473  0.432  0.384 
+[0.68, 0.71, 0.73, 0.75, 0.77, 0.8, 0.81, 0.82, 0.84, 0.86, 0.89] [0.55, 0.52, 0.49, 0.47, 0.45, 0.43, 0.42, 0.42, 0.41, 0.41, 0.39]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.940  0.859  0.781  0.703  0.659  0.618  0.565  0.530  0.482  0.441  0.393 
+Args:
+	algorithm: inftask
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 400
+	eval_freq: 50
+	exp_name: e3b_tail_support
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: True
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\E3b_tail_support
+	penalty_weight: 1000
+	save_ckpts: True
+	seed: 2
+	steps: 600
+	tail_support_condition: missing_tail
+	tail_support_head_env: 0.1
+	tail_support_source_envs: 0.1,0.2,0.5,0.9
+	tail_support_source_envs_parsed: (0.1, 0.2, 0.5, 0.9)
+	tail_support_tail_env: 0.9
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.2, 0.5, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 6000,1500,500,0
+	train_env_sizes_parsed: (6000, 1500, 500, 0)
+	train_envs: 0.1,0.2,0.5,0.9
+	weight_decay: 0
+Dropped zero-sized training environments: [0.9]
+Train environment sample counts: [6000, 1500, 500]
+Requested train environments: [0.1, 0.2, 0.5, 0.9]
+Active train environments: [0.1, 0.2, 0.5]
+Train domain count map: {'0.1': 6000, '0.2': 1500, '0.5': 500, '0.9': 0}
+Empirical training prior map: {'0.1': 0.75, '0.2': 0.1875, '0.5': 0.0625, '0.9': 0.0}
+train_sandbox.py:231: FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value), which uses the default pickle module implicitly. It is possible to construct malicious pickle data which will execute arbitrary code during unpickling (See https://github.com/pytorch/pytorch/blob/main/SECURITY.md#untrusted-models for more details). In a future release, the default value for `weights_only` will be flipped to `True`. This limits the functions that could be executed during unpickling. Arbitrary objects will no longer be allowed to be loaded via this mode unless they are explicitly allowlisted by the user via `torch.serialization.add_safe_globals`. We recommend you start setting `weights_only=True` for any use case where you don't have full control of the loaded file. Please open an issue on GitHub for any issues related to this experimental feature.
+  algorithm.load_state_dict(torch.load(erm_ckpt_pth, map_location=device), strict=False)
+ERM-pretrained model loaded: 1ae956611ab983bd39f9da436894b75f.
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9385000000  0.5653874278  0.8274000000  0.5757458806  0.7639000000  0.6000641584  0.6951000000  0.6273601651  0.6263000000  0.6501032114  0.5572000000  0.6760038733  0.4922000000  0.7000508904  0.4397000000  0.7193300724  0.3568000000  0.7519339919  0.2861000000  0.7759344578  0.2150000000  0.8019747734  0.0296753926  4218.7500000  0.0520338379  0.7034482956  450          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9396000000  0.4690867066  0.7798000000  0.5173926353  0.7422000000  0.5536901355  0.6976000000  0.5983619690  0.6524000000  0.6360819340  0.6031000000  0.6771419048  0.5647000000  0.7152397037  0.5345000000  0.7414342761  0.4696000000  0.8016890287  0.4300000000  0.8375412822  0.3809000000  0.8794433475  0.0280106277  4687.5000000  0.0444021560  0.7034482956  500          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9185000000  0.4415380359  0.7757000000  0.4971842170  0.7402000000  0.5409495831  0.6989000000  0.5951620936  0.6591000000  0.6406843066  0.6111000000  0.6903589964  0.5783000000  0.7351161242  0.5508000000  0.7666682005  0.4906000000  0.8404331803  0.4511000000  0.8831816316  0.4072000000  0.9334378839  0.0252808801  5156.2500000  0.0405335277  0.7034482956  550          
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.9141000000  0.4401018918  0.7752000000  0.4965204000  0.7408000000  0.5407990217  0.6991000000  0.5954791903  0.6594000000  0.6415080428  0.6122000000  0.6917426586  0.5792000000  0.7366957664  0.5519000000  0.7684500813  0.4924000000  0.8432652950  0.4532000000  0.8863384724  0.4101000000  0.9371681213  0.0231738230  5625.0000000  0.0393958800  0.7034482956  600          
+[0.68, 0.7, 0.73, 0.76, 0.78, 0.81, 0.83, 0.85, 0.87, 0.9, 0.94] [0.57, 0.54, 0.52, 0.5, 0.48, 0.46, 0.45, 0.43, 0.43, 0.42, 0.4]
+
+final accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.919  0.847  0.779  0.703  0.665  0.615  0.580  0.532  0.485  0.453  0.400 
+[0.68, 0.7, 0.73, 0.76, 0.78, 0.81, 0.83, 0.85, 0.87, 0.9, 0.94] [0.57, 0.54, 0.52, 0.5, 0.48, 0.46, 0.45, 0.43, 0.43, 0.42, 0.4]
+
+best accuracies:
+0.0    0.1    0.2    0.3    0.4    0.5    0.6    0.7    0.8    0.9    1.0   
+0.919  0.847  0.779  0.703  0.665  0.615  0.580  0.532  0.485  0.453  0.400 

@@ -18,8 +18,11 @@ def _subsample_tensor_dataset(dataset, size, mode="random"):
         return dataset
 
     dataset_size = len(dataset)
-    if size <= 0:
-        raise ValueError(f"Requested training environment size must be positive, got {size}.")
+    if size < 0:
+        raise ValueError(f"Requested training environment size must be non-negative, got {size}.")
+    if size == 0:
+        x, y = dataset.tensors
+        return TensorDataset(x[:0], y[:0])
     if size > dataset_size:
         raise ValueError(
             f"Requested training environment size {size} exceeds available samples {dataset_size}."

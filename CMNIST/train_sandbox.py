@@ -26,6 +26,10 @@ parser.add_argument('--test_env_ms', type=str, default='0.9')               # te
 parser.add_argument('--train_env_sizes', type=str, default='')
 parser.add_argument('--train_env_size_mode', type=str, default='random', choices=['random', 'first'])
 parser.add_argument('--full_resolution', action='store_true')
+parser.add_argument('--tail_support_condition', type=str, default='')
+parser.add_argument('--tail_support_source_envs', type=str, default='')
+parser.add_argument('--tail_support_tail_env', type=float, default=None)
+parser.add_argument('--tail_support_head_env', type=float, default=None)
 
 # Network architecture
 parser.add_argument('--network', type=str, default="FiLMedMLP")
@@ -100,6 +104,12 @@ else:
     train_env_sizes = None
 
 args.train_env_sizes_parsed = train_env_sizes
+if args.tail_support_source_envs:
+    args.tail_support_source_envs_parsed = tuple(
+        float(e) for e in args.tail_support_source_envs.split(",")
+    )
+else:
+    args.tail_support_source_envs_parsed = tuple(train_env_ps)
 
 # --------  LOGGING --------
 logs_dir = os.path.join(args.output_dir, "logs", args.exp_name)
@@ -140,12 +150,44 @@ else:
 envs = get_cmnist_datasets(args.data_dir, train_envs=train_env_ps, test_envs=test_env_ps, label_noise_rate = 0.25, 
                            cuda=(device == "cuda"), int_target=int_target, subsample=not args.full_resolution,
                            train_env_sizes=train_env_sizes, train_env_size_mode=args.train_env_size_mode)
-train_envs, test_envs = envs[:len(train_env_ps)], envs[len(train_env_ps):]
+train_envs_full, test_envs = envs[:len(train_env_ps)], envs[len(train_env_ps):]
+train_env_ps_active = list(train_env_ps)
+train_envs = list(train_envs_full)
+
+if train_env_sizes is not None:
+    active_indices = [index for index, size in enumerate(train_env_sizes) if size > 0]
+    dropped_indices = [index for index, size in enumerate(train_env_sizes) if size == 0]
+    if not active_indices:
+        raise ValueError("All training environment sizes are zero; at least one source domain must be visible.")
+    if dropped_indices:
+        train_envs = [train_envs_full[index] for index in active_indices]
+        train_env_ps_active = [train_env_ps[index] for index in active_indices]
+        dropped_envs = [train_env_ps[index] for index in dropped_indices]
+        print(f"Dropped zero-sized training environments: {dropped_envs}")
+
 input_shape = train_envs[0].tensors[0].size()[1:]
 train_env_sample_counts = [env.tensors[0].size()[0] for env in train_envs]
 n_train_samples = sum(train_env_sample_counts)
 steps_per_epoch = n_train_samples / (args.batch_size * len(train_envs))
 print(f"Train environment sample counts: {train_env_sample_counts}")
+
+train_env_count_map = {str(p): 0 for p in args.tail_support_source_envs_parsed}
+for env_p, env_count in zip(train_env_ps_active, train_env_sample_counts):
+    train_env_count_map[str(env_p)] = int(env_count)
+
+train_total_for_prior = sum(train_env_count_map.values())
+if train_total_for_prior > 0:
+    empirical_prior_map = {
+        env_name: float(count) / float(train_total_for_prior)
+        for env_name, count in train_env_count_map.items()
+    }
+else:
+    empirical_prior_map = {env_name: 0.0 for env_name in train_env_count_map}
+
+print(f"Requested train environments: {list(train_env_ps)}")
+print(f"Active train environments: {train_env_ps_active}")
+print(f"Train domain count map: {train_env_count_map}")
+print(f"Empirical training prior map: {empirical_prior_map}")
 
 train_loaders = [FastDataLoader(dataset=env, batch_size=args.batch_size, num_workers=args.n_workers)
                  for env in train_envs]
@@ -200,7 +242,14 @@ def adjust_learning_rate(optimizer, current_step, lr, total_steps):
 
 # +
 # -------- UPDATES --------
-h_alphas_train = [0.0,1.0,1.0]
+h_alphas_train = [0.0, 1.0, 1.0]
+
+
+def alpha_for_eval(index, alpha_schedule):
+    # Use the last alpha when there are more eval envs than schedule entries.
+    if index < len(alpha_schedule):
+        return alpha_schedule[index]
+    return alpha_schedule[-1]
 results = {}
 best_acc, best_weights = 0., copy.deepcopy(algorithm.state_dict())
 start_time, step_since_eval = time.time(), 0
@@ -240,8 +289,9 @@ for step in range(start_step, args.steps + 1):
                 results[env_name + '_acc'] = misc.accuracy(algorithm, env_loader, device)
                 results[env_name + '_loss'] = misc.loss(algorithm, env_loader, loss_fn, device)
             else:
-                results[env_name + '_acc'] = misc.accuracy(algorithm, env_loader, device, alpha=h_alphas_train[i])
-                results[env_name + '_loss'] = misc.loss(algorithm, env_loader, loss_fn, device, alpha=h_alphas_train[i])
+                eval_alpha = alpha_for_eval(i, h_alphas_train)
+                results[env_name + '_acc'] = misc.accuracy(algorithm, env_loader, device, alpha=eval_alpha)
+                results[env_name + '_loss'] = misc.loss(algorithm, env_loader, loss_fn, device, alpha=eval_alpha)
         
         results['mem_gb'] = torch.cuda.max_memory_allocated() / (1024. * 1024. * 1024.)
         results_keys = sorted(results.keys())
@@ -309,6 +359,13 @@ else:
 results["seed"] = args.seed
 results["args_id"] = args_id
 results["args"] = vars(args_no_seed)
+results["tail_support_condition"] = args.tail_support_condition if args.tail_support_condition else None
+results["tail_support_source_envs"] = [float(e) for e in args.tail_support_source_envs_parsed]
+results["tail_support_train_count_map"] = train_env_count_map
+results["tail_support_empirical_prior_map"] = empirical_prior_map
+results["tail_support_train_envs_active"] = [float(p) for p in train_env_ps_active]
+results["tail_support_tail_env"] = args.tail_support_tail_env
+results["tail_support_head_env"] = args.tail_support_head_env
 
 with open(os.path.join(results_dir, f"{md5_fname}.jsonl"), 'a') as f:
     f.write(json.dumps(results, sort_keys=True) + "\n")
