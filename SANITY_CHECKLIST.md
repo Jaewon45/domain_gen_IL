@@ -205,7 +205,7 @@ Run E0 with one seed and ERM, GroupDRO, IRO first.
 - [x] STOP if grouping fields are missing for any stress phase.
 - [x] GO to larger sweep only after E0-E3 reduced outputs are valid and interpretable.
 - [x] GO to multi-seed only after one-seed runs are stable and complete.
-- [x] GO to full 600-command sweep only after storage/runtime budget is confirmed.
+- [x] GO to the full 450-command [CMN] sweep only after storage/runtime budget is confirmed.
 
 ## 11) Recommended Validation Order
 

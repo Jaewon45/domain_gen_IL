@@ -50,7 +50,20 @@ To run the experiments, you can use the provided scripts. Below is an example of
     ```
 
 ## Datasets
-The codebase supports benchmarking on CMNIST and some more simulations.
+The codebase currently includes:
+
+- CMNIST experiments and stress-test workflows,
+- UCI Bike Rental real-data experiments,
+- simulation code under `sim/` and related folders.
+
+Current extension direction:
+
+- ImageNet-C is the preferred additional-dataset extension.
+- The adopted plan keeps the native 1000-class task, treats corruption type as the primary domain variable, and separates severity as a secondary analysis axis.
+- The initial comparison should use a frozen pretrained ResNet-50 backbone with a trainable head and compare `ERM`, `GroupDRO`, and `IRO`.
+- The extension should use fresh output roots under `results/` and must not overwrite existing CMNIST or prior experiment artifacts.
+
+See [README_EXT_[CMN&ImgC].md](README_EXT_[CMN&ImgC].md) for workflow updates and [README_DATASET_SETUPS_[CMN&ImgC].md](README_DATASET_SETUPS_[CMN&ImgC].md) for the dataset comparison table.
 
 ## Contributing
 We welcome contributions from the community. If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request.

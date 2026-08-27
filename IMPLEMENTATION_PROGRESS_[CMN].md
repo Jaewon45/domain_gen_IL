@@ -1,4 +1,4 @@
-# Implementation Progress
+# [CMN] Implementation Progress
 
 This document records the implementation work completed for Experiment 1, the CMNIST stress test, and the validation results collected during setup.
 
@@ -425,7 +425,7 @@ Added:
 - `EXPERIMENT_PLANS.md`
 - `IMPLEMENTATION_PROGRESS.md`
 
-## Current Execution Status
+## [CMN] Current Execution Status
 
 ### ✅ Completed Work
 
@@ -446,19 +446,16 @@ Added:
 
 ### ⏳ Pending Work
 
-- **Reduced-main staged sweep (domain_stress_main_seed0..4)**: in progress.
-  - `seed0`: completed after a restart/recovery pass (log includes old invalid 5-env errors plus successful rerun).
-  - `seed1`: completed successfully.
-  - `seed2`: completed successfully.
-  - `seed3`/`seed4`: pending.
+- **Reduced-main staged sweep (domain_stress_main_seed0..4)**: partially executed.
+  - Manifest files exist for seeds 0–4, each with 45 commands.
+  - Current result artifacts contain records for seeds 0–2, including recovery/duplicate records; they should not be treated as a clean 135-job completion without deduplication and log review.
+  - Seeds 3–4 have not been verified as completed.
 
 - **Full sweep (domain_stress.txt)**: 450 commands available as the current full-grid generator output (10 seeds × 45 jobs/seed).
   - Intended for final publication-grade results (all 5 algorithms, 10 seeds).
   - Throughput-based runtime estimate is now much lower than earlier drafts; use recent per-seed log timing as the planning baseline.
 
-- **Lambda-grid evaluation (E4)**: Script exists but not yet run on saved checkpoints.
-  - Will use `CMNIST/evaluate_lambda_grid.py` on reduced-sweep `iro` and `inftask` checkpoints.
-  - Output needed for E4 plotting.
+- **Lambda-grid evaluation (E4)**: The script and checkpoint-loading path exist; report-grade CMNIST lambda results and plots remain pending.
 
 ## Experiment Budget & Scope
 
@@ -496,7 +493,7 @@ The full experiment sweep (`domain_stress.txt`) is organized as follows (time es
 - **Purpose**: Intermediate robustness validation before full sweep
 - **Status**: 🟡 Partially complete (seeds 0–2 done, seeds 3–4 pending)
 
-#### Full Sweep (`domain_stress.txt`)
+#### [CMN] Full Sweep (`domain_stress.txt`)
 - **Scope**: E0–E3 complete coverage
 - **Seeds**: 10 (seeds 0–9)
 - **Algorithms**: 5 (erm, irm, groupdro, iro, inftask)
@@ -553,7 +550,7 @@ The current generated `domain_stress` sweep is functional but has caveats:
 - The generated Phase 3 sweep is currently severity-based (balanced/mild/strong) and does not include mirrored first-heavy/last-heavy directional variants.
 - If majority-vs-minority directional claims are needed, add mirrored schedules explicitly before final reporting.
 
-### Lambda Evaluation
+### [CMN] Lambda Evaluation
 
 The dedicated λ-grid evaluation script is ready but not yet validated on actual checkpoint outputs.
 
@@ -567,9 +564,9 @@ Command pattern:
 ```bash
 cd CMNIST
 ..\dgil_env\Scripts\python.exe evaluate_lambda_grid.py \
-  --ckpt_dirs ../cmnist_exp_small/ckpts \
+  ../cmnist_exp_small/ckpts \
   --output_dir ../cmnist_exp_small/lambda_results \
-  --lambda_grid 0.0 0.1 0.2 ... 0.9
+  --lambda_grid 0.0:1.0:0.1
 ```
 
 Reason:
@@ -636,3 +633,138 @@ Reason:
 3. Optional: Execute `run_domain_stress_small_seeds.sh` to validate multi-seed automation (seeds 1–2).
 4. Export all results using `CMNIST/export_results_csv.py` for final reporting.
 5. Stage `domain_stress.txt` for batch execution when compute resources are available.
+
+#  AISTATS / CMNIST Closure TODOs
+
+## Priority 0 — Freeze the exact scientific object
+
+* [ ] Trace the CMNIST training code from per-example losses to per-domain risks and then to CVaR.
+* [ ] Determine whether IRO assigns equal mass to each active domain or weights domains proportionally to sample counts.
+* [ ] Write the exact implemented IRO objective in one equation in the README.
+* [ ] Write the exact implemented GroupDRO objective in one equation in the README.
+* [ ] State explicitly whether logged empirical priors \(n_a/N\) are used in training, used only for analysis, or both.
+* [ ] Confirm that zero-count domains are removed from training but retained with positive weight in deployment/test evaluation.
+* [ ] Align the theoretical notation with the implemented weighting rule before finalizing any prior-mismatch claim.
+
+## Priority 1 — Clean the current result records
+
+* [ ] Build a canonical run key using algorithm, seed, experiment phase, train environments, train sizes, steps, hyperparameters, and model-selection rule.
+* [ ] Deduplicate recovery, partial, and repeated JSONL records in `results/cmnist_exp/`.
+* [ ] Separate training records from post-training evaluation records.
+* [ ] Inspect the logs for every retained run and mark each run as complete, failed, recovered, or partial.
+* [ ] Produce a manifest-to-result audit table showing one intended command and one retained final record per run.
+* [ ] Do not interpret 553 JSONL rows as 553 independent jobs.
+* [ ] Recompute all means and standard deviations only from the clean retained records.
+* [ ] Export a new versioned clean result root rather than overwriting the current result root.
+* [ ] Record the exact seed set used in every reported table.
+
+## Priority 2 — Close the main tail-support experiment
+
+* [ ] Decide whether E3b will contain three or four final conditions.
+* [ ] If using four conditions, run the missing `near_missing_tail` condition for all intended algorithms and seeds.
+* [ ] If using three conditions, remove `near_missing_tail` from the final experimental design and state that the final study uses balanced-visible, long-tail-visible, and missing-tail.
+* [ ] Confirm that all E3b conditions use the intended fixed test environments.
+* [ ] Confirm the exact head-to-tail ordering of the four source environments.
+* [ ] Verify that `missing_tail` assigns zero training samples but positive evaluation weight to the missing domain.
+* [ ] Regenerate `raw_results.csv`, `summary_by_condition.csv`, and `slide_table.csv` from the clean records.
+* [ ] Regenerate tail accuracy, worst-domain accuracy, head-tail gap, and CVaR-gap plots from the same clean CSV source.
+* [ ] Report per-seed values in addition to mean and standard deviation.
+* [ ] Treat E3b as the principal CMNIST experiment in the AISTATS paper.
+
+## Priority 3 — Audit GroupDRO
+
+* [ ] Verify that GroupDRO receives correct group/domain identifiers during training.
+* [ ] Verify that GroupDRO updates its group weights during training rather than behaving as ERM.
+* [ ] Confirm that all source domains are represented in each training cycle or document the sampling policy.
+* [ ] Report worst observed-source-group loss for GroupDRO.
+* [ ] Report worst held-out-target-domain accuracy separately.
+* [ ] Check whether GroupDRO improves source-worst performance but fails to transfer that improvement to unseen targets.
+* [ ] Compare GroupDRO and ERM using the same architecture, optimizer, number of steps, batch policy, and model-selection rule.
+* [ ] Record any GroupDRO-specific regularization or hyperparameter choices.
+* [ ] Do not describe GroupDRO as “not working” unless it also fails on the observed-group objective it is designed to optimize.
+
+## Priority 4 — Correct E1 domain-count evaluation
+
+* [ ] Do not treat the current 2-, 4-, and 8-domain result as a clean domain-count ablation.
+* [ ] Replace the current environment sets with nested or approximately symmetric sets.
+* [ ] Remove duplicated environment values from the 8-domain condition.
+* [ ] Keep either the total sample budget or the samples per domain fixed and state which quantity is controlled.
+* [ ] Keep test environments identical across all domain-count conditions.
+* [ ] Run at least three seeds for the corrected E1 comparison.
+* [ ] Consider sampling several different domain subsets for each domain count.
+* [ ] Report the distribution across domain subsets rather than relying on one favorable or unfavorable subset.
+* [ ] Move the current E1 result to the appendix or label it exploratory if the corrected run is not completed.
+
+## Priority 5 — Correct E3 imbalance interpretation
+
+* [ ] Rename the current E3 conditions as balanced, mild last-domain-heavy, and strong last-domain-heavy.
+* [ ] State which environment is being overweighted.
+* [ ] Do not call the current result a general minority-underrepresentation experiment.
+* [ ] Add mirrored first-domain-heavy conditions if directional imbalance claims are required.
+* [ ] Consider fixed-total-budget imbalance schedules so that imbalance is not confounded with total sample size.
+* [ ] Report per-environment accuracy curves for balanced and strong imbalance.
+* [ ] Keep E3 as supporting evidence for the distinction between visible imbalance and missing support.
+
+## Priority 6 — Validate E4 lambda sensitivity
+
+* [ ] Match every lambda-evaluation record to one unique training checkpoint.
+* [ ] Remove duplicate or recovered checkpoints before computing lambda statistics.
+* [ ] Distinguish `lambda_model`, which is supplied to \(h(x,\lambda)\), from `alpha_eval`, which changes the CVaR aggregation of fixed losses.
+* [ ] For IRO and INF-TASK, report per-environment accuracy as `lambda_model` changes.
+* [ ] For ERM and GroupDRO, state clearly that predictions are fixed and only the evaluation risk functional changes.
+* [ ] Compute prediction disagreement between low- and high-lambda IRO predictions.
+* [ ] Compute the best-to-worst accuracy range across lambda.
+* [ ] Compute the maximum neighboring-lambda change.
+* [ ] Compute operator regret relative to fixed-lambda reference models if those references are available.
+* [ ] Regenerate the lambda figure from the clean checkpoint set.
+* [ ] Do not claim successful preference conditioning from a flat aggregated-risk curve alone.
+* [ ] Treat the current E4 interpretation as provisional until these checks are complete.
+
+## Priority 7 — Add the theory-aligned synthetic experiment
+
+* [ ] Implement the balanced deployment prior and long-tailed empirical prior.
+* [ ] Implement two controlled risk profiles with a head-versus-tail trade-off.
+* [ ] Compute deployment CVaR and empirical CVaR for both hypotheses.
+* [ ] Estimate ranking-reversal probability over repeated source samples.
+* [ ] Sweep CVaR level, sample size, missing-tail mass, and long-tail exponent.
+* [ ] Produce one heatmap or phase diagram of ranking-reversal probability.
+* [ ] Verify that disagreement increases as source evidence becomes less informative.
+* [ ] Use this experiment as the direct validation of the main theorem.
+* [ ] Keep neural-network optimization effects separate from the synthetic identification result.
+
+## Priority 8 — Complete report-grade CMNIST evidence
+
+* [ ] Select a final core seed count of at least three clean seeds.
+* [ ] Complete seeds 3–4 only if five-seed reporting is needed after the three-seed result is stable.
+* [ ] Prefer a smaller clean theory-aligned experiment set over completing all 450 jobs.
+* [ ] Reproduce every paper table directly from a versioned CSV.
+* [ ] Verify every table number against the CSV before submission.
+* [ ] Report the exact result root, command manifest, seed set, algorithm set, and model-selection rule in each caption or methods subsection.
+* [ ] Include architecture, optimizer, learning rate, batch size, steps, evaluation frequency, and checkpoint-selection details.
+* [ ] Clearly distinguish smoke, reduced, staged-main, and final report-grade results.
+* [ ] Add explicit limitations for uncontrolled domain choice, incomplete support, and computational budget where applicable.
+
+## Priority 9 — ImageNet-C optional pilot
+
+* [ ] Do not begin a broad ImageNet-C sweep until the CMNIST result root and E4 evaluation are clean.
+* [ ] Keep the native 1000-class task.
+* [ ] Use corruption type as the primary domain variable.
+* [ ] Keep severity as a separate ordered analysis axis rather than flattening all 75 conditions into unrelated domains.
+* [ ] Validate the ImageNet and ImageNet-C directory layouts before training.
+* [ ] Verify deterministic evaluation repeatability on one fixed checkpoint.
+* [ ] Run one held-out-corruption fold, one seed, and ERM/GroupDRO/IRO first.
+* [ ] Confirm that the IRO head is actually lambda-conditioned during training.
+* [ ] Expand to three folds and three seeds only if the pilot is interpretable.
+* [ ] Treat ImageNet-C as optional external validation for AISTATS and as a fuller experiment for the journal extension.
+
+## Priority 10 — AISTATS readiness gate
+
+* [ ] The implemented objective and the theoretical probability law match.
+* [ ] The main result root is deduplicated and auditable.
+* [ ] The E3b support experiment is complete or formally reduced to three conditions.
+* [ ] GroupDRO is validated on its observed-source objective.
+* [ ] E4 measures actual predictor adaptation to lambda.
+* [ ] The synthetic ranking-reversal experiment is complete.
+* [ ] The main theoretical result goes beyond the perturbation inequality and quantifies missing-support identification error or operator regret.
+* [ ] All main tables and figures can be regenerated from versioned scripts and clean CSV files.
+* [ ] Any unfinished ImageNet-C work is explicitly marked as optional or future work.

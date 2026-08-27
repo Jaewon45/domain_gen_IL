@@ -1,0 +1,23 @@
+{
+  "fold_a": [
+    "gaussian_noise",
+    "defocus_blur",
+    "glass_blur",
+    "snow",
+    "contrast"
+  ],
+  "fold_b": [
+    "shot_noise",
+    "motion_blur",
+    "frost",
+    "fog",
+    "elastic_transform"
+  ],
+  "fold_c": [
+    "impulse_noise",
+    "zoom_blur",
+    "brightness",
+    "pixelate",
+    "jpeg_compression"
+  ]
+}

@@ -320,13 +320,13 @@ The strongest low-friction extension in this repository is a CMNIST stress test 
 
 
 
-## UPDATE — Current Implementation Status
+## [CMN] UPDATE — Current Implementation Status
 
 ## PART A — COMPLETED WORK
 
-### Experiment 1: CMNIST Stress Test — ✅ Fully Implemented & Validated
+### [CMN] Experiment 1: CMNIST Stress Test — Implemented; reduced execution validated
 
-The repository now contains a complete, tested implementation of the CMNIST stress test.
+The repository contains the CMNIST stress-test implementation. The reduced pipeline and smoke checks have been validated; the full generated grid has not been completed.
 
 **Infrastructure:**
 
@@ -334,7 +334,7 @@ The repository now contains a complete, tested implementation of the CMNIST stre
 - ✅ `CMNIST/datasets.py` — Subsamples training environments with configurable per-domain sizes and random/first modes.
 - ✅ `CMNIST/job_scripts/gen_exps.py` — Generates two command sweeps:
   - `domain_stress_small.txt`: **13 commands** (seed 0, E0–E3, 4 algorithms)
-  - `domain_stress.txt`: **600 commands** (seeds 0–9, E0–E3, all 5 algorithms)
+   - `domain_stress.txt`: **450 commands** (seeds 0–9, E0–E3, all 5 algorithms)
 - ✅ `CMNIST/collect_results.py` — Aggregates results with derived fields: `phase`, `n_train_domains`, `sample_size_per_domain`, `imbalance_type`.
 - ✅ `CMNIST/plot_domain_stress.py` — Plots E0–E3 figures from result files.
 - ✅ `CMNIST/evaluate_lambda_grid.py` — Evaluates saved checkpoints across λ grid for E4 (pending checkpoint execution).
@@ -343,7 +343,7 @@ The repository now contains a complete, tested implementation of the CMNIST stre
 **Execution Files:**
 
 - ✅ `CMNIST/job_scripts/domain_stress_small.txt` — Ready-to-run reduced sweep (13 commands).
-- ✅ `CMNIST/job_scripts/domain_stress.txt` — Ready-to-run full sweep (600 commands).
+- ✅ `CMNIST/job_scripts/domain_stress.txt` — Generated full sweep (450 commands; not fully executed).
 - ✅ `CMNIST/job_scripts/run_domain_stress_small_seeds.sh` — Bash runner for multi-seed (0–2) execution with separate output dirs.
 
 **Validation Status:**
@@ -354,18 +354,18 @@ The repository now contains a complete, tested implementation of the CMNIST stre
   - CSV exports generated and validated.
 - ✅ Smoke tests: Domain-count, sample-size, and imbalance phases all validated.
 - ✅ CSV export: Tested on reduced-sweep results → 3 CSV types generated.
-- ⏳ Full sweep: 600 commands generated, ready for batch execution (not yet run due to time/compute).
+- ⏳ Full sweep: 450 commands generated; not fully executed.
 - ⏳ Lambda-grid evaluation: Script ready, needs checkpoint execution.
 
-### Experiment 2: Lambda-Sensitivity Analysis — 🟡 Partially Implemented
+### [CMN] Experiment 2: Lambda-Sensitivity Analysis — Partially implemented
 
 - ✅ Evaluation entry point (`CMNIST/evaluate_lambda_grid.py`) created and validated.
 - ⏳ Full λ-grid results: Pending execution on saved checkpoints from reduced sweep.
 - ⏳ E4 plotting: Will be added once λ-evaluation outputs are available.
 
-### Experiment 3: Real-World Extension — ⏳ Not Yet Started
+### [ImgC] Experiment 3: ImageNet-C Extension — Smoke pipeline implemented
 
-UCI-Bike-Rental dataset infrastructure exists but no new datasets have been added.
+ImageNet-C has separate loaders, models, training/evaluation scripts, fold specification, and smoke artifacts. No report-grade real-data ImageNet-C run has been completed. UCI-Bike-Rental remains an existing dataset, not part of the ImageNet-C implementation.
 
 ---
 
@@ -378,11 +378,11 @@ UCI-Bike-Rental dataset infrastructure exists but no new datasets have been adde
 | **Phase coverage** | E0–E3 (4 phases) | E0–E3 (4 phases) |
 | **Test envs** | Explicit `0.1,0.5,0.9` | Train-derived defaults |
 | **E0 (reproduction)** | 1 config (4 domains) | 1 config (2 domains) |
-| **E1 (domain count)** | 1 variant (2 domains) | 4 variants (2, 4, 6, 8 domains) |
+| **E1 (domain count)** | 1 variant (2 domains) | 3 variants (2, 4, 8 domains) |
 | **E2 (sample size)** | 1 size (2k/domain) | 3 sizes (2k, 4k, 8k per domain) |
-| **E3 (imbalance)** | 1 schedule (last-heavy mild) | 5 schedules (balanced + 4 types) |
+| **E3 (imbalance)** | 1 schedule (last-heavy mild) | 3 schedules (balanced + 2 last-domain-heavy variants) |
 | **Output dirs** | Relative `../results/cmnist_exp_small/` | Absolute `/c:/Users/.../results/cmnist_exp/` |
-| **Estimated runtime** | ~1 day | 6–12 days (single GPU) |
+| **Estimated runtime** | Reduced validation | Not a completed-run measurement |
 
 **Purpose:**
 - Small: **Fast validation** (1 day) of the pipeline; confirms E0–E3 mechanics work.
@@ -390,7 +390,7 @@ UCI-Bike-Rental dataset infrastructure exists but no new datasets have been adde
 
 **Status:**
 - Small: ✅ **Complete** (13 commands run, results exported to CSV).
-- Full: ⏳ Ready to run when compute is available (6–12 day window).
+- Full: ⏳ Generated but not fully executed.
 
 ---
 
@@ -399,8 +399,9 @@ UCI-Bike-Rental dataset infrastructure exists but no new datasets have been adde
 Some aspects of the current implementation differ slightly from the idealized experimental design:
 
 - **Phase 1 train-environment sets:** The generator uses predefined sets (e.g., `[0.01, 0.12, 0.5, 0.99]` for 4 domains) rather than the cleaner comparison sets proposed in the plan above. **Action:** Document the exact train-envs in final write-ups.
-- **Phase 3 imbalance schedules:** The sweep includes balanced, last-domain-heavy, and first-domain-heavy options. Semantic labels (minority vs. majority) are positional in code. **Action:** Map each schedule to its semantic meaning explicitly in reports.
-- **Lambda-grid evaluation:** Script is ready but not yet validated on actual checkpoints. **Action:** Execute after reduced-sweep checkpoints are retained.
+- **Phase 3 imbalance schedules:** The current grid is balanced, mild last-domain-heavy, and strong last-domain-heavy. It does not establish a general minority-underrepresentation result.
+- **E3b tail support:** The current `results/E3b_tail_support/` artifact contains 45 records and is missing the `near_missing_tail` condition from the 60-job, 3-seed matrix.
+- **Lambda-grid evaluation:** The evaluator and checkpoints exist, but report-grade E4 results and plots are still pending.
 
 ---
 
@@ -416,9 +417,9 @@ The reduced sweep has been executed successfully. The following steps complete t
 ```bash
 cd CMNIST
 ..\dgil_env\Scripts\python.exe evaluate_lambda_grid.py \
-   --ckpt_dirs ../results/cmnist_exp_small/ckpts \
+   ../results/cmnist_exp_small/ckpts \
    --output_dir ../results/cmnist_exp_small/lambda_results \
-  --lambda_grid 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9
+   --lambda_grid 0.0:1.0:0.1
 ```
 
 **Outputs:**
@@ -477,7 +478,7 @@ cd CMNIST
 
 ### Step 5: Future — Full Sweep Execution
 
-When ready, execute the full `domain_stress.txt` sweep (600 commands, all 10 seeds and 5 algorithms):
+When ready, execute the full `domain_stress.txt` sweep (450 commands, all 10 seeds and 5 algorithms):
 
 ```bash
 cd CMNIST/job_scripts
@@ -499,7 +500,7 @@ cd CMNIST/job_scripts
 | E4 plots | ⏳ Pending Step 1 | Will be in `plots/` |
 | CSV exports | ✅ Complete | `results/export/cmnist_exp_small_*.csv` |
 | Multi-seed bash runner | ✅ Ready | `run_domain_stress_small_seeds.sh` |
-| Full sweep command file | ✅ Complete | `domain_stress.txt` (600 commands) |
+| Full sweep command file | ✅ Generated | `domain_stress.txt` (450 commands) |
 
 ---
 
@@ -510,15 +511,15 @@ cd CMNIST/job_scripts
 The original `EXPERIMENT_PLANS.md` proposed a detailed phase-by-phase execution plan (E0, E1, E2, E3). The current implementation has consolidated this into:
 
 1. **One integrated reduced sweep** (`domain_stress_small.txt`): 13 commands covering all four phases in a single execution, with results saved and analyzed together.
-2. **One integrated full sweep** (`domain_stress.txt`): 600 commands with the same phase structure, ready for when compute is available.
+2. **One integrated full sweep** (`domain_stress.txt`): 450 commands with the same phase structure, generated but not fully executed.
 3. **Unified analysis pipeline**: A single set of CSV export and plotting scripts that work on both small and full sweeps.
 
 This approach is more efficient and produces the same experimental coverage while simplifying the workflow and reducing manual command management.
 
 ### What Remains?
 
-- Execution of the full `domain_stress.txt` sweep (6–12 days, not yet started due to compute constraints).
-- Lambda-grid evaluation on saved checkpoints (script ready, awaiting execution).
+- Completion and cleanup of the full `domain_stress.txt` sweep.
+- Lambda-grid evaluation on saved checkpoints, followed by E4 plots and robustness summaries.
 - Optional multi-seed runs for robustness validation (script ready, can be deferred).
 
 All infrastructure is in place; execution is now the limiting factor.
@@ -951,4 +952,368 @@ Save under `results/E3b_tail_support/`:
 2. Train E3b runs.
 3. Run lambda-grid checkpoint evaluation.
 4. Run tail-support analyzer to export slide-ready CSVs/plots.
+
+
+## UPDATE — Proposed ImageNet-C Extension and Stability Analysis
+
+This update does not replace the historical candidate sections above. It records the currently preferred extension direction for an additional dataset while preserving the earlier real-world-dataset alternatives for reference.
+
+### Output Preservation Policy
+
+The ImageNet-C extension must not overwrite any artifacts from existing CMNIST, E3b, lambda-grid, or prior exploratory runs.
+
+Use fresh output roots under `results/` for every new ImageNet-C phase. Recommended roots:
+
+- `results/imagenet_c_eval_repeatability_v1/`
+- `results/imagenet_c_fold_generalization_v1/`
+- `results/imagenet_c_support_stress_v1/`
+
+If any of those roots already exist from prior exploratory work, create a new suffixed root such as `_v2` or a date-stamped variant instead of reusing the folder.
+
+### Three Distinct Meanings of Stability
+
+#### 1. Evaluation Repeatability
+
+For a fixed checkpoint evaluated on fixed ImageNet-C inputs without random subsampling or test-time augmentation, repeated evaluations should be deterministic. If repeated runs differ materially, the problem is in preprocessing, checkpoint loading, evaluation mode, or metric aggregation rather than in the learning algorithm.
+
+#### 2. Training Stability Across Seeds
+
+Training stability asks whether the same qualitative conclusion persists across random seeds.
+
+Final report-grade summaries should include:
+
+- mean across seeds,
+- standard deviation across seeds,
+- individual seed values,
+- count of seeds on which each method beats the baseline.
+
+#### 3. Stability Across Domains and Severity
+
+ImageNet-C contains 15 corruption types and 5 severity levels, giving 75 corruption-severity conditions. Stability should therefore be assessed across corruption domains and across severity, not only through a single aggregate metric.
+
+Required domain-level analysis should include:
+
+- average performance across corruption domains,
+- worst-corruption performance,
+- CVaR or another tail-risk metric across corruption domains,
+- severity-stratified results,
+- corruption-by-severity heatmap,
+- number of corruption domains improved or degraded by each method.
+
+These three notions of stability should remain conceptually separate in analysis and reporting.
+
+### Adopted ImageNet-C Design
+
+#### Research Question
+
+Does the imprecise learning approach provide stable average-case and tail-domain performance under realistic image corruptions, and does its advantage remain consistent across random seeds, unseen corruption types, corruption severity, and operator risk preferences?
+
+#### Domain Definition
+
+Use corruption type as the primary domain variable.
+
+- Primary domains: 15 corruption types
+- Within-domain shift: severity levels 1-5
+- Total evaluation conditions: 75
+
+Primary aggregation should operate over the 15 corruption domains. Severity should be retained as a separate analysis axis rather than flattening all 75 conditions into unrelated domains.
+
+#### Label Space
+
+Retain the native 1000-class ImageNet classification task. Do not apply CMNIST-style binary relabeling to ImageNet-C.
+
+#### Training / Evaluation Separation
+
+Official ImageNet-C validation data is evaluation-only.
+
+If training on corrupted inputs is introduced, corruptions must be generated from ImageNet training images rather than from the official ImageNet-C validation set. This avoids evaluation leakage.
+
+#### Model Architecture
+
+Use the following initial architecture for feasibility and variance control:
+
+- pretrained ResNet-50 backbone,
+- frozen backbone,
+- extracted 2048-dimensional feature representation,
+- trainable 1000-class classification head,
+- optional lambda-conditioned head for IRO-style evaluation.
+
+All compared algorithms should use the same frozen features and comparable head capacity.
+
+#### Primary Algorithms
+
+Main comparison set:
+
+1. `ERM`
+2. `GroupDRO`
+3. `IRO`
+
+`INF-TASK` may be added after the main pipeline is validated. `IRM` remains an optional secondary baseline rather than part of the initial core study.
+
+#### Lambda Evaluation
+
+Do not retrain IRO separately for every fixed lambda at the start. Reuse the repository's post-training lambda-grid evaluation pattern.
+
+Use:
+
+$$
+\lambda \in \{0.0, 0.1, 0.2, \ldots, 1.0\}.
+$$
+
+For each lambda, save:
+
+- per-corruption accuracy,
+- per-corruption loss,
+- average accuracy,
+- worst-corruption accuracy,
+- aggregated risk / CVaR,
+- lambda sensitivity score (best-worst range over the grid).
+
+#### Main Metrics
+
+Primary metrics:
+
+- clean ImageNet accuracy,
+- mean corruption accuracy,
+- worst-corruption accuracy,
+- mean corruption loss,
+- worst-corruption loss,
+- CVaR across corruption domains,
+- performance by severity,
+- lambda sensitivity,
+- mean and standard deviation across training seeds.
+
+Mean Corruption Error may be included as a standard ImageNet-C secondary metric, but the core DGIL comparison should retain average-domain, worst-domain, and CVaR-style summaries.
+
+### Experiment Set 1 — Deterministic Evaluation and Pipeline Validation
+
+Purpose: verify that evaluation and aggregation are deterministic before introducing training variance.
+
+Configuration:
+
+- one fixed pretrained ResNet-50 checkpoint,
+- no training,
+- clean ImageNet validation set,
+- all 15 ImageNet-C corruptions,
+- all 5 severity levels,
+- 3 repeated evaluation passes,
+- no random subsampling,
+- no test-time augmentation,
+- lambda grid `0.0:1.0:0.1`.
+
+Required outputs per repetition:
+
+- accuracy and loss for each of the 75 conditions,
+- corruption-level aggregation over severities,
+- average corruption accuracy,
+- worst-corruption accuracy,
+- CVaR / aggregated risk,
+- corruption-by-severity heatmap.
+
+Stability criterion: all three repetitions should match up to negligible floating-point differences.
+
+### Experiment Set 2 — Held-Out Corruption Generalization
+
+Purpose: test whether IRO generalizes to corruption types not seen during training.
+
+Use 3 fixed folds, each training on 10 corruption types and holding out 5 corruption types for primary testing.
+
+Held-out Fold A:
+
+- gaussian noise
+- defocus blur
+- glass blur
+- snow
+- contrast
+
+Held-out Fold B:
+
+- shot noise
+- motion blur
+- frost
+- fog
+- elastic transformation
+
+Held-out Fold C:
+
+- impulse noise
+- zoom blur
+- brightness
+- pixelation
+- JPEG compression
+
+Training data policy per fold:
+
+- fixed class-balanced subset of 100 ImageNet training images per class,
+- 80 images per class for training,
+- 20 images per class for validation,
+- source corruptions generated only from the 10 visible corruption types,
+- training severity sampled uniformly from levels 1-3,
+- identical base-image subset and corruption assignment for all algorithms.
+
+Evaluation:
+
+- primary: 5 held-out corruption types at severities 1-5,
+- secondary: all 15 corruption types at severities 1-5,
+- clean ImageNet validation accuracy.
+
+Training settings:
+
+- frozen ResNet-50 backbone,
+- trainable 1000-class head,
+- batch size 256,
+- max epochs 20,
+- early stopping patience 3,
+- optimizer `AdamW`,
+- learning-rate grid `{3e-4, 1e-3}`,
+- weight-decay grid `{0, 1e-4}`,
+- hyperparameters selected using Fold A, seed 0, then locked.
+
+Pilot execution:
+
+$$
+3\text{ folds} \times 3\text{ algorithms} \times 3\text{ seeds} = 27\text{ runs}.
+$$
+
+Final execution:
+
+$$
+3\text{ folds} \times 3\text{ algorithms} \times 5\text{ seeds} = 45\text{ runs}.
+$$
+
+Use seeds `0-2` for the pilot and `0-4` for the report-grade run.
+
+Success criterion:
+
+- same qualitative ranking in at least 2 of 3 folds,
+- conclusion not driven by a single seed,
+- IRO improves worst-domain or CVaR performance without excessive mean-accuracy loss,
+- severity trends remain interpretable,
+- lambda sensitivity is not dominated by isolated corruption domains.
+
+### Experiment Set 3 — Corruption-Support Stress Test
+
+Purpose: mirror the CMNIST tail-support experiment in a realistic corruption setting.
+
+Use 4 representative source corruption domains:
+
+1. gaussian noise
+2. motion blur
+3. fog
+4. JPEG compression
+
+Use severity levels 1-3 during training and a fixed total source budget of 40,000 corrupted training examples.
+
+Conditions:
+
+1. Balanced visible: `[10000, 10000, 10000, 10000]`
+2. Long-tail visible: `[25000, 10000, 4000, 1000]`
+3. Near-missing tail: `[29000, 9000, 1750, 250]`
+4. Missing tail: `[30000, 7500, 2500, 0]`
+
+For the missing-tail condition, the fourth source corruption gets zero training examples but remains present in evaluation with positive evaluation weight.
+
+Evaluation:
+
+- same 4 source corruptions at severities 4-5,
+- remaining 11 unseen corruption types at severities 1-5,
+- clean ImageNet validation set.
+
+Report:
+
+- tail-domain accuracy,
+- worst-domain accuracy,
+- head-tail performance gap,
+- mean corruption accuracy,
+- CVaR gap relative to balanced condition,
+- IRO lambda curves for tail accuracy and aggregated risk.
+
+Pilot execution:
+
+$$
+4\text{ conditions} \times 3\text{ algorithms} \times 3\text{ seeds} = 36\text{ runs}.
+$$
+
+Final execution:
+
+$$
+4\text{ conditions} \times 3\text{ algorithms} \times 5\text{ seeds} = 60\text{ runs}.
+$$
+
+### Recommended Execution Order For ImageNet-C
+
+1. Run Experiment Set 1 and verify deterministic evaluation.
+2. Run one fold, three algorithms, and one seed from Experiment Set 2 as a smoke test.
+3. Run the full three-seed pilot for Experiment Set 2.
+4. Inspect seed variance and corruption-level results.
+5. Expand Experiment Set 2 to five seeds only if results remain interpretable.
+6. Run Experiment Set 3 only after the held-out-corruption pipeline is validated.
+7. Add `INF-TASK` only after the primary `ERM` / `GroupDRO` / `IRO` comparison is complete.
+
+Minimum defensible extension: Experiment Sets 1 and 2. Experiment Set 3 is a stronger support-coverage follow-up, not the entry point.
+
+### Immediate Next-Step Implementation Surface
+
+To move from planning to implementation without disturbing existing experiments, reserve a separate dataset surface:
+
+- `IMAGENET_C/datasets.py`
+- `IMAGENET_C/features.py`
+- `IMAGENET_C/models.py`
+- `IMAGENET_C/train_head.py`
+- `IMAGENET_C/eval_repeatability.py`
+- `IMAGENET_C/evaluate_lambda_grid.py`
+- `IMAGENET_C/analyze_imagenet_c.py`
+- `IMAGENET_C/folds.json`
+- `IMAGENET_C/job_scripts/`
+
+This is intentionally separate from `CMNIST/` so the ImageNet-C extension does not inherit CMNIST-specific data generation assumptions.
+
+### Concrete Output Layout For The First Two Experiment Sets
+
+Experiment Set 1 root:
+
+- `results/imagenet_c_eval_repeatability_v1/raw/repetition_0.jsonl`
+- `results/imagenet_c_eval_repeatability_v1/raw/repetition_1.jsonl`
+- `results/imagenet_c_eval_repeatability_v1/raw/repetition_2.jsonl`
+- `results/imagenet_c_eval_repeatability_v1/summary/repeatability_summary.csv`
+- `results/imagenet_c_eval_repeatability_v1/summary/corruption_severity_matrix.csv`
+- `results/imagenet_c_eval_repeatability_v1/plots/corruption_severity_heatmap.png`
+- `results/imagenet_c_eval_repeatability_v1/plots/corruption_accuracy_bar.png`
+- `results/imagenet_c_eval_repeatability_v1/plots/lambda_sensitivity_curve.png`
+- `results/imagenet_c_eval_repeatability_v1/manifests/eval_repeatability_repetitions.txt`
+
+Experiment Set 2 root:
+
+- `results/imagenet_c_fold_generalization_v1/raw/train_runs.jsonl`
+- `results/imagenet_c_fold_generalization_v1/raw/lambda_eval.jsonl`
+- `results/imagenet_c_fold_generalization_v1/summary/by_fold_seed.csv`
+- `results/imagenet_c_fold_generalization_v1/summary/by_fold_algorithm.csv`
+- `results/imagenet_c_fold_generalization_v1/summary/held_out_only.csv`
+- `results/imagenet_c_fold_generalization_v1/summary/all_corruptions.csv`
+- `results/imagenet_c_fold_generalization_v1/plots/held_out_worst_domain.png`
+- `results/imagenet_c_fold_generalization_v1/plots/held_out_mean_accuracy.png`
+- `results/imagenet_c_fold_generalization_v1/plots/severity_profile_by_algorithm.png`
+- `results/imagenet_c_fold_generalization_v1/manifests/fold_a_seed0_smoke.txt`
+- `results/imagenet_c_fold_generalization_v1/manifests/pilot_seed012.txt`
+- `results/imagenet_c_fold_generalization_v1/manifests/final_seed01234.txt`
+
+### Reproducible Fold Specification Requirement
+
+Before any training script is written, the 3 held-out corruption folds should be encoded in a versioned spec file rather than being hardcoded inconsistently across scripts.
+
+Required folds:
+
+- `fold_a`: `gaussian_noise`, `defocus_blur`, `glass_blur`, `snow`, `contrast`
+- `fold_b`: `shot_noise`, `motion_blur`, `frost`, `fog`, `elastic_transform`
+- `fold_c`: `impulse_noise`, `zoom_blur`, `brightness`, `pixelate`, `jpeg_compression`
+
+### First Command Manifests To Generate
+
+Generate these manifests first once the scripts exist:
+
+1. `eval_repeatability_repetitions.txt`
+2. `fold_a_seed0_smoke.txt`
+3. `pilot_seed012.txt`
+
+Only after those are validated should the final `seed0-4` held-out-generalization manifest and any support-stress manifest be generated.
 
