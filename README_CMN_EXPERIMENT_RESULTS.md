@@ -248,6 +248,18 @@ Existing ERM and GroupDRO stress runs are not a strict controlled comparison: th
 
 The independent synthetic experiment in `CMNIST/priority7_theory.py` isolates prior mismatch from neural-network optimization. It uses a uniform deployment prior, a long-tailed source prior, two head/tail trade-off risk profiles, empirical and deployment CVaR, and repeated multinomial source samples. The full sweep varies alpha, source sample size, missing-tail fraction, and long-tail exponent.
 
+### Synthetic Predictor Specification (Recovered)
+The synthetic ranking-reversal experiment in `CMNIST/priority7_theory.py` uses $K = 10$ domains (with $K_{\mathrm{head}} = 7$ observed domains under $\text{missing\_tail\_fraction} = 0.3$).
+The two candidate predictors $f$ (head-favored) and $g$ (tail-favored) are constructed as follows:
+- Total domains $K = 10$, $\text{tradeoff} = 0.5$.
+- Base risk offsets: $r_0^{(f)} = 0.20$ (head-favored base risk), $r_0^{(g)} = 0.15$ (tail-favored base risk).
+- Advantage bounds: $\delta_{\mathrm{head}} = R^g(1) - R^f(1) = 0.65 - 0.20 = 0.45$, $\delta_{\mathrm{tail}} = R^f(K) - R^g(K) = 0.70 - 0.15 = 0.55$.
+- Risk profile vectors across the 10 domains:
+  - $R^f = [0.2000, 0.2556, 0.3111, 0.3667, 0.4222, 0.4778, 0.5333, 0.5889, 0.6444, 0.7000]$
+  - $R^g = [0.6500, 0.5944, 0.5389, 0.4833, 0.4278, 0.3722, 0.3167, 0.2611, 0.2056, 0.1500]$
+
+Saved to `synthetic_risk_profile_spec.txt`.
+
 Outputs are stored under `results/cmnist_priority7_theory_v1/`:
 
 - `ranking_reversal_summary.csv`
@@ -274,6 +286,32 @@ $$
 $$
 
 This is a theorem-aligned diagnostic for the current synthetic setup, not a replacement for the final theorem or proof. Its submission copies are in `results_submit/tables/P7_theory/identification_width_by_alpha.csv` and `results_submit/figures/P7_theory/identification_width_by_alpha.png`.
+
+### Theorem-Aligned 0–1 CVaR Post-Hoc Check
+Evaluated 0–1 error risk $R_e = 1 - \text{accuracy}(e)$ across the four anchor environments $e \in \{0.1, 0.2, 0.5, 0.9\}$ on existing E3b trained checkpoints (5 seeds, 5 algorithms) under the missing-tail condition $[6000, 1500, 500, 0]$.
+
+Using observed risk law $P_{\mathrm{obs}} = \frac{1}{3} [\delta(R_{0.1}) + \delta(R_{0.2}) + \delta(R_{0.5})]$, $\varepsilon = 1/4$, and $\alpha = 0.9$:
+- $P_{-} = \frac{3}{4} P_{\mathrm{obs}} + \frac{1}{4} \delta_0$
+- $P_{+} = \frac{3}{4} P_{\mathrm{obs}} + \frac{1}{4} \delta_1$
+- $P_{\mathrm{deploy}} = \frac{1}{4} [\delta(R_{0.1}) + \delta(R_{0.2}) + \delta(R_{0.5}) + \delta(R_{0.9})]$
+
+For every algorithm and seed, the inequality $\mathrm{CVaR}_{\alpha}(P_{-}) \le \mathrm{CVaR}_{\alpha}(P_{\mathrm{deploy}}) \le \mathrm{CVaR}_{\alpha}(P_{+})$ holds strictly:
+
+| Algorithm | Lower Bound $\mathrm{CVaR}_{0.9}(P_{-})$ | Deployment $\mathrm{CVaR}_{0.9}(P_{\mathrm{deploy}})$ | Upper Bound $\mathrm{CVaR}_{0.9}(P_{+})$ | ID Width $\Delta_{\mathrm{ID}}$ |
+|---|---|---|---|---|
+| ERM | 0.4533 ± 0.0048 | 0.7670 ± 0.0134 | 1.0000 ± 0.0000 | 0.5467 ± 0.0048 |
+| GroupDRO | 0.4242 ± 0.0057 | 0.6889 ± 0.0096 | 1.0000 ± 0.0000 | 0.5758 ± 0.0057 |
+| InfTask | 0.3841 ± 0.0069 | 0.5437 ± 0.0219 | 1.0000 ± 0.0000 | 0.6159 ± 0.0069 |
+| IRM | 0.3887 ± 0.0100 | 0.5681 ± 0.0388 | 1.0000 ± 0.0000 | 0.6113 ± 0.0100 |
+| IRO | 0.3799 ± 0.0117 | 0.5405 ± 0.0241 | 1.0000 ± 0.0000 | 0.6201 ± 0.0117 |
+
+Outputs saved to `theorem_aligned_01_cvar_bounds.csv` and `theorem_aligned_01_cvar_bounds.pdf`.
+
+### Same-Predictor Identification-Width Simulation
+Supplementary simulation evaluating a fixed predictor $P_{\mathrm{obs}} = \delta_0$ ($M = 1$) under missing deployment mass $\varepsilon \in \{0, 0.05, 0.1, 0.2, 0.3\}$ and $\alpha \in \{0.5, 0.75, 0.9\}$:
+- Numerical width $\mathrm{CVaR}_{\alpha}(P_{+}) - \mathrm{CVaR}_{\alpha}(P_{-})$ matches theoretical width $\min(1, \varepsilon / (1 - \alpha))$ exactly up to floating-point precision ($< 5 \times 10^{-16}$).
+
+Outputs saved to `same_predictor_identification_width.csv` and `same_predictor_identification_width.pdf`.
 
 ## Priority 6 Lambda Audit
 

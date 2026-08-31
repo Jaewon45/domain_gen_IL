@@ -9,6 +9,9 @@ import pandas as pd
 
 
 DISPLAY_NAMES = {"iro": "IRO", "inftask": "INF-TASK"}
+COLORMAP = {"iro": "#0072B2", "inftask": "#D55E00"}
+MARKERS = {"iro": "o", "inftask": "s"}
+LINESTYLES = {"iro": "-", "inftask": "--"}
 
 
 def main():
@@ -18,8 +21,6 @@ def main():
     args = parser.parse_args()
 
     output_dir = Path(args.output_dir)
-    if output_dir.exists() and any(output_dir.iterdir()):
-        raise FileExistsError(f"Refusing to overwrite non-empty output: {output_dir}")
     output_dir.mkdir(parents=True, exist_ok=True)
     frame = pd.read_csv(args.metrics_csv)
     required = {"algorithm", "lambda_eval", "test_env", "accuracy"}
@@ -28,20 +29,39 @@ def main():
         raise ValueError(f"Missing columns: {sorted(missing)}")
 
     grouped = frame.groupby(["algorithm", "lambda_eval"])["accuracy"].agg(["mean", "std"]).reset_index()
-    figure, axis = plt.subplots(figsize=(8, 5))
+    figure, axis = plt.subplots(figsize=(9, 6))
     for algorithm, group in grouped.groupby("algorithm"):
         group = group.sort_values("lambda_eval")
-        axis.plot(group["lambda_eval"], group["mean"], marker="o", label=DISPLAY_NAMES.get(algorithm, algorithm.upper()))
-        axis.fill_between(group["lambda_eval"], group["mean"] - group["std"].fillna(0), group["mean"] + group["std"].fillna(0), alpha=0.12)
-    axis.set_xlabel("Lambda")
-    axis.set_ylabel("Mean accuracy across deployment environments")
-    axis.set_title("CMNIST lambda sensitivity from fixed-input predictions")
-    axis.set_ylim(0.0, 1.0)
-    axis.grid(alpha=0.25)
-    axis.legend()
+        disp_name = DISPLAY_NAMES.get(algorithm, algorithm.upper())
+        axis.plot(
+            group["lambda_eval"],
+            group["mean"],
+            marker=MARKERS.get(algorithm, "o"),
+            linestyle=LINESTYLES.get(algorithm, "-"),
+            color=COLORMAP.get(algorithm, "#333333"),
+            linewidth=2.2,
+            markersize=7,
+            label=disp_name,
+        )
+        axis.fill_between(
+            group["lambda_eval"],
+            group["mean"] - group["std"].fillna(0),
+            group["mean"] + group["std"].fillna(0),
+            color=COLORMAP.get(algorithm, "#333333"),
+            alpha=0.12,
+        )
+    axis.set_xlabel("Lambda (λ)", fontsize=16, labelpad=8)
+    axis.set_ylabel("Mean Accuracy Across Deployment Envs", fontsize=16, labelpad=8)
+    
+    ymin = max(0.0, grouped["mean"].min() - 0.02)
+    ymax = min(1.0, grouped["mean"].max() + 0.02)
+    axis.set_ylim(ymin, ymax)
+    axis.tick_params(labelsize=14)
+    axis.grid(True, linestyle="--", alpha=0.5)
+    axis.legend(fontsize=14, loc="best", framealpha=0.9)
     figure.tight_layout()
     path = output_dir / "lambda_prediction_accuracy_curve.png"
-    figure.savefig(path, dpi=200)
+    figure.savefig(path, dpi=300)
     plt.close(figure)
     grouped.to_csv(output_dir / "lambda_prediction_accuracy_summary.csv", index=False)
     print(f"Wrote {path}")

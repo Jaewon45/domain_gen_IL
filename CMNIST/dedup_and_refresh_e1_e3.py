@@ -47,7 +47,7 @@ def load_deduped_records(results_dir):
 
 
 def write_verification(frame, summary, group_by, output_path, tolerance=1e-10):
-    metrics = ["worst_domain_acc_best", "avg_domain_acc_best", "best_domain_acc_best"]
+    metrics = ["worst_domain_acc_final", "avg_domain_acc_final", "best_domain_acc_final"]
     audit_rows = []
     for _, expected in summary.iterrows():
         subset = frame[
@@ -87,7 +87,7 @@ def refresh_e1(results_dir, output_dir):
     frame["n_train_domains"] = frame["n_train_domains"].astype(int)
 
     metric_columns = [
-        column for column in ["worst_domain_acc_best", "avg_domain_acc_best", "best_domain_acc_best"]
+        column for column in ["worst_domain_acc_final", "avg_domain_acc_final", "best_domain_acc_final"]
         if column in frame.columns
     ]
     summary = (
@@ -103,7 +103,7 @@ def refresh_e1(results_dir, output_dir):
     write_verification(frame, summary, "n_train_domains", output_dir / "E1_report_table_verification.csv")
 
     env_columns = sorted(
-        [c for c in frame.columns if c.endswith("_acc_best") and c.split("_")[0].replace(".", "", 1).isdigit()],
+        [c for c in frame.columns if c.endswith("_acc_final") and c.split("_")[0].replace(".", "", 1).isdigit()],
         key=lambda c: float(c.split("_")[0]),
     )
     long_rows = []
@@ -119,22 +119,76 @@ def refresh_e1(results_dir, output_dir):
     long_frame = pd.DataFrame(long_rows)
     long_frame.to_csv(output_dir / "domain_count_accuracy_by_test_env.csv", index=False)
 
-    figure, axes = plt.subplots(1, 4, figsize=(20, 5), sharey=True)
-    for axis, domain_count in zip(axes, sorted(long_frame["n_train_domains"].unique())):
+    algo_display = {
+        "erm": "ERM",
+        "groupdro": "GroupDRO",
+        "inftask": "INF-TASK",
+        "irm": "IRM",
+        "iro": "IRO",
+    }
+    algo_colors = {
+        "erm": "#0072B2",
+        "groupdro": "#D55E00",
+        "inftask": "#009E73",
+        "irm": "#CC79A7",
+        "iro": "#E69F00",
+    }
+    algo_markers = {
+        "erm": "o",
+        "groupdro": "s",
+        "inftask": "^",
+        "irm": "d",
+        "iro": "v",
+    }
+    algo_linestyles = {
+        "erm": "-",
+        "groupdro": "--",
+        "inftask": "-.",
+        "irm": ":",
+        "iro": "-",
+    }
+
+    figure, axes = plt.subplots(2, 2, figsize=(12, 10), sharey=True, sharex=True)
+    axes_flat = axes.flatten()
+    domain_counts = sorted(long_frame["n_train_domains"].unique())
+    algo_order = ["erm", "groupdro", "inftask", "irm", "iro"]
+
+    for axis, domain_count in zip(axes_flat, domain_counts):
         subset = long_frame[long_frame["n_train_domains"] == domain_count]
-        for algorithm, group in subset.groupby("algorithm"):
+        for algorithm in algo_order:
+            if algorithm not in subset["algorithm"].unique():
+                continue
+            group = subset[subset["algorithm"] == algorithm]
             curve = group.groupby("test_env")["accuracy"].agg(["mean", "std"]).reset_index()
-            axis.plot(curve["test_env"], curve["mean"], marker="o", label=algorithm)
+            disp_name = algo_display.get(algorithm, algorithm.upper())
+            axis.plot(
+                curve["test_env"],
+                curve["mean"],
+                marker=algo_markers.get(algorithm, "o"),
+                linestyle=algo_linestyles.get(algorithm, "-"),
+                color=algo_colors.get(algorithm, "#333333"),
+                linewidth=2.2,
+                markersize=7,
+                label=disp_name,
+            )
             if curve["std"].notna().any():
-                axis.fill_between(curve["test_env"], curve["mean"] - curve["std"].fillna(0), curve["mean"] + curve["std"].fillna(0), alpha=0.08)
-        axis.set_title(f"{domain_count} source domains")
-        axis.set_xlabel("Test environment e")
-        axis.grid(alpha=0.25)
-    axes[0].set_ylabel("Accuracy")
-    axes[-1].legend(loc="best", fontsize=9)
-    figure.suptitle("E1 clean domain-count accuracy across test environments (seeds 0-4)")
-    figure.tight_layout()
-    figure.savefig(output_dir / "domain_count_accuracy_by_test_env.png", dpi=200)
+                axis.fill_between(
+                    curve["test_env"],
+                    curve["mean"] - curve["std"].fillna(0),
+                    curve["mean"] + curve["std"].fillna(0),
+                    color=algo_colors.get(algorithm, "#333333"),
+                    alpha=0.1,
+                )
+        axis.set_title(f"{domain_count} Source Domains", fontsize=16, pad=8, fontweight="bold")
+        axis.set_xlabel("Test Environment e", fontsize=14, labelpad=6)
+        axis.set_ylabel("Accuracy", fontsize=14, labelpad=6)
+        axis.tick_params(labelsize=12)
+        axis.grid(True, linestyle="--", alpha=0.5)
+
+    handles, labels = axes_flat[0].get_legend_handles_labels()
+    figure.legend(handles, labels, loc="lower center", bbox_to_anchor=(0.5, -0.02), ncol=5, fontsize=14, framealpha=0.9)
+    figure.tight_layout(rect=[0, 0.05, 1, 0.98])
+    figure.savefig(output_dir / "domain_count_accuracy_by_test_env.png", dpi=300, bbox_inches="tight")
     plt.close(figure)
 
     print(f"[E1] records: {len(frame)}; seeds: {sorted(frame['seed'].unique())}; "
@@ -148,7 +202,7 @@ def refresh_e3(results_dir, output_dir):
     frame = frame[frame["phase"] == "imbalance"].copy()
 
     metric_columns = [
-        column for column in ["worst_domain_acc_best", "avg_domain_acc_best", "best_domain_acc_best"]
+        column for column in ["worst_domain_acc_final", "avg_domain_acc_final", "best_domain_acc_final"]
         if column in frame.columns
     ]
     summary = (
@@ -164,7 +218,7 @@ def refresh_e3(results_dir, output_dir):
     write_verification(frame, summary, "imbalance_type", output_dir / "E3_report_table_verification.csv")
 
     env_columns = sorted(
-        [c for c in frame.columns if c.endswith("_acc_best") and c.split("_")[0].replace(".", "", 1).isdigit()],
+        [c for c in frame.columns if c.endswith("_acc_final") and c.split("_")[0].replace(".", "", 1).isdigit()],
         key=lambda c: float(c.split("_")[0]),
     )
     long_rows = []
@@ -180,33 +234,109 @@ def refresh_e3(results_dir, output_dir):
     long_frame = pd.DataFrame(long_rows)
     long_frame.to_csv(output_dir / "imbalance_accuracy_by_test_env_cross_seed.csv", index=False)
 
-    figure, axis = plt.subplots(figsize=(9, 6))
-    for imbalance_type, group in long_frame.groupby("imbalance_type"):
+    imbalance_display = {
+        "balanced": "Balanced",
+        "first_heavy_mild": "First-heavy, mild",
+        "first_heavy_strong": "First-heavy, strong",
+        "last_heavy_mild": "Last-heavy, mild",
+        "last_heavy_strong": "Last-heavy, strong",
+    }
+    imbalance_colors = {
+        "balanced": "#0072B2",             # Blue
+        "first_heavy_mild": "#D55E00",     # Vermillion
+        "first_heavy_strong": "#E69F00",   # Orange
+        "last_heavy_mild": "#009E73",      # Bluish Green
+        "last_heavy_strong": "#CC79A7",    # Reddish Purple
+    }
+    imbalance_markers = {
+        "balanced": "o",
+        "first_heavy_mild": "s",
+        "first_heavy_strong": "^",
+        "last_heavy_mild": "d",
+        "last_heavy_strong": "v",
+    }
+    imbalance_linestyles = {
+        "balanced": "-",
+        "first_heavy_mild": "--",
+        "first_heavy_strong": "-.",
+        "last_heavy_mild": ":",
+        "last_heavy_strong": "-",
+    }
+
+    figure, axis = plt.subplots(figsize=(10, 6.5))
+    imb_order = ["balanced", "first_heavy_mild", "first_heavy_strong", "last_heavy_mild", "last_heavy_strong"]
+    for imbalance_type in imb_order:
+        if imbalance_type not in long_frame["imbalance_type"].unique():
+            continue
+        group = long_frame[long_frame["imbalance_type"] == imbalance_type]
         curve = group.groupby("test_env")["accuracy"].agg(["mean", "std"]).reset_index()
-        axis.plot(curve["test_env"], curve["mean"], marker="o", label=imbalance_type)
+        disp = imbalance_display.get(imbalance_type, imbalance_type)
+        axis.plot(
+            curve["test_env"],
+            curve["mean"],
+            marker=imbalance_markers.get(imbalance_type, "o"),
+            linestyle=imbalance_linestyles.get(imbalance_type, "-"),
+            color=imbalance_colors.get(imbalance_type, "#333333"),
+            linewidth=2.2,
+            markersize=7,
+            label=disp,
+        )
         if curve["std"].notna().any():
-            axis.fill_between(curve["test_env"], curve["mean"] - curve["std"].fillna(0), curve["mean"] + curve["std"].fillna(0), alpha=0.08)
-    axis.set_xlabel("Test environment e")
-    axis.set_ylabel("Accuracy")
-    axis.set_title("E3 clean imbalance accuracy across test environments (seeds 0-4)")
-    axis.legend(loc="best", fontsize=9)
-    axis.grid(alpha=0.25)
+            axis.fill_between(
+                curve["test_env"],
+                curve["mean"] - curve["std"].fillna(0),
+                curve["mean"] + curve["std"].fillna(0),
+                color=imbalance_colors.get(imbalance_type, "#333333"),
+                alpha=0.08,
+            )
+    axis.set_xlabel("Test Environment e", fontsize=16, labelpad=8)
+    axis.set_ylabel("Accuracy", fontsize=16, labelpad=8)
+    axis.tick_params(labelsize=14)
+    axis.legend(loc="best", fontsize=13, framealpha=0.9)
+    axis.grid(True, linestyle="--", alpha=0.5)
     figure.tight_layout()
-    figure.savefig(output_dir / "e3_imbalance_accuracy_by_test_env.png", dpi=200)
+    figure.savefig(output_dir / "e3_imbalance_accuracy_by_test_env.png", dpi=300)
     plt.close(figure)
 
-    figure2, axis2 = plt.subplots(figsize=(9, 6))
+    imbalance_tick_display = {
+        "balanced": "Balanced",
+        "first_heavy_mild": "First-heavy,\nmild",
+        "first_heavy_strong": "First-heavy,\nstrong",
+        "last_heavy_mild": "Last-heavy,\nmild",
+        "last_heavy_strong": "Last-heavy,\nstrong",
+    }
+
+    figure2, axis2 = plt.subplots(figsize=(10, 6.5))
     worst_summary = (
-        frame.groupby(["imbalance_type", "algorithm"])["worst_domain_acc_best"]
+        frame.groupby(["imbalance_type", "algorithm"])["worst_domain_acc_final"]
         .mean()
         .reset_index()
-        .pivot(index="imbalance_type", columns="algorithm", values="worst_domain_acc_best")
+        .pivot(index="imbalance_type", columns="algorithm", values="worst_domain_acc_final")
     )
-    worst_summary.plot(kind="bar", ax=axis2)
-    axis2.set_ylabel("Worst-domain accuracy (mean over seeds)")
-    axis2.set_title("E3 worst-domain accuracy by condition (seeds 0-4)")
+    # Reindex for clean order
+    existing_types = [t for t in imb_order if t in worst_summary.index]
+    worst_summary = worst_summary.reindex(existing_types)
+    worst_summary.index = [imbalance_tick_display.get(t, t) for t in worst_summary.index]
+
+    algo_display_map = {"erm": "ERM", "groupdro": "GroupDRO", "inftask": "INF-TASK", "irm": "IRM", "iro": "IRO"}
+    worst_summary.columns = [algo_display_map.get(c, c.upper()) for c in worst_summary.columns]
+    bar_cols = ["#0072B2", "#D55E00", "#009E73", "#CC79A7", "#E69F00"][:len(worst_summary.columns)]
+    worst_summary.plot(kind="bar", ax=axis2, color=bar_cols, width=0.8, edgecolor="black", linewidth=0.8)
+
+    hatches = ["", "//", "\\\\", "xx", ".."]
+    for i, container in enumerate(axis2.containers):
+        hatch = hatches[i % len(hatches)]
+        for bar in container:
+            bar.set_hatch(hatch)
+
+    axis2.set_ylabel("Worst-Domain Accuracy (Mean over Seeds)", fontsize=16, labelpad=8)
+    axis2.set_xlabel("Imbalance Condition", fontsize=16, labelpad=8)
+    axis2.tick_params(axis="x", rotation=0, labelsize=13)
+    axis2.tick_params(axis="y", labelsize=14)
+    axis2.legend(loc="upper right", fontsize=13, framealpha=0.9)
+    axis2.grid(axis="y", linestyle="--", alpha=0.5)
     figure2.tight_layout()
-    figure2.savefig(output_dir / "e3_imbalance_worst_domain_accuracy.png", dpi=200)
+    figure2.savefig(output_dir / "e3_imbalance_worst_domain_accuracy.png", dpi=300)
     plt.close(figure2)
 
     print(f"[E3] records: {len(frame)}; seeds: {sorted(frame['seed'].unique())}; "

@@ -32,7 +32,7 @@ def main():
     frame["n_train_domains"] = frame["n_train_domains"].astype(int)
 
     metric_columns = [
-        column for column in ["worst_domain_acc_best", "avg_domain_acc_best", "best_domain_acc_best"]
+        column for column in ["worst_domain_acc_final", "avg_domain_acc_final", "best_domain_acc_final"]
         if column in frame.columns
     ]
     summary = (
@@ -47,7 +47,7 @@ def main():
     summary.to_csv(output_dir / "domain_count_by_algorithm.csv", index=False)
 
     env_columns = sorted(
-        [column for column in frame.columns if column.endswith("_acc_best") and column.split("_")[0].replace(".", "", 1).isdigit()],
+        [column for column in frame.columns if column.endswith("_acc_final") and column.split("_")[0].replace(".", "", 1).isdigit()],
         key=lambda column: float(column.split("_")[0]),
     )
     long_rows = []
@@ -63,22 +63,76 @@ def main():
     long_frame = pd.DataFrame(long_rows)
     long_frame.to_csv(output_dir / "domain_count_accuracy_by_test_env.csv", index=False)
 
-    figure, axes = plt.subplots(1, 4, figsize=(20, 5), sharey=True)
-    for axis, domain_count in zip(axes, sorted(long_frame["n_train_domains"].unique())):
+    algo_display = {
+        "erm": "ERM",
+        "groupdro": "GroupDRO",
+        "inftask": "INF-TASK",
+        "irm": "IRM",
+        "iro": "IRO",
+    }
+    algo_colors = {
+        "erm": "#0072B2",
+        "groupdro": "#D55E00",
+        "inftask": "#009E73",
+        "irm": "#CC79A7",
+        "iro": "#E69F00",
+    }
+    algo_markers = {
+        "erm": "o",
+        "groupdro": "s",
+        "inftask": "^",
+        "irm": "d",
+        "iro": "v",
+    }
+    algo_linestyles = {
+        "erm": "-",
+        "groupdro": "--",
+        "inftask": "-.",
+        "irm": ":",
+        "iro": "-",
+    }
+
+    figure, axes = plt.subplots(2, 2, figsize=(12, 10), sharey=True, sharex=True)
+    axes_flat = axes.flatten()
+    domain_counts = sorted(long_frame["n_train_domains"].unique())
+    algo_order = ["erm", "groupdro", "inftask", "irm", "iro"]
+
+    for axis, domain_count in zip(axes_flat, domain_counts):
         subset = long_frame[long_frame["n_train_domains"] == domain_count]
-        for algorithm, group in subset.groupby("algorithm"):
+        for algorithm in algo_order:
+            if algorithm not in subset["algorithm"].unique():
+                continue
+            group = subset[subset["algorithm"] == algorithm]
             curve = group.groupby("test_env")["accuracy"].agg(["mean", "std"]).reset_index()
-            axis.plot(curve["test_env"], curve["mean"], marker="o", label=algorithm)
+            disp_name = algo_display.get(algorithm, algorithm.upper())
+            axis.plot(
+                curve["test_env"],
+                curve["mean"],
+                marker=algo_markers.get(algorithm, "o"),
+                linestyle=algo_linestyles.get(algorithm, "-"),
+                color=algo_colors.get(algorithm, "#333333"),
+                linewidth=2.2,
+                markersize=7,
+                label=disp_name,
+            )
             if curve["std"].notna().any():
-                axis.fill_between(curve["test_env"], curve["mean"] - curve["std"].fillna(0), curve["mean"] + curve["std"].fillna(0), alpha=0.08)
-        axis.set_title(f"{domain_count} source domains")
-        axis.set_xlabel("Test environment e")
-        axis.grid(alpha=0.25)
-    axes[0].set_ylabel("Accuracy")
-    axes[-1].legend(loc="best", fontsize=9)
-    figure.suptitle("E1 clean domain-count accuracy across test environments")
-    figure.tight_layout()
-    figure.savefig(output_dir / "domain_count_accuracy_by_test_env.png", dpi=200)
+                axis.fill_between(
+                    curve["test_env"],
+                    curve["mean"] - curve["std"].fillna(0),
+                    curve["mean"] + curve["std"].fillna(0),
+                    color=algo_colors.get(algorithm, "#333333"),
+                    alpha=0.1,
+                )
+        axis.set_title(f"{domain_count} Source Domains", fontsize=16, pad=8, fontweight="bold")
+        axis.set_xlabel("Test Environment e", fontsize=14, labelpad=6)
+        axis.set_ylabel("Accuracy", fontsize=14, labelpad=6)
+        axis.tick_params(labelsize=12)
+        axis.grid(True, linestyle="--", alpha=0.5)
+
+    handles, labels = axes_flat[0].get_legend_handles_labels()
+    figure.legend(handles, labels, loc="lower center", bbox_to_anchor=(0.5, -0.02), ncol=5, fontsize=14, framealpha=0.9)
+    figure.tight_layout(rect=[0, 0.05, 1, 0.98])
+    figure.savefig(output_dir / "domain_count_accuracy_by_test_env.png", dpi=300, bbox_inches="tight")
     plt.close(figure)
     print(f"Records: {len(frame)}; seeds: {sorted(frame['seed'].unique())}; conditions: {sorted(frame['n_train_domains'].unique())}")
     print(f"Wrote outputs to {output_dir}")

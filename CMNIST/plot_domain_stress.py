@@ -168,6 +168,43 @@ def plot_grouped_metric(frame, phase_name, x_column, y_column, output_name, titl
     return output_path
 
 
+def plot_imbalance_environment_curves(frame, output_dir):
+    phase_frame = frame[frame["phase"] == "imbalance"].copy()
+    if phase_frame.empty:
+        return None
+    acc_columns = env_metric_columns(phase_frame, "_acc_best")
+    if not acc_columns:
+        return None
+    phase_frame["condition"] = phase_frame["train_env_sizes"].astype(str)
+    selected_conditions = [
+        "[2000, 2000, 2000, 2000]",
+        "[1000, 1000, 1000, 5000]",
+        "[5000, 1000, 1000, 1000]",
+    ]
+    phase_frame = phase_frame[phase_frame["condition"].isin(selected_conditions)]
+    if phase_frame.empty:
+        return None
+
+    figure, axes = plt.subplots(1, 3, figsize=(18, 5), sharey=True)
+    x_values = [float(column.split("_")[0]) for column in acc_columns]
+    for axis, condition in zip(axes, selected_conditions):
+        condition_frame = phase_frame[phase_frame["condition"] == condition]
+        for algorithm, algorithm_frame in condition_frame.groupby("algorithm"):
+            values = algorithm_frame[acc_columns].mean(axis=0).to_numpy()
+            axis.plot(x_values, values, marker="o", label=format_algorithm_name(algorithm))
+        axis.set_title(condition.replace("[", "").replace("]", ""))
+        axis.set_xlabel("Test environment e")
+        axis.grid(alpha=0.25)
+    axes[0].set_ylabel("Accuracy")
+    axes[-1].legend(loc="best", fontsize=10)
+    figure.suptitle("E3 fixed-budget imbalance: accuracy across test environments")
+    figure.tight_layout()
+    output_path = os.path.join(output_dir, "e3_imbalance_accuracy_by_test_env.png")
+    figure.savefig(output_path, dpi=200)
+    plt.close(figure)
+    return output_path
+
+
 def plot_lambda_risk(lambda_results_dir, output_dir):
     lambda_records = load_records(lambda_results_dir)
     frame = pd.DataFrame.from_records(lambda_records)
@@ -241,6 +278,7 @@ if __name__ == "__main__":
             "Imbalance condition",
             args.output_dir,
         ),
+        plot_imbalance_environment_curves(frame, args.output_dir),
     ]:
         if output_path is not None:
             generated.append(output_path)

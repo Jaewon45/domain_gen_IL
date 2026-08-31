@@ -23,7 +23,7 @@ def main():
     records = records[records["phase"] == args.phase].copy()
     summary = pd.read_csv(args.summary_csv)
     group_by = args.group_by or ("n_train_domains" if args.phase == "domain_count" else "imbalance_type")
-    metrics = ["worst_domain_acc_best", "avg_domain_acc_best", "best_domain_acc_best"]
+    metrics = ["worst_domain_acc_final", "avg_domain_acc_final", "best_domain_acc_final"]
     audit_rows = []
     for _, expected in summary.iterrows():
         subset = records[

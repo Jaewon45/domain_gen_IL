@@ -8,9 +8,9 @@ Smoke-level provisional marks for sections 4-9 are supported by `SMOKE_MANUAL_4_
 
 - [x] Critical fix applied: IRO Pareto update now uses full parameter-gradient tuple and safe Beta-parameter update path.
 - [x] High fix applied: `loss_fn` CLI choices are valid (`nll`, `cross_ent`) and no longer malformed.
-- [~] Medium behavior check in progress: IRO domain-count robustness red flag is improved in tiny E1 smoke run, but full multi-seed E1 confirmation is still pending.
+- [x] Medium behavior check resolved: full 5-seed E1 confirmation (seeds 0-4, `results/cmnist_domain_count_clean_v1/analysis_seed0-4/`) shows no worst-domain accuracy collapse for IRO across 2/4/6/8 source domains (worst-domain mean 0.675-0.686, std 0.007-0.011).
   - [x] Tiny smoke signal collected (seed 0, short run): IRO worst-domain accuracy no longer collapsed near zero.
-  - [ ] Full-status closure pending: rerun E1 at longer schedule and across seeds before marking fully resolved.
+  - [x] Full-status closure complete: E1 reran across seeds 0-4 with the corrected fixed-budget manifest; IRO worst-domain accuracy stays in the same range as other algorithms at every domain count.
 
 ## 0) Scope Lock
 

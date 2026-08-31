@@ -26,19 +26,26 @@ ALGORITHM_DISPLAY_NAMES = {
     "irm": "IRM",
     "groupdro": "GroupDRO",
     "iro": "IRO",
-    "inftask": "InfTask",
+    "inftask": "INF-TASK",
 }
 
-BRIGHT_BAR_COLORS = [
-    "#4C78A8",
-    "#F58518",
-    "#54A24B",
-    "#E45756",
-    "#72B7B2",
-    "#EECA3B",
-    "#B279A2",
-    "#FF9DA6",
+CONDITION_DISPLAY_NAMES = {
+    "balanced_visible": "Balanced\nVisible",
+    "long_tail_visible": "Long-Tail\nVisible",
+    "near_missing_tail": "Near-Missing\nTail",
+    "missing_tail": "Missing\nTail",
+}
+
+COLORBIND_PALETTE = [
+    "#0072B2",  # Blue
+    "#D55E00",  # Vermillion
+    "#009E73",  # Bluish Green
+    "#CC79A7",  # Reddish Purple
+    "#E69F00",  # Orange
+    "#56B4E9",  # Sky Blue
 ]
+
+HATCHES = ["", "//", "\\\\", "xx", ".."]
 
 
 def apply_plot_style() -> None:
@@ -216,7 +223,7 @@ def metrics_from_rows(group_rows: pd.DataFrame, alphas: List[float]) -> Dict[str
 
 def build_raw_rows_from_main(frame: pd.DataFrame, eval_envs: List[float]) -> List[Dict[str, object]]:
     rows: List[Dict[str, object]] = []
-    acc_cols = env_metric_columns(frame, "_acc_best")
+    acc_cols = env_metric_columns(frame, "_acc_final")
     envs = [float(col.split("_")[0]) for col in acc_cols]
     if eval_envs:
         envs = eval_envs
@@ -237,8 +244,8 @@ def build_raw_rows_from_main(frame: pd.DataFrame, eval_envs: List[float]) -> Lis
 
         for env in envs:
             env_key = str(env)
-            acc_key = f"{env_key}_acc_best"
-            loss_key = f"{env_key}_loss_best"
+            acc_key = f"{env_key}_acc_final"
+            loss_key = f"{env_key}_loss_final"
             if acc_key not in row or loss_key not in row:
                 continue
 
@@ -333,16 +340,32 @@ def plot_metric(summary: pd.DataFrame, metric: str, out_path: str, title: str, y
     if pivot.empty:
         return
 
+    algo_order = ["erm", "groupdro", "inftask", "irm", "iro"]
+    existing_cols = [c for c in algo_order if c in pivot.columns] + [c for c in pivot.columns if c not in algo_order]
+    pivot = pivot[existing_cols]
+
     pivot.columns = [format_algorithm_name(column) for column in pivot.columns]
-    bar_colors = BRIGHT_BAR_COLORS[:len(pivot.columns)]
-    ax = pivot.plot(kind="bar", figsize=(11, 6), color=bar_colors)
-    ax.set_title(reportable_text(title))
-    ax.set_xlabel("Condition")
-    ax.set_ylabel(reportable_text(ylabel))
-    ax.set_xticklabels([format_condition_tick(value) for value in pivot.index], rotation=0, ha="center")
-    ax.legend(loc="best")
+    bar_colors = COLORBIND_PALETTE[:len(pivot.columns)]
+
+    fig, ax = plt.subplots(figsize=(10, 6.5))
+    pivot.plot(kind="bar", ax=ax, color=bar_colors, width=0.8, edgecolor="black", linewidth=0.8)
+
+    for i, container in enumerate(ax.containers):
+        hatch = HATCHES[i % len(HATCHES)]
+        for bar in container:
+            bar.set_hatch(hatch)
+
+    ax.set_xlabel("Condition", fontsize=18, labelpad=8)
+    ax.set_ylabel(reportable_text(ylabel), fontsize=18, labelpad=8)
+
+    labels = [CONDITION_DISPLAY_NAMES.get(str(value), str(value)) for value in pivot.index]
+    ax.set_xticklabels(labels, rotation=0, ha="center", fontsize=15)
+    ax.tick_params(axis="y", labelsize=15)
+    ax.legend(loc="upper left", fontsize=14, framealpha=0.9)
+    ax.grid(axis="y", linestyle="--", alpha=0.5)
+
     plt.tight_layout()
-    plt.savefig(out_path, dpi=200)
+    plt.savefig(out_path, dpi=300)
     plt.close()
 
 
@@ -381,7 +404,6 @@ def plot_iro_lambda(raw_df: pd.DataFrame, metric: str, out_path: str, title: str
 
     plt.xlabel("Lambda")
     plt.ylabel(reportable_text(ylabel))
-    plt.title(reportable_text(title))
     plt.legend()
     plt.tight_layout()
     plt.savefig(out_path, dpi=200)

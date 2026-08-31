@@ -137,6 +137,16 @@ def _infer_imbalance_type(train_env_sizes):
     if len(unique_sizes) == 1:
         return "balanced"
 
+    if len(train_env_sizes) == 4:
+        if train_env_sizes == [3500, 1500, 1500, 1500]:
+            return "first_heavy_mild"
+        if train_env_sizes == [1500, 1500, 1500, 3500]:
+            return "last_heavy_mild"
+        if train_env_sizes == [5000, 1000, 1000, 1000]:
+            return "first_heavy_strong"
+        if train_env_sizes == [1000, 1000, 1000, 5000]:
+            return "last_heavy_strong"
+
     min_size = min(train_env_sizes)
     max_size = max(train_env_sizes)
     if min_size <= 0:

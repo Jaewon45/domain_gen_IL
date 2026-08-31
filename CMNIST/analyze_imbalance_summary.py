@@ -23,12 +23,12 @@ def main():
         raise ValueError("No imbalance records found")
 
     metrics = [
-        "worst_domain_acc_best",
-        "avg_domain_acc_best",
-        "best_domain_acc_best",
         "worst_domain_acc_final",
         "avg_domain_acc_final",
         "best_domain_acc_final",
+        "worst_domain_acc_best",
+        "avg_domain_acc_best",
+        "best_domain_acc_best",
     ]
     metrics = [metric for metric in metrics if metric in frame.columns]
     summary = (
@@ -49,7 +49,7 @@ def main():
     env_columns = sorted(
         [
             column for column in frame.columns
-            if column.endswith("_acc_best")
+            if column.endswith("_acc_final")
             and column.split("_")[0].replace(".", "", 1).isdigit()
         ],
         key=lambda column: float(column.split("_")[0]),

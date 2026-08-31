@@ -106,19 +106,39 @@ def main():
     frame.to_csv(output_dir / "identification_width_by_alpha.csv", index=False)
 
     selected = frame[(frame["alpha"] == args.plot_alpha) & (frame["exponent"] == args.plot_exponent)]
-    figure, axis = plt.subplots(figsize=(8, 5))
-    for missing_fraction, group in selected.groupby("requested_missing_tail_fraction"):
+    figure, axis = plt.subplots(figsize=(9, 6))
+    colors = ["#0072B2", "#D55E00", "#009E73", "#CC79A7"]
+    markers = ["o", "s", "^", "d"]
+    linestyles = ["-", "--", "-.", ":"]
+
+    for idx, (missing_fraction, group) in enumerate(selected.groupby("requested_missing_tail_fraction")):
         group = group.sort_values("sample_size")
-        axis.plot(group["sample_size"], group["analytical_delta_id"], marker="o", label=f"epsilon={missing_fraction:g}")
-        axis.scatter(group["sample_size"], group["simulated_interval_width"], marker="x")
+        axis.plot(
+            group["sample_size"],
+            group["analytical_delta_id"],
+            marker=markers[idx % len(markers)],
+            linestyle=linestyles[idx % len(linestyles)],
+            color=colors[idx % len(colors)],
+            linewidth=2.2,
+            markersize=7,
+            label=f"epsilon={missing_fraction:g}",
+        )
+        axis.scatter(
+            group["sample_size"],
+            group["simulated_interval_width"],
+            marker="x",
+            color=colors[idx % len(colors)],
+            s=60,
+            zorder=5,
+        )
     axis.set_xscale("log")
-    axis.set_xlabel("Source sample size")
-    axis.set_ylabel("Identification interval width")
-    axis.set_title("Priority 7 identification-width diagnostic")
-    axis.grid(alpha=0.25)
-    axis.legend()
+    axis.set_xlabel("Source Sample Size", fontsize=16, labelpad=8)
+    axis.set_ylabel("Identification Interval Width", fontsize=16, labelpad=8)
+    axis.tick_params(labelsize=14)
+    axis.grid(True, linestyle="--", alpha=0.5)
+    axis.legend(fontsize=13, loc="best", framealpha=0.9)
     figure.tight_layout()
-    figure.savefig(output_dir / "identification_width_by_alpha.png", dpi=200)
+    figure.savefig(output_dir / "identification_width_by_alpha.png", dpi=300)
     plt.close(figure)
     print(f"Conditions: {len(frame)}")
     print(f"Wrote {output_dir / 'identification_width_by_alpha.csv'}")
