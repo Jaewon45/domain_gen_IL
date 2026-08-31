@@ -1,0 +1,7 @@
+checkpoint_path,algorithm,seed,metric,best_value,worst_value,best_worst_range,max_neighbor_change,mean_value
+C:\Users\320257223\PycharmProjects\domain_gen_IL\results\cmnist_exp\ckpts\0268e00ec2b36c8905d74119a90e1e81_best.pkl,iro,0,accuracy,0.69154,0.68902,0.0025200000000000777,0.0013000000000000789,0.6902818181818181
+C:\Users\320257223\PycharmProjects\domain_gen_IL\results\cmnist_exp\ckpts\0268e00ec2b36c8905d74119a90e1e81_best.pkl,iro,0,disagreement_from_lambda_0,0.038880000000000005,0.0,0.038880000000000005,0.0098,0.02460909090909091
+C:\Users\320257223\PycharmProjects\domain_gen_IL\results\cmnist_exp\ckpts\0268e00ec2b36c8905d74119a90e1e81_best.pkl,iro,0,neighbor_disagreement,0.012620000000000001,0.0,0.012620000000000001,0.0098,0.007385454545454546
+C:\Users\320257223\PycharmProjects\domain_gen_IL\results\cmnist_exp\ckpts\09c6e2f547919223592ba676adeec8ab_best.pkl,inftask,0,accuracy,0.6863400000000001,0.6544000000000001,0.03193999999999997,0.008560000000000123,0.6735890909090909
+C:\Users\320257223\PycharmProjects\domain_gen_IL\results\cmnist_exp\ckpts\09c6e2f547919223592ba676adeec8ab_best.pkl,inftask,0,disagreement_from_lambda_0,0.159,0.0,0.159,0.11202000000000001,0.12471272727272727
+C:\Users\320257223\PycharmProjects\domain_gen_IL\results\cmnist_exp\ckpts\09c6e2f547919223592ba676adeec8ab_best.pkl,inftask,0,neighbor_disagreement,0.11202000000000001,0.0,0.11202000000000001,0.11202000000000001,0.029258181818181815

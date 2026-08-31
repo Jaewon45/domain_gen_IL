@@ -1,0 +1,8 @@
+experiment,result_root,manifest,result_root_exists,manifest_exists,file_count,jsonl_count,csv_count,plot_count
+E1_corrected_domain_count,results/cmnist_domain_count_clean_v1,CMNIST/job_scripts/domain_count_clean.txt,True,True,441,108,7,2
+E3b_tail_support,results/E3b_tail_support,CMNIST/job_scripts/e3b_tail_support.txt,True,True,296,100,3,4
+E3_corrected_imbalance,results/imbalance_clean_v1,CMNIST/job_scripts/imbalance_clean.txt,True,True,519,125,7,2
+E4_lambda_predictions,results/cmnist_lambda_prediction_eval_v2,CMNIST/job_scripts/bashes/run_lambda_prediction_eval.ps1,True,True,8,1,3,1
+E4_pseudo_regret,results/cmnist_lambda_pseudoregret_v2,CMNIST/job_scripts/bashes/run_regret_logging.sh,True,True,3,0,2,0
+Priority7_theory,results/cmnist_priority7_theory_v1,CMNIST/job_scripts/bashes/run_priority7_theory.ps1,True,True,5,0,2,2
+GroupDRO_controlled,results/cmnist_groupdro_control_v2,CMNIST/job_scripts/groupdro_controlled_seed012_v2.txt,True,True,38,6,2,0

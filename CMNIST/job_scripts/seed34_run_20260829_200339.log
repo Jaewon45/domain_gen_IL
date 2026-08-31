@@ -1,0 +1,412 @@
+Seed 3/4 Job Batch Launch Log
+Started at: 08/29/2026 20:03:39
+Working directory: C:\Users\320257223\PycharmProjects\domain_gen_IL\CMNIST
+Python executable: C:\Users\320257223\PycharmProjects\domain_gen_IL\dgil_env\Scripts\python.exe
+Manifests to process: domain_count_clean_seed3.txt, domain_count_clean_seed4.txt, imbalance_clean_seed3.txt, imbalance_clean_seed4.txt, e3b_tail_support_seed3.txt, e3b_tail_support_seed4.txt
+Total expected jobs: 120
+====================================
+
+=== Processing domain_count_clean_seed3.txt at 08/29/2026 20:03:39 ===
+[1] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+Job 1 completed with exit code 1 at 2026-08-29T20:03:39.9671229+02:00
+
+[2] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 2 completed with exit code 1 at 2026-08-29T20:03:40.0679761+02:00
+
+[3] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 3 completed with exit code 1 at 2026-08-29T20:03:40.1388723+02:00
+
+[4] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 4 completed with exit code 1 at 2026-08-29T20:03:40.2124633+02:00
+
+[5] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 5 completed with exit code 1 at 2026-08-29T20:03:40.2857417+02:00
+
+[6] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+Job 6 completed with exit code 1 at 2026-08-29T20:03:40.3540987+02:00
+
+[7] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 7 completed with exit code 1 at 2026-08-29T20:03:40.4418031+02:00
+
+[8] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 8 completed with exit code 1 at 2026-08-29T20:03:40.5339608+02:00
+
+[9] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 9 completed with exit code 1 at 2026-08-29T20:03:40.6011495+02:00
+
+[10] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 10 completed with exit code 1 at 2026-08-29T20:03:40.6868280+02:00
+
+[11] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+Job 11 completed with exit code 1 at 2026-08-29T20:03:40.7707034+02:00
+
+[12] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 12 completed with exit code 1 at 2026-08-29T20:03:40.8499107+02:00
+
+[13] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 13 completed with exit code 1 at 2026-08-29T20:03:40.9182058+02:00
+
+[14] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 14 completed with exit code 1 at 2026-08-29T20:03:40.9837439+02:00
+
+[15] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 15 completed with exit code 1 at 2026-08-29T20:03:41.0460310+02:00
+
+[16] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+Job 16 completed with exit code 1 at 2026-08-29T20:03:41.1244526+02:00
+
+[17] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 17 completed with exit code 1 at 2026-08-29T20:03:41.2079113+02:00
+
+[18] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 18 completed with exit code 1 at 2026-08-29T20:03:41.2767309+02:00
+
+[19] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 19 completed with exit code 1 at 2026-08-29T20:03:41.3528418+02:00
+
+[20] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 20 completed with exit code 1 at 2026-08-29T20:03:41.4164584+02:00
+
+=== Processing domain_count_clean_seed4.txt at 08/29/2026 20:03:41 ===
+[21] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+Job 21 completed with exit code 1 at 2026-08-29T20:03:41.5297852+02:00
+
+[22] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 22 completed with exit code 1 at 2026-08-29T20:03:41.5944545+02:00
+
+[23] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 23 completed with exit code 1 at 2026-08-29T20:03:41.6682269+02:00
+
+[24] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 24 completed with exit code 1 at 2026-08-29T20:03:41.7378048+02:00
+
+[25] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 25 completed with exit code 1 at 2026-08-29T20:03:41.8052373+02:00
+
+[26] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+Job 26 completed with exit code 1 at 2026-08-29T20:03:41.8756460+02:00
+
+[27] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 27 completed with exit code 1 at 2026-08-29T20:03:41.9536878+02:00
+
+[28] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 28 completed with exit code 1 at 2026-08-29T20:03:42.0311191+02:00
+
+[29] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 29 completed with exit code 1 at 2026-08-29T20:03:42.0968906+02:00
+
+[30] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 30 completed with exit code 1 at 2026-08-29T20:03:42.1587423+02:00
+
+[31] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+Job 31 completed with exit code 1 at 2026-08-29T20:03:42.2118880+02:00
+
+[32] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 32 completed with exit code 1 at 2026-08-29T20:03:42.2811289+02:00
+
+[33] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 33 completed with exit code 1 at 2026-08-29T20:03:42.3501907+02:00
+
+[34] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 34 completed with exit code 1 at 2026-08-29T20:03:42.4174552+02:00
+
+[35] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 35 completed with exit code 1 at 2026-08-29T20:03:42.4841468+02:00
+
+[36] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+Job 36 completed with exit code 1 at 2026-08-29T20:03:42.5452697+02:00
+
+[37] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 37 completed with exit code 1 at 2026-08-29T20:03:42.6234077+02:00
+
+[38] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 38 completed with exit code 1 at 2026-08-29T20:03:42.7012864+02:00
+
+[39] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 39 completed with exit code 1 at 2026-08-29T20:03:42.7655653+02:00
+
+[40] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 40 completed with exit code 1 at 2026-08-29T20:03:42.8416662+02:00
+
+=== Processing imbalance_clean_seed3.txt at 08/29/2026 20:03:42 ===
+[41] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+Job 41 completed with exit code 1 at 2026-08-29T20:03:42.9220177+02:00
+
+[42] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 42 completed with exit code 1 at 2026-08-29T20:03:42.9985122+02:00
+
+[43] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 43 completed with exit code 1 at 2026-08-29T20:03:43.0645503+02:00
+
+[44] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 44 completed with exit code 1 at 2026-08-29T20:03:43.1212771+02:00
+
+[45] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 45 completed with exit code 1 at 2026-08-29T20:03:43.1886449+02:00
+
+[46] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+Job 46 completed with exit code 1 at 2026-08-29T20:03:43.2739261+02:00
+
+[47] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 47 completed with exit code 1 at 2026-08-29T20:03:43.3541588+02:00
+
+[48] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 48 completed with exit code 1 at 2026-08-29T20:03:43.4452370+02:00
+
+[49] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 49 completed with exit code 1 at 2026-08-29T20:03:43.5346747+02:00
+
+[50] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 50 completed with exit code 1 at 2026-08-29T20:03:43.6022272+02:00
+
+[51] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+Job 51 completed with exit code 1 at 2026-08-29T20:03:43.6866486+02:00
+
+[52] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 52 completed with exit code 1 at 2026-08-29T20:03:43.7534246+02:00
+
+[53] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 53 completed with exit code 1 at 2026-08-29T20:03:43.8283638+02:00
+
+[54] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 54 completed with exit code 1 at 2026-08-29T20:03:43.8982441+02:00
+
+[55] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 55 completed with exit code 1 at 2026-08-29T20:03:43.9782390+02:00
+
+[56] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+Job 56 completed with exit code 1 at 2026-08-29T20:03:44.0621753+02:00
+
+[57] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 57 completed with exit code 1 at 2026-08-29T20:03:44.1247516+02:00
+
+[58] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 58 completed with exit code 1 at 2026-08-29T20:03:44.2010501+02:00
+
+[59] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 59 completed with exit code 1 at 2026-08-29T20:03:44.2706786+02:00
+
+[60] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 60 completed with exit code 1 at 2026-08-29T20:03:44.3349442+02:00
+
+[61] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+Job 61 completed with exit code 1 at 2026-08-29T20:03:44.4091466+02:00
+
+[62] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 62 completed with exit code 1 at 2026-08-29T20:03:44.4885712+02:00
+
+[63] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 63 completed with exit code 1 at 2026-08-29T20:03:44.5488531+02:00
+
+[64] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 64 completed with exit code 1 at 2026-08-29T20:03:44.6367181+02:00
+
+[65] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 65 completed with exit code 1 at 2026-08-29T20:03:44.7169751+02:00
+
+=== Processing imbalance_clean_seed4.txt at 08/29/2026 20:03:44 ===
+[66] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+Job 66 completed with exit code 1 at 2026-08-29T20:03:44.8071620+02:00
+
+[67] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 67 completed with exit code 1 at 2026-08-29T20:03:44.8845504+02:00
+
+[68] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 68 completed with exit code 1 at 2026-08-29T20:03:44.9705292+02:00
+
+[69] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 69 completed with exit code 1 at 2026-08-29T20:03:45.0371066+02:00
+
+[70] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 70 completed with exit code 1 at 2026-08-29T20:03:45.0992975+02:00
+
+[71] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+Job 71 completed with exit code 1 at 2026-08-29T20:03:45.1686687+02:00
+
+[72] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 72 completed with exit code 1 at 2026-08-29T20:03:45.2346732+02:00
+
+[73] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 73 completed with exit code 1 at 2026-08-29T20:03:45.3165605+02:00
+
+[74] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 74 completed with exit code 1 at 2026-08-29T20:03:45.3838702+02:00
+
+[75] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 75 completed with exit code 1 at 2026-08-29T20:03:45.4673025+02:00
+
+[76] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+Job 76 completed with exit code 1 at 2026-08-29T20:03:45.5409373+02:00
+
+[77] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 77 completed with exit code 1 at 2026-08-29T20:03:45.6164827+02:00
+
+[78] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 78 completed with exit code 1 at 2026-08-29T20:03:45.7002985+02:00
+
+[79] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 79 completed with exit code 1 at 2026-08-29T20:03:45.7761034+02:00
+
+[80] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 80 completed with exit code 1 at 2026-08-29T20:03:45.8335561+02:00
+
+[81] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+Job 81 completed with exit code 1 at 2026-08-29T20:03:45.9295732+02:00
+
+[82] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 82 completed with exit code 1 at 2026-08-29T20:03:45.9949006+02:00
+
+[83] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 83 completed with exit code 1 at 2026-08-29T20:03:46.0430584+02:00
+
+[84] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 84 completed with exit code 1 at 2026-08-29T20:03:46.1030413+02:00
+
+[85] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 85 completed with exit code 1 at 2026-08-29T20:03:46.1733986+02:00
+
+[86] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+Job 86 completed with exit code 1 at 2026-08-29T20:03:46.2386085+02:00
+
+[87] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 87 completed with exit code 1 at 2026-08-29T20:03:46.3104495+02:00
+
+[88] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 88 completed with exit code 1 at 2026-08-29T20:03:46.3900241+02:00
+
+[89] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 89 completed with exit code 1 at 2026-08-29T20:03:46.4532921+02:00
+
+[90] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 90 completed with exit code 1 at 2026-08-29T20:03:46.5336577+02:00
+
+=== Processing e3b_tail_support_seed3.txt at 08/29/2026 20:03:46 ===
+[91] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+Job 91 completed with exit code 1 at 2026-08-29T20:03:46.6193366+02:00
+
+[92] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 92 completed with exit code 1 at 2026-08-29T20:03:46.7047514+02:00
+
+[93] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 93 completed with exit code 1 at 2026-08-29T20:03:46.7703476+02:00
+
+[94] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 94 completed with exit code 1 at 2026-08-29T20:03:46.8551188+02:00
+
+[95] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 95 completed with exit code 1 at 2026-08-29T20:03:46.9342931+02:00
+
+[96] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+Job 96 completed with exit code 1 at 2026-08-29T20:03:47.0064831+02:00
+
+[97] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 97 completed with exit code 1 at 2026-08-29T20:03:47.0926835+02:00
+
+[98] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 98 completed with exit code 1 at 2026-08-29T20:03:47.1716658+02:00
+
+[99] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 99 completed with exit code 1 at 2026-08-29T20:03:47.2408854+02:00
+
+[100] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 100 completed with exit code 1 at 2026-08-29T20:03:47.3118083+02:00
+
+[101] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+Job 101 completed with exit code 1 at 2026-08-29T20:03:47.3942504+02:00
+
+[102] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 102 completed with exit code 1 at 2026-08-29T20:03:47.4796217+02:00
+
+[103] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 103 completed with exit code 1 at 2026-08-29T20:03:47.5639537+02:00
+
+[104] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 104 completed with exit code 1 at 2026-08-29T20:03:47.6295522+02:00
+
+[105] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 105 completed with exit code 1 at 2026-08-29T20:03:47.7045115+02:00
+
+[106] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+Job 106 completed with exit code 1 at 2026-08-29T20:03:47.7751394+02:00
+
+[107] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 107 completed with exit code 1 at 2026-08-29T20:03:47.8610868+02:00
+
+[108] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 108 completed with exit code 1 at 2026-08-29T20:03:47.9274504+02:00
+
+[109] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 109 completed with exit code 1 at 2026-08-29T20:03:48.0007113+02:00
+
+[110] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 110 completed with exit code 1 at 2026-08-29T20:03:48.0838777+02:00
+
+=== Processing e3b_tail_support_seed4.txt at 08/29/2026 20:03:48 ===
+[111] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+Job 111 completed with exit code 1 at 2026-08-29T20:03:48.2154459+02:00
+
+[112] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 112 completed with exit code 1 at 2026-08-29T20:03:48.2836598+02:00
+
+[113] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 113 completed with exit code 1 at 2026-08-29T20:03:48.3505108+02:00
+
+[114] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 114 completed with exit code 1 at 2026-08-29T20:03:48.4168262+02:00
+
+[115] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 115 completed with exit code 1 at 2026-08-29T20:03:48.4751809+02:00
+
+[116] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+Job 116 completed with exit code 1 at 2026-08-29T20:03:48.5475905+02:00
+
+[117] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 117 completed with exit code 1 at 2026-08-29T20:03:48.6159278+02:00
+
+[118] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 118 completed with exit code 1 at 2026-08-29T20:03:48.6980175+02:00
+
+[119] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 119 completed with exit code 1 at 2026-08-29T20:03:48.7660714+02:00
+
+[120] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 120 completed with exit code 1 at 2026-08-29T20:03:48.8270946+02:00
+
+[121] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+Job 121 completed with exit code 1 at 2026-08-29T20:03:48.8954033+02:00
+
+[122] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 122 completed with exit code 1 at 2026-08-29T20:03:48.9655269+02:00
+
+[123] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 123 completed with exit code 1 at 2026-08-29T20:03:49.0243060+02:00
+
+[124] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 124 completed with exit code 1 at 2026-08-29T20:03:49.1090442+02:00
+
+[125] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 125 completed with exit code 1 at 2026-08-29T20:03:49.1787127+02:00
+
+[126] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+Job 126 completed with exit code 1 at 2026-08-29T20:03:49.2469169+02:00
+
+[127] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+Job 127 completed with exit code 1 at 2026-08-29T20:03:49.3096911+02:00
+
+[128] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+Job 128 completed with exit code 1 at 2026-08-29T20:03:49.3821058+02:00
+
+[129] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 129 completed with exit code 1 at 2026-08-29T20:03:49.4493933+02:00
+
+[130] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+Job 130 completed with exit code 1 at 2026-08-29T20:03:49.5204812+02:00
+
+
+=== JOB SUMMARY ===
+Total jobs executed: 130
+Jobs skipped due to previous success: 0
+Jobs failed: 130
+Start time: 08/29/2026 20:03:39
+End time: 08/29/2026 20:03:49
+Elapsed time: 9.9837043 seconds

@@ -1,0 +1,16 @@
+{
+    "generated_at": "2026-08-30T14:03:39.722256+02:00",
+    "expected_jobs": 125,
+    "successful_jobs": 125,
+    "failed_jobs": 0,
+    "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+    ],
+    "results_dir": "C:\\Users\\320257223\\PycharmProjects\\domain_gen_IL\\results\\imbalance_clean_v1\\results",
+    "analysis_dir": "C:\\Users\\320257223\\PycharmProjects\\domain_gen_IL\\results\\imbalance_clean_v1\\analysis_seed0-4",
+    "note": "Deduplicated: kept most recently written record per (seed, algorithm, train_envs, train_env_sizes)."
+}

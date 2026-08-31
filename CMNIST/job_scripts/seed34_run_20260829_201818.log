@@ -1,0 +1,71 @@
+Seed 3/4 Job Batch Launch Log
+Started at: 08/29/2026 20:18:18
+Working directory: C:\Users\320257223\PycharmProjects\domain_gen_IL\CMNIST
+Python executable: C:\Users\320257223\PycharmProjects\domain_gen_IL\dgil_env\Scripts\python.exe
+Manifests to process: domain_count_clean_seed3.txt, domain_count_clean_seed4.txt, imbalance_clean_seed3.txt, imbalance_clean_seed4.txt, e3b_tail_support_seed3.txt, e3b_tail_support_seed4.txt
+Total expected jobs: 120
+====================================
+
+=== Processing domain_count_clean_seed3.txt at 08/29/2026 20:18:18 ===
+[1] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0 --test_env_ms 1.0
+Job 1 completed with exit code 0 at 2026-08-29T20:22:53.6570164+02:00
+
+[2] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts --test_env_ms 1.0
+Job 2 completed with exit code 0 at 2026-08-29T20:27:25.1428089+02:00
+
+[3] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts --test_env_ms 1.0
+Job 3 completed with exit code 0 at 2026-08-29T20:31:54.1805381+02:00
+
+[4] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts --test_env_ms 1.0
+Job 4 completed with exit code 0 at 2026-08-29T20:57:02.9113269+02:00
+
+[5] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts --test_env_ms 1.0
+Job 5 completed with exit code 0 at 2026-08-29T21:00:24.2172059+02:00
+
+[6] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0 --test_env_ms 1.0
+Job 6 completed with exit code 0 at 2026-08-29T21:04:42.9581729+02:00
+
+[7] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts --test_env_ms 1.0
+Job 7 completed with exit code 0 at 2026-08-29T21:08:59.0073563+02:00
+
+[8] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts --test_env_ms 1.0
+Job 8 completed with exit code 0 at 2026-08-29T21:13:17.6709477+02:00
+
+[9] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts --test_env_ms 1.0
+Job 9 completed with exit code 0 at 2026-08-29T21:42:35.3665463+02:00
+
+[10] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts --test_env_ms 1.0
+Job 10 completed with exit code 0 at 2026-08-29T21:46:02.5283493+02:00
+
+[11] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0 --test_env_ms 1.0
+Job 11 completed with exit code 0 at 2026-08-29T21:50:25.4299575+02:00
+
+[12] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts --test_env_ms 1.0
+Job 12 completed with exit code 0 at 2026-08-29T21:54:35.1113525+02:00
+
+[13] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts --test_env_ms 1.0
+Job 13 completed with exit code 0 at 2026-08-29T21:58:46.2391126+02:00
+
+[14] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts --test_env_ms 1.0
+Job 14 completed with exit code 0 at 2026-08-29T22:50:49.5755127+02:00
+
+[15] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts --test_env_ms 1.0
+Job 15 completed with exit code 0 at 2026-08-29T22:54:16.0480591+02:00
+
+[16] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0 --test_env_ms 1.0
+Job 16 completed with exit code 0 at 2026-08-29T22:58:32.2778939+02:00
+
+[17] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts --test_env_ms 1.0
+Job 17 completed with exit code 0 at 2026-08-29T23:02:41.5076804+02:00
+
+[18] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts --test_env_ms 1.0
+Job 18 completed with exit code 0 at 2026-08-29T23:06:53.1193259+02:00
+
+[19] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts --test_env_ms 1.0
+Job 19 completed with exit code 0 at 2026-08-29T23:36:13.6953015+02:00
+
+[20] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts --test_env_ms 1.0
+Job 20 completed with exit code 0 at 2026-08-29T23:39:34.6686168+02:00
+
+=== Processing domain_count_clean_seed4.txt at 08/29/2026 23:39:34 ===
+[21] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0 --test_env_ms 1.0

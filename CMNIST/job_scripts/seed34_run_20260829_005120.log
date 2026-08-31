@@ -1,0 +1,539 @@
+Seed 3/4 Job Batch Launch Log
+Started at: 08/29/2026 00:51:20
+Working directory: C:\Users\320257223\PycharmProjects\domain_gen_IL\CMNIST
+Manifests to process: domain_count_clean_seed3/4, imbalance_clean_seed3/4, e3b_tail_support_seed3/4
+Total expected jobs: 120
+====================================
+
+=== Processing domain_count_clean_seed3.txt at 08/29/2026 00:51:21 ===
+[1] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+ERROR in Job 1: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[2] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 2: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[3] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 3: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[4] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 4: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[5] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 5: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[6] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+ERROR in Job 6: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[7] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 7: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[8] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 8: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[9] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 9: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[10] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 10: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[11] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+ERROR in Job 11: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[12] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 12: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[13] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 13: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[14] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 14: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[15] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 15: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[16] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+ERROR in Job 16: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[17] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 17: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[18] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 18: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[19] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 19: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[20] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 20: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+=== Processing domain_count_clean_seed4.txt at 08/29/2026 00:51:23 ===
+[21] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+ERROR in Job 21: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[22] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 22: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[23] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 23: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[24] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 24: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[25] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 25: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[26] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+ERROR in Job 26: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[27] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 27: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[28] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 28: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[29] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 29: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[30] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 30: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[31] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+ERROR in Job 31: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[32] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 32: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[33] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 33: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[34] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 34: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[35] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.3,0.5,0.7,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 35: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[36] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+ERROR in Job 36: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[37] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 37: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[38] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 38: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[39] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 39: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[40] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 40: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+=== Processing imbalance_clean_seed3.txt at 08/29/2026 00:51:26 ===
+[41] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+ERROR in Job 41: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[42] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 42: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[43] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 43: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[44] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 44: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[45] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 45: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[46] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+ERROR in Job 46: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[47] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 47: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[48] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 48: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[49] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 49: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[50] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 50: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[51] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+ERROR in Job 51: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[52] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 52: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[53] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 53: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[54] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 54: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[55] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 55: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[56] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+ERROR in Job 56: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[57] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 57: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[58] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 58: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[59] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 59: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[60] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 60: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[61] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+ERROR in Job 61: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[62] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 62: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[63] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 63: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[64] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 64: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[65] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 65: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+=== Processing imbalance_clean_seed4.txt at 08/29/2026 00:51:28 ===
+[66] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+ERROR in Job 66: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[67] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 67: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[68] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 68: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[69] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 69: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[70] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 70: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[71] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+ERROR in Job 71: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[72] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 72: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[73] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 73: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[74] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 74: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[75] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1500,1500,1500,3500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 75: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[76] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+ERROR in Job 76: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[77] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 77: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[78] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 78: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[79] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 79: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[80] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 3500,1500,1500,1500 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 80: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[81] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+ERROR in Job 81: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[82] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 82: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[83] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 83: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[84] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 84: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[85] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 1000,1000,1000,5000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 85: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[86] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 0
+ERROR in Job 86: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[87] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 87: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[88] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 88: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[89] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 89: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[90] python train_sandbox.py --data_dir ..\data --output_dir ..\results\imbalance_clean_v1 --exp_name imbalance_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,1000,1000,1000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --exp_name imbalance_clean --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 90: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+=== Processing e3b_tail_support_seed3.txt at 08/29/2026 00:51:31 ===
+[91] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+ERROR in Job 91: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[92] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 92: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[93] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 93: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[94] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 94: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[95] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 95: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[96] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+ERROR in Job 96: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[97] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 97: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[98] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 98: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[99] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 99: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[100] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 100: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[101] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+ERROR in Job 101: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[102] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 102: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[103] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 103: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[104] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 104: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[105] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 105: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[106] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+ERROR in Job 106: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[107] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 107: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[108] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 108: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[109] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 109: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[110] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 110: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+=== Processing e3b_tail_support_seed4.txt at 08/29/2026 00:51:34 ===
+[111] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+ERROR in Job 111: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[112] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 112: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[113] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 113: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[114] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 114: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[115] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 2000,2000,2000,2000 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition balanced_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 115: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[116] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+ERROR in Job 116: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[117] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 117: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[118] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 118: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[119] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 119: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[120] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5000,2000,800,200 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition long_tail_visible --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 120: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[121] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+ERROR in Job 121: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[122] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 122: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[123] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 123: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[124] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 124: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[125] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 5800,1800,350,50 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition near_missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 125: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[126] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm erm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 0
+ERROR in Job 126: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[127] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm irm --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts
+ERROR in Job 127: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[128] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm groupdro --steps 1000 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts
+ERROR in Job 128: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[129] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm iro --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 129: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+[130] python train_sandbox.py --data_dir ..\data --output_dir ..\results\E3b_tail_support --exp_name e3b_tail_support --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 4 --algorithm inftask --steps 600 --train_envs 0.1,0.2,0.5,0.9 --train_env_sizes 6000,1500,500,0 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --tail_support_condition missing_tail --tail_support_source_envs 0.1,0.2,0.5,0.9 --tail_support_tail_env 0.9 --tail_support_head_env 0.1 --erm_pretrain_iters 400 --lr_cos_sched --save_ckpts
+ERROR in Job 130: The term 'python' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
+
+
+=== JOB SUMMARY ===
+Total jobs executed: 130
+Start time: 08/29/2026 00:51:21
+End time: 08/29/2026 00:51:36
+Elapsed time: 15.0366964 seconds

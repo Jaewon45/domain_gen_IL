@@ -1,0 +1,55 @@
+Seed 3/4 Job Batch Launch Log
+Started at: 08/29/2026 13:30:52
+Working directory: C:\Users\320257223\PycharmProjects\domain_gen_IL\CMNIST
+Python executable: C:\Users\320257223\PycharmProjects\domain_gen_IL\dgil_env\Scripts\python.exe
+Manifests to process: domain_count_clean_seed3/4, imbalance_clean_seed3/4, e3b_tail_support_seed3/4
+Total expected jobs: 120
+====================================
+
+=== Processing domain_count_clean_seed3.txt at 08/29/2026 13:30:52 ===
+[1] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0
+Args:
+	algorithm: erm
+	alpha: 0.4
+	batch_size: 25000
+	data_dir: ..\data
+	deterministic: False
+	dropout_p: 0.2
+	erm_pretrain_iters: 0
+	eval_freq: 50
+	exp_name: domain_count_clean
+	full_resolution: False
+	groupdro_eta: 1.0
+	loss_fn: nll
+	lr: 0.0001
+	lr_cos_sched: False
+	lr_factor_reduction: 1
+	mlp_hidden_dim: 390
+	n_workers: 0
+	network: FiLMedMLP
+	other_arg: default
+	output_dir: ..\results\cmnist_domain_count_clean_v1
+	penalty_weight: 1000
+	save_ckpts: False
+	seed: 3
+	steps: 600
+	tail_support_condition: 
+	tail_support_head_env: None
+	tail_support_source_envs: 
+	tail_support_source_envs_parsed: (0.1, 0.9)
+	tail_support_tail_env: None
+	test_env_ms: 0.9
+	test_envs: 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0
+	train_env_ps: (0.1, 0.9)
+	train_env_size_mode: random
+	train_env_sizes: 
+	train_env_sizes_parsed: None
+	train_envs: 0.1,0.9
+	weight_decay: 0
+Train environment sample counts: [25000, 25000]
+Requested train environments: [0.1, 0.9]
+Active train environments: [0.1, 0.9]
+Train domain count map: {'0.1': 25000, '0.9': 25000}
+Empirical training prior map: {'0.1': 0.5, '0.9': 0.5}
+0.0_acc       0.0_loss      0.1_acc       0.1_loss      0.2_acc       0.2_loss      0.3_acc       0.3_loss      0.4_acc       0.4_loss      0.5_acc       0.5_loss      0.6_acc       0.6_loss      0.7_acc       0.7_loss      0.8_acc       0.8_loss      0.9_acc       0.9_loss      1.0_acc       1.0_loss      avg_step_tim  epoch         loss          mem_gb        step         
+0.6542000000  0.6341385841  0.6654000000  0.6258891225  0.6624000000  0.6304293871  0.6677000000  0.6260893941  0.6605000000  0.6261645555  0.6615000000  0.6307780743  0.6626000000  0.6288276911  0.6653000000  0.6293026209  0.6636000000  0.6323789954  0.6659000000  0.6285613179  0.6728000000  0.6282377839  0.4109211588  50.000000000  0.6359627843  0.8235135078  50           

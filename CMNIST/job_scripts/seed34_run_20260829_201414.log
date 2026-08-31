@@ -1,0 +1,13 @@
+Seed 3/4 Job Batch Launch Log
+Started at: 08/29/2026 20:14:14
+Working directory: C:\Users\320257223\PycharmProjects\domain_gen_IL\CMNIST
+Python executable: C:\Users\320257223\PycharmProjects\domain_gen_IL\dgil_env\Scripts\python.exe
+Manifests to process: domain_count_clean_seed3.txt, domain_count_clean_seed4.txt, imbalance_clean_seed3.txt, imbalance_clean_seed4.txt, e3b_tail_support_seed3.txt, e3b_tail_support_seed4.txt
+Total expected jobs: 120
+====================================
+
+=== Processing domain_count_clean_seed3.txt at 08/29/2026 20:14:14 ===
+[1] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm erm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 0 --test_env_ms 1.0
+ERROR in Job 1: The process cannot access the file 'C:\Users\320257223\PycharmProjects\domain_gen_IL\CMNIST\job_scripts\seed34_job_001.out.txt' because it is being used by another process.
+
+[2] python train_sandbox.py --data_dir ..\data --output_dir ..\results\cmnist_domain_count_clean_v1 --exp_name domain_count_clean --lr 0.0001 --batch_size 25000 --dropout_p 0.2 --seed 3 --algorithm irm --steps 600 --train_envs 0.1,0.9 --test_envs 0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0 --erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts --test_env_ms 1.0
