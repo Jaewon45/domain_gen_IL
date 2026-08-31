@@ -1,0 +1,15 @@
+Synthetic Ranking-Reversal Experiment Specification:
+--------------------------------------------------
+K (total domain count)           : 10
+K_head (observed head domains)    : 7 (for missing_tail_fraction = 0.3)
+r0_head (f base risk offset)     : 0.20
+r0_tail (g base risk offset)     : 0.15
+tradeoff (risk slope spread)     : 0.5
+delta_head (head advantage)      : 0.45
+delta_tail (tail advantage)      : 0.55
+
+Candidate Risk Profiles:
+risk_vector_f (head-favored) : [0.2     , 0.255556, 0.311111, 0.366667, 0.422222, 0.477778, 0.533333,
+ 0.588889, 0.644444, 0.7     ]
+risk_vector_g (tail-favored) : [0.65    , 0.594444, 0.538889, 0.483333, 0.427778, 0.372222, 0.316667,
+ 0.261111, 0.205556, 0.15    ]
