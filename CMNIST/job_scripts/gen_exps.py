@@ -162,6 +162,73 @@ def generate_domain_stress_commands(args, base_call, seeds):
     return commands
 
 
+def generate_domain_count_clean_commands(args, base_call, seeds):
+    """Generate a clean E1 ablation with fixed total source budget."""
+    commands = []
+    algorithms = [
+        ("erm", 600, "--erm_pretrain_iters 0"),
+        ("irm", 600, "--erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts"),
+        ("groupdro", 1000, "--erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts"),
+        ("iro", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+        ("inftask", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+    ]
+    train_envs_by_count = {
+        "2": "0.1,0.9",
+        "4": "0.1,0.2,0.5,0.9",
+        "6": "0.1,0.2,0.3,0.5,0.7,0.9",
+        "8": "0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9",
+    }
+    fixed_test_envs = "0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0"
+
+    for seed in seeds:
+        for train_envs in train_envs_by_count.values():
+            for algorithm, steps, extra_args in algorithms:
+                commands.append(
+                    (
+                        f"{base_call} "
+                        f"--seed {seed} "
+                        f"--algorithm {algorithm} "
+                        f"--steps {steps} "
+                        f"--train_envs {train_envs} "
+                        f"--test_envs {fixed_test_envs} "
+                        f"{extra_args}"
+                    ).strip()
+                )
+    return commands
+
+
+def generate_imbalance_clean_commands(args, base_call, seeds):
+    """Generate mirrored fixed-total-budget E3 imbalance conditions."""
+    commands = []
+    algorithms = [
+        ("erm", 600, "--erm_pretrain_iters 0"),
+        ("irm", 600, "--erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts"),
+        ("groupdro", 1000, "--erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts"),
+        ("iro", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+        ("inftask", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+    ]
+    source_envs = "0.1,0.2,0.5,0.9"
+    test_envs = "0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0"
+    conditions = {
+        "balanced": "2000,2000,2000,2000",
+        "last_heavy_mild": "1500,1500,1500,3500",
+        "first_heavy_mild": "3500,1500,1500,1500",
+        "last_heavy_strong": "1000,1000,1000,5000",
+        "first_heavy_strong": "5000,1000,1000,1000",
+    }
+    for seed in seeds:
+        for condition, sizes in conditions.items():
+            for algorithm, steps, extra_args in algorithms:
+                commands.append(
+                    (
+                        f"{base_call} --seed {seed} --algorithm {algorithm} --steps {steps} "
+                        f"--train_envs {source_envs} --train_env_sizes {sizes} "
+                        f"--test_envs {test_envs} --exp_name {args.exp_name} {extra_args}"
+                    ).strip()
+                )
+    return commands
+
+
 def parse_seed_list(seed_list_arg):
     if not seed_list_arg:
         return list(range(10))
@@ -252,6 +319,10 @@ if __name__ == "__main__":
 
     if args.exp_name == "domain_stress":
         commands = generate_domain_stress_commands(args, base_call, seeds)
+    elif args.exp_name == "domain_count_clean":
+        commands = generate_domain_count_clean_commands(args, base_call, seeds)
+    elif args.exp_name == "imbalance_clean":
+        commands = generate_imbalance_clean_commands(args, base_call, seeds)
     elif "tail_support" in args.exp_name:
         commands = generate_tail_support_commands(args, base_call, seeds)
     else:

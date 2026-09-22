@@ -30,11 +30,21 @@ def cvar(losses, weights, alpha):
         return float("nan")
     weights = weights / weights.sum()
     order = np.argsort(losses)
-    cumulative = np.cumsum(weights[order])
-    index = min(int(np.searchsorted(cumulative, alpha, side="left")), len(losses) - 1)
-    threshold = losses[order][index]
-    tail = losses >= threshold
-    return float(np.sum(losses[tail] * weights[tail]) / np.sum(weights[tail]))
+    sorted_losses = losses[order]
+    sorted_weights = weights[order]
+
+    tail_mass = max(0.0, 1.0 - float(alpha))
+    if tail_mass <= 0.0:
+        return float(sorted_losses[-1])
+
+    cumulative = np.cumsum(sorted_weights)
+    value = 0.0
+    previous = 0.0
+    for loss, current in zip(sorted_losses, cumulative):
+        overlap = max(0.0, min(float(current), 1.0) - max(previous, float(alpha)))
+        value += loss * overlap
+        previous = float(current)
+    return float(value / tail_mass)
 
 
 def deployment_prior(n_domains):
@@ -77,10 +87,14 @@ def one_trial(n_domains, sample_size, exponent, missing_tail_fraction, alpha, tr
     }
     deployment_winner = min(deployment_scores, key=deployment_scores.get)
     empirical_winner = min(empirical_scores, key=empirical_scores.get)
+    reversal = (
+        deployment_scores["tail_favored"] < deployment_scores["head_favored"]
+        and empirical_scores["head_favored"] < empirical_scores["tail_favored"]
+    )
     return {
         "deployment_winner": deployment_winner,
         "empirical_winner": empirical_winner,
-        "reversal": int(empirical_winner != deployment_winner),
+        "reversal": int(reversal),
         "deployment_gap": abs(deployment_scores[PROFILE_NAMES[0]] - deployment_scores[PROFILE_NAMES[1]]),
         "empirical_gap": abs(empirical_scores[PROFILE_NAMES[0]] - empirical_scores[PROFILE_NAMES[1]]),
         "missing_domains": missing_count,
@@ -141,7 +155,6 @@ def plot_heatmap(summary, args, output_dir):
     axis.set_yticks(range(len(pivot.index)), [str(value) for value in pivot.index])
     axis.set_xlabel("Sample size")
     axis.set_ylabel("Missing-tail fraction")
-    axis.set_title("Priority 7 ranking-reversal probability")
     figure.colorbar(image, ax=axis, label="Reversal probability")
     figure.tight_layout()
     path = output_dir / "ranking_reversal_heatmap.png"
@@ -154,27 +167,36 @@ def plot_sample_size(summary, args, output_dir):
     target = summary[
         (summary["alpha"] == args.heatmap_alpha)
         & (summary["exponent"] == args.heatmap_exponent)
-        & (summary["missing_tail_fraction"] == 0.0)
     ]
     if target.empty:
         return None
-    figure, axis = plt.subplots(figsize=(8, 5))
-    for missing_fraction, group in summary[
-        (summary["alpha"] == args.heatmap_alpha)
-        & (summary["exponent"] == args.heatmap_exponent)
-    ].groupby("missing_tail_fraction"):
+    figure, axis = plt.subplots(figsize=(9, 6))
+    colors = ["#0072B2", "#D55E00", "#009E73", "#CC79A7"]
+    markers = ["o", "s", "^", "d"]
+    linestyles = ["-", "--", "-.", ":"]
+
+    for idx, (missing_fraction, group) in enumerate(target.groupby("missing_tail_fraction")):
         curve = group.groupby("sample_size")["reversal_probability"].mean().reset_index()
-        axis.plot(curve["sample_size"], curve["reversal_probability"], marker="o", label=f"missing={missing_fraction:g}")
+        axis.plot(
+            curve["sample_size"],
+            curve["reversal_probability"],
+            marker=markers[idx % len(markers)],
+            linestyle=linestyles[idx % len(linestyles)],
+            color=colors[idx % len(colors)],
+            linewidth=2.2,
+            markersize=7,
+            label=f"epsilon={missing_fraction:g}",
+        )
     axis.set_xscale("log")
-    axis.set_ylim(0.0, 1.0)
-    axis.set_xlabel("Source sample size")
-    axis.set_ylabel("Ranking-reversal probability")
-    axis.set_title("Priority 7 evidence versus source information")
-    axis.legend()
-    axis.grid(alpha=0.25)
+    axis.set_ylim(-0.02, 1.05)
+    axis.set_xlabel("Source Sample Size", fontsize=16, labelpad=8)
+    axis.set_ylabel("Ranking-Reversal Probability", fontsize=16, labelpad=8)
+    axis.tick_params(labelsize=14)
+    axis.legend(fontsize=13, loc="best", framealpha=0.9)
+    axis.grid(True, linestyle="--", alpha=0.5)
     figure.tight_layout()
     path = output_dir / "ranking_reversal_by_sample_size.png"
-    figure.savefig(path, dpi=200)
+    figure.savefig(path, dpi=300)
     plt.close(figure)
     return path
 

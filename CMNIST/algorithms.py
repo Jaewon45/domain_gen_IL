@@ -238,7 +238,11 @@ class GroupDRO(ERM):
         self.optimizer.step()
 
         self.update_count += 1
-        return {'loss': loss.item()}
+        return {
+            'loss': loss.item(),
+            'group_losses': losses.detach().cpu().tolist(),
+            'group_weights': self.q.detach().cpu().tolist(),
+        }
 
 
 class IGA(ERM):

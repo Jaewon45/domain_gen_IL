@@ -333,13 +333,24 @@ def run_task3():
 
 def run_task4():
     print("=== Running Task 4: Ranking-reversal by missing mass simulation figure ===")
-    epsilons = [0.0, 0.1, 0.2, 0.3]
-    reversal_probs = [0.666, 0.952, 0.997, 1.000]
+    summary_path = Path("results/cmnist_priority7_theory_v1/ranking_reversal_summary.csv")
+    if not summary_path.exists():
+        raise FileNotFoundError(
+            f"Missing {summary_path}; run CMNIST/priority7_theory.py before regenerating this figure."
+        )
 
-    df = pd.DataFrame({
-        "epsilon": epsilons,
-        "mean_reversal_probability": reversal_probs,
-    })
+    summary = pd.read_csv(summary_path)
+    required = {"missing_tail_fraction", "reversal_probability"}
+    missing = required.difference(summary.columns)
+    if missing:
+        raise ValueError(f"Missing required columns in {summary_path}: {sorted(missing)}")
+
+    df = (
+        summary.groupby("missing_tail_fraction", as_index=False)["reversal_probability"]
+        .mean()
+        .rename(columns={"missing_tail_fraction": "epsilon", "reversal_probability": "mean_reversal_probability"})
+        .sort_values("epsilon")
+    )
 
     csv_filename = "ranking_reversal_by_missing_mass.csv"
     df.to_csv(csv_filename, index=False)
@@ -358,8 +369,8 @@ def run_task4():
     marker = "o"
 
     ax.plot(
-        epsilons,
-        reversal_probs,
+        df["epsilon"],
+        df["mean_reversal_probability"],
         marker=marker,
         color=color,
         linewidth=2.5,
@@ -369,7 +380,7 @@ def run_task4():
     )
 
     # Annotate points with values for high clarity
-    for eps, val in zip(epsilons, reversal_probs):
+    for eps, val in zip(df["epsilon"], df["mean_reversal_probability"]):
         ax.annotate(
             f"{val:.3f}",
             (eps, val),
@@ -382,8 +393,8 @@ def run_task4():
 
     ax.set_xlabel("Missing Deployment Mass (ε)", fontsize=16, labelpad=8)
     ax.set_ylabel("Mean Ranking-Reversal Probability", fontsize=16, labelpad=8)
-    ax.set_xticks(epsilons)
-    ax.set_xticklabels(["0", "0.1", "0.2", "0.3"], fontsize=14)
+    ax.set_xticks(df["epsilon"])
+    ax.set_xticklabels([f"{value:g}" for value in df["epsilon"]], fontsize=14)
     ax.tick_params(axis="y", labelsize=14)
     ax.set_xlim(-0.02, 0.32)
     ax.set_ylim(0.60, 1.06)

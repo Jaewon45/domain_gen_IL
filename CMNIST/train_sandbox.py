@@ -89,6 +89,16 @@ elif args.train_envs == 'gray':
 else:
     train_env_ps = tuple(float(e) for e in args.train_envs.split(","))
 
+metric_env = str(args.test_env_ms)
+metric_env_candidates = [str(p) for p in test_env_ps]
+if metric_env not in metric_env_candidates:
+    metric_env = metric_env_candidates[-1] if metric_env_candidates else "0.9"
+    print(
+        f"Warning: --test_env_ms={args.test_env_ms} is not in --test_envs={args.test_envs}; "
+        f"using {metric_env} instead."
+    )
+args.test_env_ms = metric_env
+
 args.train_env_ps = train_env_ps
 train_env_names = [str(p) for p in train_env_ps]
 test_env_names = [str(p) for p in test_env_ps]
@@ -332,6 +342,11 @@ for ms_name in ["final", "best"]:
         else:
             results[env_name+'_acc_'+ms_name] = misc.accuracy(algorithm,env_loader,device, alpha=h_alphas_test[i])
             results[env_name+'_loss_'+ms_name] = misc.loss(algorithm,env_loader,loss_fn,device, alpha=h_alphas_test[i])
+    if args.algorithm.lower() in ['erm', 'groupdro']:
+        source_losses = [misc.loss(algorithm, loader, loss_fn, device) for loader in train_loaders]
+        for env_name, source_loss in zip(train_env_names, source_losses):
+            results[f"source_{env_name}_loss_{ms_name}"] = source_loss
+        results[f"source_worst_loss_{ms_name}"] = max(source_losses)
     # -------- PRINT -------- 
     misc.cvar(algorithm, loaders, loss_fn, device, all_ps, args.algorithm.lower() not in ['iro', 'inftask'])
     print(f"\n{ms_name} accuracies:")

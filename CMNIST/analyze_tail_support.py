@@ -180,18 +180,19 @@ def weighted_cvar(losses: np.ndarray, weights: np.ndarray, alpha: float) -> floa
     order = np.argsort(losses)
     sorted_losses = losses[order]
     sorted_weights = weights[order]
-    cumulative = np.cumsum(sorted_weights)
-    var_idx = int(np.searchsorted(cumulative, alpha, side="left"))
-    var_idx = min(var_idx, len(sorted_losses) - 1)
-    var_threshold = sorted_losses[var_idx]
 
-    tail_mask = losses >= var_threshold
-    tail_weights = weights[tail_mask]
-    tail_losses = losses[tail_mask]
-    tail_mass = tail_weights.sum()
-    if tail_mass <= 0:
-        return float(var_threshold)
-    return float(np.dot(tail_losses, tail_weights) / tail_mass)
+    tail_mass = max(0.0, 1.0 - float(alpha))
+    if tail_mass <= 0.0:
+        return float(sorted_losses[-1])
+
+    cumulative = np.cumsum(sorted_weights)
+    value = 0.0
+    previous = 0.0
+    for loss, current in zip(sorted_losses, cumulative):
+        overlap = max(0.0, min(float(current), 1.0) - max(previous, float(alpha)))
+        value += loss * overlap
+        previous = float(current)
+    return float(value / tail_mass)
 
 
 def metrics_from_rows(group_rows: pd.DataFrame, alphas: List[float]) -> Dict[str, float]:
