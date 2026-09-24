@@ -123,21 +123,15 @@ def run_task1():
 
     res_df = pd.DataFrame(rows)
     
-    # Ensure folders exist
-    Path("results").mkdir(exist_ok=True, parents=True)
-    Path("results_submit/additional").mkdir(exist_ok=True, parents=True)
-    Path("results_submit/figures").mkdir(exist_ok=True, parents=True)
-    Path("results_submit/figures/P7_theory").mkdir(exist_ok=True, parents=True)
-    Path("results_submit/tables/P7_theory").mkdir(exist_ok=True, parents=True)
-    Path("results_submit/metadata").mkdir(exist_ok=True, parents=True)
+    # Ensure canonical output folder exists
+    p7_theory_dir = Path("results/P7_theory")
+    p7_theory_dir.mkdir(exist_ok=True, parents=True)
 
-    # Save CSV files
+    # Save CSV to canonical location
     csv_filename = "theorem_aligned_01_cvar_bounds.csv"
-    res_df.to_csv(csv_filename, index=False)
-    res_df.to_csv(Path("results") / csv_filename, index=False)
-    res_df.to_csv(Path("results_submit/additional") / csv_filename, index=False)
-    res_df.to_csv(Path("results_submit/tables/P7_theory") / csv_filename, index=False)
-    print(f"Saved {csv_filename} to root, results/, results_submit/additional/, and results_submit/tables/P7_theory/")
+    csv_path = p7_theory_dir / csv_filename
+    res_df.to_csv(csv_path, index=False)
+    print(f"Saved {csv_filename} to {csv_path}")
 
     # Print summary statistics
     print("\n--- Theorem-aligned 0-1 CVaR Bounds Summary (alpha=0.9, epsilon=0.25) ---")
@@ -187,18 +181,12 @@ def run_task1():
     plt.tight_layout()
     pdf_filename = "theorem_aligned_01_cvar_bounds.pdf"
     png_filename = "theorem_aligned_01_cvar_bounds.png"
-    safe_savefig(fig, pdf_filename, dpi=300)
-    safe_savefig(fig, png_filename, dpi=300)
-    safe_savefig(fig, Path("results") / pdf_filename, dpi=300)
-    safe_savefig(fig, Path("results") / png_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/additional") / pdf_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/additional") / png_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/figures") / pdf_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/figures") / png_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/figures/P7_theory") / pdf_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/figures/P7_theory") / png_filename, dpi=300)
+    p7_theory_dir = Path("results/P7_theory")
+    p7_theory_dir.mkdir(exist_ok=True, parents=True)
+    safe_savefig(fig, p7_theory_dir / pdf_filename, dpi=300)
+    safe_savefig(fig, p7_theory_dir / png_filename, dpi=300)
     plt.close()
-    print(f"Saved {pdf_filename} to root, results/, results_submit/additional/, and results_submit/figures/P7_theory/\n")
+    print(f"Saved {pdf_filename} and {png_filename} to {p7_theory_dir}\n")
     return res_df, summary
 
 
@@ -234,15 +222,12 @@ risk_vector_g (tail-favored) : {np.array2string(risk_vector_g, precision=6, sepa
     print(spec_text)
 
     spec_filename = "synthetic_risk_profile_spec.txt"
-    with open(spec_filename, "w", encoding="utf-8") as f:
+    p7_theory_dir = Path("results/P7_theory")
+    p7_theory_dir.mkdir(exist_ok=True, parents=True)
+    spec_path = p7_theory_dir / spec_filename
+    with open(spec_path, "w", encoding="utf-8") as f:
         f.write(spec_text)
-    with open(Path("results") / spec_filename, "w", encoding="utf-8") as f:
-        f.write(spec_text)
-    with open(Path("results_submit/additional") / spec_filename, "w", encoding="utf-8") as f:
-        f.write(spec_text)
-    with open(Path("results_submit/metadata") / spec_filename, "w", encoding="utf-8") as f:
-        f.write(spec_text)
-    print(f"Saved {spec_filename} to root, results/, results_submit/additional/, and results_submit/metadata/\n")
+    print(f"Saved {spec_filename} to {spec_path}\n")
 
 
 def run_task3():
@@ -279,11 +264,11 @@ def run_task3():
     df = pd.DataFrame(rows)
 
     csv_filename = "same_predictor_identification_width.csv"
-    df.to_csv(csv_filename, index=False)
-    df.to_csv(Path("results") / csv_filename, index=False)
-    df.to_csv(Path("results_submit/additional") / csv_filename, index=False)
-    df.to_csv(Path("results_submit/tables/P7_theory") / csv_filename, index=False)
-    print(f"Saved {csv_filename} to root, results/, results_submit/additional/, and results_submit/tables/P7_theory/")
+    p7_theory_dir = Path("results/P7_theory")
+    p7_theory_dir.mkdir(exist_ok=True, parents=True)
+    csv_path = p7_theory_dir / csv_filename
+    df.to_csv(csv_path, index=False)
+    print(f"Saved {csv_filename} to {csv_path}")
 
     print(df.to_string())
 
@@ -317,18 +302,12 @@ def run_task3():
     plt.tight_layout()
     pdf_filename = "same_predictor_identification_width.pdf"
     png_filename = "same_predictor_identification_width.png"
-    safe_savefig(fig, pdf_filename, dpi=300)
-    safe_savefig(fig, png_filename, dpi=300)
-    safe_savefig(fig, Path("results") / pdf_filename, dpi=300)
-    safe_savefig(fig, Path("results") / png_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/additional") / pdf_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/additional") / png_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/figures") / pdf_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/figures") / png_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/figures/P7_theory") / pdf_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/figures/P7_theory") / png_filename, dpi=300)
+    p7_theory_dir = Path("results/P7_theory")
+    p7_theory_dir.mkdir(exist_ok=True, parents=True)
+    safe_savefig(fig, p7_theory_dir / pdf_filename, dpi=300)
+    safe_savefig(fig, p7_theory_dir / png_filename, dpi=300)
     plt.close()
-    print(f"Saved {pdf_filename} to root, results/, results_submit/additional/, and results_submit/figures/P7_theory/\n")
+    print(f"Saved {pdf_filename} and {png_filename} to {p7_theory_dir}\n")
 
 
 def run_task4():
@@ -353,11 +332,11 @@ def run_task4():
     )
 
     csv_filename = "ranking_reversal_by_missing_mass.csv"
-    df.to_csv(csv_filename, index=False)
-    df.to_csv(Path("results") / csv_filename, index=False)
-    df.to_csv(Path("results_submit/additional") / csv_filename, index=False)
-    df.to_csv(Path("results_submit/tables/P7_theory") / csv_filename, index=False)
-    print(f"Saved {csv_filename} to root, results/, results_submit/additional/, and results_submit/tables/P7_theory/")
+    p7_theory_dir = Path("results/P7_theory")
+    p7_theory_dir.mkdir(exist_ok=True, parents=True)
+    csv_path = p7_theory_dir / csv_filename
+    df.to_csv(csv_path, index=False)
+    print(f"Saved {csv_filename} to {csv_path}")
 
     print(df.to_string())
 
@@ -403,18 +382,12 @@ def run_task4():
     plt.tight_layout()
     pdf_filename = "ranking_reversal_by_missing_mass.pdf"
     png_filename = "ranking_reversal_by_missing_mass.png"
-    safe_savefig(fig, pdf_filename, dpi=300)
-    safe_savefig(fig, png_filename, dpi=300)
-    safe_savefig(fig, Path("results") / pdf_filename, dpi=300)
-    safe_savefig(fig, Path("results") / png_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/additional") / pdf_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/additional") / png_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/figures") / pdf_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/figures") / png_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/figures/P7_theory") / pdf_filename, dpi=300)
-    safe_savefig(fig, Path("results_submit/figures/P7_theory") / png_filename, dpi=300)
+    p7_theory_dir = Path("results/P7_theory")
+    p7_theory_dir.mkdir(exist_ok=True, parents=True)
+    safe_savefig(fig, p7_theory_dir / pdf_filename, dpi=300)
+    safe_savefig(fig, p7_theory_dir / png_filename, dpi=300)
     plt.close()
-    print(f"Saved {pdf_filename} to root, results/, results_submit/additional/, and results_submit/figures/P7_theory/\n")
+    print(f"Saved {pdf_filename} and {png_filename} to {p7_theory_dir}\n")
 
 
 if __name__ == "__main__":

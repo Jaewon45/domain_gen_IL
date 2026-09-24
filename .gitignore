@@ -18,11 +18,28 @@ dgil_env/
 # Local experiment outputs
 cmnist_exp_smoke/
 
-# Transient run logs
+# Transient run logs (stdout/stderr from job submissions)
 **/out.txt
 **/err.txt
+
+# Job submission logs (should be in CMNIST/job_scripts/logs/)
+/domain_stress_main_seed*.log
+/seed*.log
+*.log
 
 # Downloaded raw datasets
 data/MNIST/raw/
 **/MNIST/raw/
 results/
+
+# Root-level theory outputs (canonical location: results/P7_theory/)
+/theorem_aligned_01_cvar_bounds.csv
+/theorem_aligned_01_cvar_bounds.pdf
+/theorem_aligned_01_cvar_bounds.png
+/same_predictor_identification_width.csv
+/same_predictor_identification_width.pdf
+/same_predictor_identification_width.png
+/ranking_reversal_by_missing_mass.csv
+/ranking_reversal_by_missing_mass.pdf
+/ranking_reversal_by_missing_mass.png
+/synthetic_risk_profile_spec.txt
