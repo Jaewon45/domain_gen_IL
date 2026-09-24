@@ -16,6 +16,18 @@ The paper presents a novel approach to domain generalization by contending that 
 
 ![Overview of DGIL](assets/overview.png)
 
+## Quick Start: Reproduce All Results
+
+**To regenerate all 8 report items (figures & tables) from scratch:**
+
+👉 **See [docs/QUICKSTART.md](docs/QUICKSTART.md)** for complete step-by-step instructions
+
+- **Smoke test (E0):** ~30 minutes — validate end-to-end pipeline
+- **Full experiments (E1-E4):** ~20-24 hours — generate all results
+- **Theory postprocessing:** ~5 minutes — produce 4 theory outputs
+
+**Requires Python 3.10+** and ~20GB disk space for experiment outputs.
+
 ## Installation
 To install the necessary dependencies, please follow these steps:
 
@@ -63,7 +75,7 @@ Current extension direction:
 - The initial comparison should use a frozen pretrained ResNet-50 backbone with a trainable head and compare `ERM`, `GroupDRO`, and `IRO`.
 - The extension should use fresh output roots under `results/` and must not overwrite existing CMNIST or prior experiment artifacts.
 
-See [README_EXT_[CMN&ImgC].md](README_EXT_[CMN&ImgC].md) for workflow updates and [README_DATASET_SETUPS_[CMN&ImgC].md](README_DATASET_SETUPS_[CMN&ImgC].md) for the dataset comparison table.
+See [README_EXT_[CMN&ImgC].md](docs/README_EXT_[CMN&ImgC].md) for workflow updates and [README_DATASET_SETUPS_[CMN&ImgC].md](docs/README_DATASET_SETUPS_[CMN&ImgC].md) for the dataset comparison table.
 
 ## Contributing
 We welcome contributions from the community. If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request.
