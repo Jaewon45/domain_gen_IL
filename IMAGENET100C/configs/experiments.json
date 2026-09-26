@@ -1,0 +1,77 @@
+{
+  "dataset": "clane9/imagenet-100",
+  "dataset_revision": "0519dc2f402a3a18c6e57f7913db059215eee25b",
+  "weight_version": "IMAGENET1K_V2",
+  "primary_source_order": [
+    "gaussian_noise",
+    "defocus_blur",
+    "snow",
+    "contrast",
+    "shot_noise",
+    "motion_blur",
+    "frost",
+    "brightness",
+    "impulse_noise",
+    "zoom_blur",
+    "fog",
+    "pixelate"
+  ],
+  "e3b_anchor_types": [
+    "gaussian_noise",
+    "defocus_blur",
+    "snow",
+    "contrast"
+  ],
+  "corruption_families": {
+    "noise": ["gaussian_noise", "shot_noise", "impulse_noise"],
+    "blur": ["defocus_blur", "glass_blur", "motion_blur", "zoom_blur"],
+    "weather": ["snow", "frost", "fog"],
+    "digital": ["brightness", "contrast", "elastic_transform", "pixelate", "jpeg_compression"]
+  },
+  "held_out_only_types": ["glass_blur", "elastic_transform", "jpeg_compression"],
+  "experiments": {
+    "E0": {
+      "protocol": "mechanism",
+      "source_count": 4,
+      "counts": [1000, 1000, 1000, 1000]
+    },
+    "E1": {
+      "protocol": "mechanism",
+      "source_counts": [2, 4, 8, 12],
+      "total_budget": 40000
+    },
+    "E2": {
+      "protocol": "mechanism",
+      "source_count": 4,
+      "samples_per_type": [1000, 5000, 10000]
+    },
+    "E3": {
+      "protocol": "mechanism",
+      "source_count": 4,
+      "conditions": {
+        "balanced": [10000, 10000, 10000, 10000],
+        "mild_imbalance": [17500, 7500, 7500, 7500],
+        "strong_imbalance": [25000, 5000, 5000, 5000]
+      }
+    },
+    "E3b": {
+      "protocol": "mechanism",
+      "source_count": 4,
+      "conditions": {
+        "balanced": [10000, 10000, 10000, 10000],
+        "long_tail": [25000, 10000, 4000, 1000],
+        "near_missing": [29000, 9000, 1800, 200],
+        "missing": [30000, 7500, 2500, 0]
+      }
+    },
+    "severity_support": {
+      "protocol": "severity",
+      "source_severities": [1, 2, 3],
+      "total_budget": 40000,
+      "held_out_severities": [4, 5]
+    },
+    "E4": {
+      "lambda_grid": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    }
+  }
+}
