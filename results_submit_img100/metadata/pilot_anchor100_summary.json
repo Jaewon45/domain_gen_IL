@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "scope": "pilot",
+  "seed": 0,
+  "seed_count": 1,
+  "validation_images": 100,
+  "validation_sampling": "one image per ImageNet-100 class",
+  "corruption_types": [
+    "gaussian_noise",
+    "defocus_blur",
+    "snow",
+    "contrast"
+  ],
+  "severities": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "evaluated_checkpoints": 28,
+  "limitations": [
+    "Single seed; no cross-seed standard deviation.",
+    "One validation image per class; metrics are high-variance pilot estimates.",
+    "Worst-domain means worst among the four registered anchors, not all 15 corruption types.",
+    "Not report-grade and must not be mixed with full evaluation results."
+  ]
+}

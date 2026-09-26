@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "runs_root": "C:/Users/320257223/PycharmProjects/domain_gen_IL/results/imagenet100c_seed0",
+  "completed_runs": 64,
+  "expected_runs": 64,
+  "seeds": [
+    0
+  ],
+  "algorithms": [
+    "erm",
+    "groupdro",
+    "inftask",
+    "iro"
+  ],
+  "experiments": {
+    "E0": 4,
+    "E1": 16,
+    "E2": 12,
+    "E3": 12,
+    "E3b": 16,
+    "severity_support": 4
+  },
+  "evaluation_jsonl_count": 0,
+  "deployment_evaluation_complete": false,
+  "bundle_scope": "source-training diagnostics; deployment evaluation pending"
+}

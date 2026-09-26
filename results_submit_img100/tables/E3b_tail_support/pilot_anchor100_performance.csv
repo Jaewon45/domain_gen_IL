@@ -1,0 +1,17 @@
+seed,condition,algorithm,designated_tail_type,designated_tail_accuracy_percent,worst_anchor_accuracy_percent,mean_anchor_accuracy_percent,alpha_0.9_anchor_cvar_error,pilot_images,seed_count,sd_available
+0,balanced,erm,contrast,79.39999999999999,53.800000000000004,66.8,0.462,100,1,False
+0,balanced,groupdro,contrast,71.2,54.0,59.85,0.45999999999999996,100,1,False
+0,balanced,inftask,contrast,82.6,56.60000000000001,66.75,0.43399999999999994,100,1,False
+0,balanced,iro,contrast,81.4,54.400000000000006,64.95,0.45599999999999996,100,1,False
+0,long_tail,erm,contrast,80.0,59.199999999999996,68.8,0.40800000000000003,100,1,False
+0,long_tail,groupdro,contrast,71.8,50.4,57.95,0.496,100,1,False
+0,long_tail,inftask,contrast,69.19999999999999,50.6,59.3,0.49400000000000005,100,1,False
+0,long_tail,iro,contrast,71.39999999999999,50.8,59.9,0.492,100,1,False
+0,near_missing,erm,contrast,82.2,59.199999999999996,68.95,0.40800000000000003,100,1,False
+0,near_missing,groupdro,contrast,69.0,45.199999999999996,55.55,0.548,100,1,False
+0,near_missing,inftask,contrast,71.6,47.20000000000001,58.25,0.5279999999999999,100,1,False
+0,near_missing,iro,contrast,70.60000000000001,52.2,60.150000000000006,0.47800000000000004,100,1,False
+0,missing,erm,contrast,78.2,62.2,68.85,0.378,100,1,False
+0,missing,groupdro,contrast,76.0,54.2,63.14999999999999,0.458,100,1,False
+0,missing,inftask,contrast,74.8,54.2,61.8,0.458,100,1,False
+0,missing,iro,contrast,76.6,56.2,63.24999999999999,0.438,100,1,False

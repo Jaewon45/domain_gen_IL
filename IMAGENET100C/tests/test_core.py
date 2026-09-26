@@ -8,7 +8,12 @@ from PIL import Image
 
 from IMAGENET100C.algorithms import DomainAlgorithm
 from IMAGENET100C.corruptions import CORRUPTION_TYPES, SEVERITIES, corrupt_image, stable_seed
-from IMAGENET100C.data import ImageNet100CDataset, datasets_from_manifest, validate_label_space
+from IMAGENET100C.data import (
+    ImageNet100CDataset,
+    datasets_from_manifest,
+    final_evaluation_datasets,
+    validate_label_space,
+)
 from IMAGENET100C.evaluate import identification_interval, summarize, weighted_upper_cvar
 from IMAGENET100C.manifests import build_manifest, load_manifest, save_manifest
 from IMAGENET100C.models import build_transform_and_spec
@@ -23,6 +28,8 @@ class FakeDataset:
         return len(self.labels)
 
     def __getitem__(self, index):
+        if index == "label":
+            return list(self.labels)
         array = np.full((10, 12, 3), index % 255, dtype=np.uint8)
         return {"image": Image.fromarray(array), "label": int(self.labels[index])}
 
@@ -84,6 +91,17 @@ class CoreTests(unittest.TestCase):
         validate_label_space(list(range(100)))
         with self.assertRaises(ValueError):
             validate_label_space([0, 100])
+
+    def test_pilot_evaluation_is_class_stratified_and_can_subset_corruptions(self):
+        labels = [label for label in range(100) for _ in range(3)]
+        clean, conditions = final_evaluation_datasets(
+            FakeDataset(labels), tensor_transform, seed=0, max_images=100,
+            corruption_types=["gaussian_noise", "defocus_blur", "snow", "contrast"],
+        )
+        selected_labels = [labels[index] for index in clean.indices]
+        self.assertEqual(len(selected_labels), 100)
+        self.assertEqual(set(selected_labels), set(range(100)))
+        self.assertEqual(len(conditions), 20)
 
     def test_rgb_shape_and_deterministic_corruption(self):
         base = FakeDataset([0])

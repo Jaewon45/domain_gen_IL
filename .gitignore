@@ -32,6 +32,12 @@ data/MNIST/raw/
 **/MNIST/raw/
 results/
 
+# Final submission figures/tables are intentionally versioned.
+!results_submit/
+!results_submit/**
+!results_submit_img100/
+!results_submit_img100/**
+
 # Root-level theory outputs (canonical location: results/P7_theory/)
 /theorem_aligned_01_cvar_bounds.csv
 /theorem_aligned_01_cvar_bounds.pdf

@@ -186,15 +186,52 @@ class InfiniteDomainBatches:
         return batches
 
 
-def final_evaluation_datasets(base_validation, transform, seed: int, max_images: Optional[int] = None):
-    count = len(base_validation) if max_images is None else min(len(base_validation), int(max_images))
-    indices = list(range(count))
+def _class_stratified_prefix_indices(base_dataset, max_images: int) -> Sequence[int]:
+    """Select a deterministic, approximately class-balanced evaluation prefix."""
+    limit = min(len(base_dataset), int(max_images))
+    if limit <= 0:
+        raise ValueError("max_images must be positive")
+    labels = [int(value) for value in base_dataset["label"]]
+    classes = sorted(set(labels))
+    quotient, remainder = divmod(limit, len(classes))
+    quotas = {label: quotient + (position < remainder) for position, label in enumerate(classes)}
+    selected = []
+    used = {label: 0 for label in classes}
+    for index, label in enumerate(labels):
+        if used[label] < quotas[label]:
+            selected.append(index)
+            used[label] += 1
+        if len(selected) == limit:
+            break
+    if len(selected) != limit:
+        raise ValueError(f"Could select only {len(selected)} of {limit} stratified validation images")
+    return selected
+
+
+def final_evaluation_datasets(
+    base_validation,
+    transform,
+    seed: int,
+    max_images: Optional[int] = None,
+    corruption_types: Optional[Sequence[str]] = None,
+):
+    indices = (
+        list(range(len(base_validation)))
+        if max_images is None
+        else list(_class_stratified_prefix_indices(base_validation, int(max_images)))
+    )
+    selected_corruptions = list(CORRUPTION_TYPES if corruption_types is None else corruption_types)
+    unknown = sorted(set(selected_corruptions) - set(CORRUPTION_TYPES))
+    if unknown:
+        raise ValueError(f"Unknown corruption types: {unknown}")
+    if not selected_corruptions:
+        raise ValueError("At least one corruption type is required")
     clean = ImageNet100CDataset(
         base_validation, indices, transform, split="validation", global_seed=seed,
         protocol="mechanism", clean=True,
     )
     conditions = {}
-    for corruption_name in CORRUPTION_TYPES:
+    for corruption_name in selected_corruptions:
         for severity in SEVERITIES:
             conditions[(corruption_name, severity)] = ImageNet100CDataset(
                 base_validation,

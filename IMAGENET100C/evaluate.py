@@ -108,8 +108,14 @@ def summarize(
     manifest: Mapping[str, object],
     alphas=(0.5, 0.75, 0.9),
 ):
+    evaluated_corruptions = [
+        corruption for corruption in CORRUPTION_TYPES
+        if any(row["corruption"] == corruption for row in condition_rows)
+    ]
+    if not evaluated_corruptions:
+        raise ValueError("No corruption conditions were evaluated")
     per_type = []
-    for corruption in CORRUPTION_TYPES:
+    for corruption in evaluated_corruptions:
         rows = [row for row in condition_rows if row["corruption"] == corruption]
         per_type.append({
             "corruption": corruption,
@@ -129,7 +135,14 @@ def summarize(
             str(severity): float(np.mean([row["top1"] for row in condition_rows if row["severity"] == severity]))
             for severity in SEVERITIES
         },
-        "primary_deployment_law": manifest["external_deployment_law"],
+        "primary_deployment_law": (
+            manifest["external_deployment_law"]
+            if evaluated_corruptions == list(CORRUPTION_TYPES)
+            else {
+                "kind": "pilot_uniform_evaluated_corruption_types",
+                "weights": {name: 1.0 / len(evaluated_corruptions) for name in evaluated_corruptions},
+            }
+        ),
     }
     summary["domain_cvar_error"] = {
         str(alpha): weighted_upper_cvar(domain_errors, uniform_weights, alpha) for alpha in alphas
@@ -149,6 +162,16 @@ def summarize(
     epsilon = 1.0 - sum(observed_weights)
     final_by_type = {row["corruption"]: row["severity_averaged_error"] for row in per_type}
     realized_names = list(law_weights)
+    missing_realized_types = [name for name in realized_names if name not in final_by_type]
+    if missing_realized_types:
+        summary["partial_identification"] = {}
+        summary["identification_deployment_law"] = identification_law
+        summary["identification_p_obs_source"] = "held_out_source_validation_subset"
+        summary["identification_not_computed_reason"] = (
+            "Pilot corruption subset does not cover the complete identification deployment law"
+        )
+        summary["identification_missing_evaluated_types"] = missing_realized_types
+        return summary
     realized_losses = [final_by_type[name] for name in realized_names]
     realized_weights = [law_weights[name] for name in realized_names]
     intervals = {}
@@ -178,6 +201,11 @@ def main() -> None:
     parser.add_argument("--batch_size", type=int, default=64)
     parser.add_argument("--workers", type=int, default=0)
     parser.add_argument("--max_eval_images", type=int, default=None)
+    parser.add_argument(
+        "--corruption_types",
+        default=None,
+        help="Optional comma-separated corruption subset for explicitly labeled pilot evaluation.",
+    )
     args = parser.parse_args()
 
     checkpoint = torch.load(args.checkpoint, map_location="cpu")
@@ -195,8 +223,12 @@ def main() -> None:
         manifest["dataset"]["name"], manifest["dataset"]["revision"], split="train"
     )
     source_validation_datasets = datasets_from_manifest(source_train, manifest, transform, validation=True)
+    corruption_types = None
+    if args.corruption_types:
+        corruption_types = [value.strip() for value in args.corruption_types.split(",") if value.strip()]
     clean_dataset, conditions = final_evaluation_datasets(
-        validation, transform, int(manifest["global_seed"]), args.max_eval_images
+        validation, transform, int(manifest["global_seed"]), args.max_eval_images,
+        corruption_types=corruption_types,
     )
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = build_model(checkpoint["model_mode"], weight_version=checkpoint["weight_version"]).to(device)
@@ -234,6 +266,13 @@ def main() -> None:
             "environment_counts": manifest["active_domain_counts"],
             "per_class_counts": manifest["source_class_counts"],
             "selection_uses_target_validation": False,
+            "evaluation_scope": {
+                "kind": "full" if corruption_types is None and args.max_eval_images is None else "pilot",
+                "max_eval_images": args.max_eval_images,
+                "validation_sampling": "all" if args.max_eval_images is None else "class_stratified",
+                "corruption_types": list(CORRUPTION_TYPES if corruption_types is None else corruption_types),
+                "severities": list(SEVERITIES),
+            },
         }
         record.update(summarize(condition_rows, source_validation_rows, manifest))
         records.append(record)
