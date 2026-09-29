@@ -1,0 +1,3 @@
+n_train_domains,algorithm,worst_domain_acc_final_mean,worst_domain_acc_final_std,worst_domain_acc_final_count,avg_domain_acc_final_mean,avg_domain_acc_final_std,avg_domain_acc_final_count,best_domain_acc_final_mean,best_domain_acc_final_std,best_domain_acc_final_count
+2,eqrm,0.6903400000000001,0.0038213871826864006,5,0.7014763636363636,0.0020209808599696566,5,0.71222,0.00393281069974133,5
+2,vrex,0.67474,0.007154928371409426,5,0.7027309090909091,0.0010102695818934536,5,0.7306999999999999,0.004854379466008027,5

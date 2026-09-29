@@ -1,0 +1,11 @@
+phase,algorithm,seed,exp_name,n_train_domains,sample_size_per_domain,imbalance_type,worst_domain_acc_best_mean,worst_domain_acc_best_std,worst_domain_acc_best_count,avg_domain_acc_best_mean,avg_domain_acc_best_std,avg_domain_acc_best_count,best_domain_acc_best_mean,best_domain_acc_best_std,best_domain_acc_best_count,worst_domain_acc_final_mean,worst_domain_acc_final_std,worst_domain_acc_final_count,avg_domain_acc_final_mean,avg_domain_acc_final_std,avg_domain_acc_final_count,best_domain_acc_final_mean,best_domain_acc_final_std,best_domain_acc_final_count
+domain_count,eqrm,0,qrm_eqrm_seed0,2,__na__,__na__,0.6944,,1,0.7041636363636363,,1,0.7142,,1,0.6959,,1,0.7047,,1,0.7128,,1
+domain_count,eqrm,1,qrm_eqrm_seed1,2,__na__,__na__,0.685,,1,0.7013727272727273,,1,0.7161,,1,0.6881,,1,0.7014272727272727,,1,0.7127,,1
+domain_count,eqrm,2,qrm_eqrm_seed2,2,__na__,__na__,0.6786,,1,0.696590909090909,,1,0.7119,,1,0.6896,,1,0.6991090909090909,,1,0.7099,,1
+domain_count,eqrm,3,qrm_eqrm_seed3,2,__na__,__na__,0.6692,,1,0.6986909090909091,,1,0.7264,,1,0.6921,,1,0.7011545454545455,,1,0.7076,,1
+domain_count,eqrm,4,qrm_eqrm_seed4,2,__na__,__na__,0.6598,,1,0.695690909090909,,1,0.7293,,1,0.686,,1,0.7009909090909091,,1,0.7181,,1
+domain_count,vrex,0,qrm_vrex_seed0,2,__na__,__na__,0.682,,1,0.7040181818181819,,1,0.7285,,1,0.6806,,1,0.7042454545454545,,1,0.7313,,1
+domain_count,vrex,1,qrm_vrex_seed1,2,__na__,__na__,0.6812,,1,0.702709090909091,,1,0.725,,1,0.678,,1,0.7029363636363637,,1,0.7282,,1
+domain_count,vrex,2,qrm_vrex_seed2,2,__na__,__na__,0.6669,,1,0.7018,,1,0.7337,,1,0.6649,,1,0.7022272727272727,,1,0.7367,,1
+domain_count,vrex,3,qrm_vrex_seed3,2,__na__,__na__,0.6769,,1,0.7024727272727272,,1,0.7289,,1,0.6695,,1,0.7015090909090909,,1,0.7333,,1
+domain_count,vrex,4,qrm_vrex_seed4,2,__na__,__na__,0.6852,,1,0.7028818181818182,,1,0.7198,,1,0.6807,,1,0.7027363636363636,,1,0.724,,1
