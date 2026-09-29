@@ -275,7 +275,7 @@ The current documented local device is an NVIDIA RTX A1000 6GB Laptop GPU.
 Use the 100-image loader/training smoke test before launching a new seed or a
 different machine configuration.
 
-### Measured runtime and five-seed wall-clock budget
+### Local Windows RTX A1000: measured runtime and five-seed wall-clock budget
 
 All timings in this section assume the machine used for seed 0: one NVIDIA RTX
 A1000 6GB Laptop GPU, Windows, `finetune_last_stage`, batch size 64, zero data
@@ -299,6 +299,57 @@ validation-image instances at 5,000 images per condition. Corruptions are
 generated online for every checkpoint and every lambda. The measured pilot
 showed that corruption generation is a material bottleneck; GPU inference alone
 does not determine runtime.
+
+### Remote Linux dual RTX A6000: current execution plan and estimates
+
+The remote execution environment is separate from the historical local Windows
+environment above: Linux, two NVIDIA RTX A6000 GPUs with 49,140 MiB each, 64
+logical CPU cores, approximately 477 GiB available host RAM, and the isolated
+`domgen` Conda environment (`torch 2.6.0+cu124`, `torchvision 0.21.0+cu124`).
+It uses `IMAGENET100C/run_seed_all.sh`, which keeps **two independent training
+processes** active: one process per GPU, dynamically assigning the next run to
+whichever GPU finishes first. It does not use DDP and does not run all 64 jobs
+at once.
+
+The remote dataset cache and ImageNet-1k ResNet-50 weights passed the documented
+100-image/two-step smoke run. A 100-step cached E0 ERM calibration took 50.77 s.
+An E0 IRO probe with batch size 64 and four lambda samples completed without OOM;
+it took 35.07 s including setup for 10 steps and used 11.1 GiB host RAM. The
+first full remote E0 ERM and GroupDRO runs each completed in approximately 11
+minutes. These are readiness measurements, not report-grade experiment results.
+
+The following remote values are planning estimates, not measurements. They keep
+the local `2-3 h` full-evaluation-per-checkpoint estimate because online
+corruption generation is CPU-heavy; a complete remote evaluation benchmark must
+be run before claiming an A6000 speedup for that stage.
+
+| Remote work item | Work | Estimated wall time | Basis / status |
+| --- | ---: | ---: | --- |
+| Train one seed | 64 runs, two dynamically scheduled GPU workers | **18-24 h** | Provisional estimate from the cached ERM, full E0, and IRO probes; IRO and high-domain-count runs dominate. |
+| Targeted lambda-0 evaluation, one seed | E1 + E3 + E3b = 44 checkpoints | **44-66 h** | `44 x (2-3 h) / 2` concurrent checkpoint workers; not yet benchmarked end-to-end remotely. |
+| Exhaustive lambda-0 evaluation, one seed | all 64 checkpoints | **64-96 h** | `64 x (2-3 h) / 2` concurrent checkpoint workers; not yet benchmarked end-to-end remotely. |
+| E4 for one IRO and one INF-TASK checkpoint | 20 extra lambda-equivalent passes | **20-30 h** | `20 x (2-3 h) / 2`; separate from lambda-0 evaluation. |
+| Targeted train + evaluation + E4, one seed | 64 training runs + 64 evaluation-equivalent passes | **82-120 h = 3.4-5.0 days** | Train, 44 targeted lambda-0 passes, and 20 E4 passes. |
+| Exhaustive train + evaluation + E4, one seed | 64 training runs + 84 evaluation-equivalent passes | **102-150 h = 4.3-6.3 days** | Train, 64 lambda-0 passes, and 20 E4 passes. |
+
+The remote training launcher is resumable: it skips only runs containing
+`checkpoints/final.pt` and stops on an incomplete run directory. Run one seed
+launcher at a time because it already uses both GPUs. Full evaluation currently
+uses the Python evaluator directly; schedule no more than one evaluator process
+per GPU until a remote full-evaluation throughput and memory benchmark is
+recorded.
+
+Example remote seed launch after the cache has been populated:
+
+```bash
+cd /home/ra95tig/lrz_mount/domgen
+nohup bash IMAGENET100C/run_seed_all.sh \
+  --seed 1 \
+  --results-root /home/ra95tig/imagenet100c_results/seed1 \
+  --python /home/ra95tig/anaconda3/envs/domgen/bin/python \
+  --gpus 0,1 --offline \
+  > logs/imagenet100c_seed1.log 2>&1 &
+```
 
 #### Training-only budget for five seeds
 
