@@ -124,7 +124,7 @@ class DomainAlgorithm:
         device: torch.device,
     ):
         name = name.lower()
-        if name not in {"erm", "groupdro", "inftask", "iro"}:
+        if name not in {"erm", "irm", "vrex", "eqrm", "groupdro", "inftask", "iro"}:
             raise ValueError(f"Unknown algorithm: {name}")
         if name in {"inftask", "iro"} and not getattr(model, "uses_lambda", False):
             raise TypeError(f"{name} requires a lambda-conditioned model")
@@ -134,6 +134,8 @@ class DomainAlgorithm:
         self.model = model
         self.device = device
         self.groupdro_eta = float(groupdro_eta)
+        self.penalty_weight = 1000.0
+        self.alpha = 0.75
         self.num_lambda_samples = int(num_lambda_samples)
         self.numpy_rng = np.random.default_rng(seed)
         self.optimizer = torch.optim.AdamW(
@@ -165,6 +167,28 @@ class DomainAlgorithm:
             preference = torch.zeros((all_images.shape[0], 1), device=self.device)
             objective = F.cross_entropy(self.model(all_images, preference), all_targets)
             names, risks = self._risk_vector(prepared, 0.0)
+            self.last_lambdas = [0.0]
+        elif self.name in {"irm", "vrex", "eqrm"}:
+            names, risks = self._risk_vector(prepared, 0.0)
+            if self.name == "irm":
+                scale = torch.ones((), device=self.device, requires_grad=True)
+                scaled_risks = []
+                for _, images, targets in prepared:
+                    preference = torch.zeros((images.shape[0], 1), device=self.device)
+                    logits = self.model(images, preference)
+                    scaled_risks.append(F.cross_entropy(logits * scale, targets))
+                risks_for_penalty = torch.stack(scaled_risks)
+                gradients = [
+                    torch.autograd.grad(risk, scale, create_graph=True)[0]
+                    for risk in risks_for_penalty
+                ]
+                penalty = torch.stack(gradients).pow(2).mean()
+                objective = risks_for_penalty.mean() + self.penalty_weight * penalty
+            elif self.name == "vrex":
+                penalty = (risks - risks.mean()).pow(2).mean()
+                objective = risks.mean() + self.penalty_weight * penalty
+            else:
+                objective = torch.quantile(risks, self.alpha)
             self.last_lambdas = [0.0]
         elif self.name == "groupdro":
             names, risks = self._risk_vector(prepared, 0.0)

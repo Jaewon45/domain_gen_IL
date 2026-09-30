@@ -23,6 +23,7 @@ parser = argparse.ArgumentParser(description='Colored MNIST')
 parser.add_argument('--train_envs', type=str, default='0.01, 0.12, 0.0, 0.0, 0.99, 0.5, 0.7, 0.01, 0.0, 0.0, 0.14')
 parser.add_argument('--test_envs', type=str, default='0.1,0.5,0.9')     # test envs to log/print
 parser.add_argument('--test_env_ms', type=str, default='0.9')               # test env for selecting best model
+parser.add_argument('--checkpoint_selection', type=str, default='legacy_test_env_best', choices=['legacy_test_env_best', 'final'])
 parser.add_argument('--train_env_sizes', type=str, default='')
 parser.add_argument('--train_env_size_mode', type=str, default='random', choices=['random', 'first'])
 parser.add_argument('--full_resolution', action='store_true')
@@ -310,7 +311,7 @@ for step in range(start_step, args.steps + 1):
         misc.print_row([results[key] for key in results_keys], colwidth=12)
 
         start_time, step_since_eval = time.time(), 0
-        if results[args.test_env_ms + '_acc'] > best_acc:
+        if args.checkpoint_selection == 'legacy_test_env_best' and results[args.test_env_ms + '_acc'] > best_acc:
             best_acc = results[args.test_env_ms + '_acc']
             best_weights = copy.deepcopy(algorithm.state_dict())
 
@@ -320,7 +321,10 @@ for step in range(start_step, args.steps + 1):
         print("Saved ERM-pretrained model.")
 # -
 
-# -------- FINAL EVAL ON ALL ENVS AND HELD-OUT TEST SET --------
+    if args.checkpoint_selection == 'final':
+        best_weights = copy.deepcopy(algorithm.state_dict())
+
+    # -------- FINAL EVAL ON ALL ENVS AND HELD-OUT TEST SET --------
 all_ps = [i / 10. for i in range(11)]
 all_env_names = [str(p) for p in all_ps]
 all_envs = get_cmnist_datasets(args.data_dir, train_envs=[], test_envs=all_ps, cuda=(device == "cuda"),

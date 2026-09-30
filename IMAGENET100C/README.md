@@ -20,12 +20,13 @@ on natural images:
   and `contrast`;
 - deployment law: uniform over those four registered anchors;
 - source conditions: `balanced`, `long_tail`, and `missing`;
-- algorithms: ERM, GroupDRO, and IRO;
+- candidate algorithms: ERM, IRM, GroupDRO, IRO, INF-TASK, EQRM, and VREx;
 - seeds: `0,1,2`;
 - evaluation: 1,000 fixed class-stratified validation images per
   type/severity condition, shared across models and seeds.
 
-This is `3 conditions x 3 algorithms x 3 seeds = 27 checkpoints`. Each
+The candidate matrix is `3 conditions x 7 algorithms x 3 seeds = 63 checkpoints`.
+Each
 checkpoint evaluates the four anchors at severities `1..5`, with severity
 averaging within each anchor. Clean validation is reported separately.
 
@@ -35,8 +36,8 @@ and whether pairwise rankings are certified. The held-out ImageNet validation
 results are descriptive plug-in deployment results; identification intervals
 use the held-out source-validation subset declared in each manifest.
 
-The `near_missing` condition is dropped. INF-TASK is dropped from this focused
-extension. E1 domain-count, E2 sample-support, E3 visible-imbalance,
+The `near_missing` condition is dropped. E1 domain-count, E2 sample-support,
+E3 visible-imbalance,
 `severity_support`, and E4 lambda-grid studies are stopped as paper runs.
 They remain available as internal controls if a reviewer specifically requests
 them.
@@ -139,7 +140,14 @@ submission plan.
 
 The obsolete seed-1 full 15-type evaluation was stopped after 8 completed
 checkpoints. Those JSONL files are preserved but are not part of the focused
-27-checkpoint result set. Seed 2 has no evaluation outputs yet.
+candidate result set.
+
+For seeds 1 and 2, the currently available selected checkpoints are ERM,
+GroupDRO, IRO, and INF-TASK for all three conditions. IRM, EQRM, and VREx are
+missing for both seeds: **18 training checkpoints total** (`3 algorithms x 3
+conditions x 2 seeds`). No focused evaluations have yet been run for INF-TASK,
+IRM, EQRM, or VREx. Seed 0 selected checkpoints are not present on this remote
+filesystem.
 
 The existing `results_submit_img100/` figures are seed-0 pilot/training
 artifacts. They are explicitly marked `pilot_anchor100` where appropriate and
@@ -148,18 +156,17 @@ visualizations have been generated yet.
 
 ## Remaining work and estimate
 
-Training remaining for the focused plan: **none**, assuming the nine selected
-seed-0 checkpoints are available from the completed local bundle. Seed 1 and
-seed 2 already contain the nine selected training checkpoints each. If the
-seed-0 checkpoints are not transferred to the remote server, transfer or rerun
-only those nine runs; do not rerun the other 55 configurations.
+Training remaining for the seven-method candidate plan: **18 selected runs for
+seeds 1 and 2**, plus 21 selected runs for seed 0 if its checkpoints are not
+transferred from the completed local bundle. Do not rerun the other legacy
+configurations.
 
 Evaluation remaining:
 
-- seed 0: 9 focused evaluations;
-- seed 1: 9 focused evaluations, regardless of the 8 obsolete broad evaluations;
-- seed 2: 9 focused evaluations;
-- total: **27 focused evaluations**.
+- seed 0: 21 candidate evaluations if all seven methods are included;
+- seed 1: 21 candidate evaluations, regardless of the 8 obsolete broad evaluations;
+- seed 2: 21 candidate evaluations;
+- total: **63 candidate evaluations** once all missing checkpoints are trained.
 
 The completed broad evaluations show that a full 15-type, 5,000-image
 checkpoint evaluation takes approximately four hours on this remote setup.

@@ -140,7 +140,7 @@ def main() -> None:
     parser.add_argument("--condition", default="balanced")
     parser.add_argument("--source_count", type=int, default=4)
     parser.add_argument("--samples_per_type", type=int, default=1000)
-    parser.add_argument("--algorithm", choices=["erm", "groupdro", "inftask", "iro"], default="erm")
+    parser.add_argument("--algorithm", choices=["erm", "irm", "vrex", "eqrm", "groupdro", "inftask", "iro"], default="erm")
     parser.add_argument("--backbone_mode", choices=["frozen_feature_pilot", "finetune_last_stage"], default="frozen_feature_pilot")
     parser.add_argument("--seed", type=int, default=0)
     parser.add_argument("--num_lambda_samples", type=int, choices=[2, 4, 8], default=4)
@@ -152,6 +152,7 @@ def main() -> None:
     parser.add_argument("--learning_rate", type=float, default=3e-4)
     parser.add_argument("--weight_decay", type=float, default=1e-4)
     parser.add_argument("--groupdro_eta", type=float, default=0.1)
+    parser.add_argument("--alpha", type=float, default=0.75, help="EQRM quantile over observed source risks")
     parser.add_argument(
         "--checkpoint_selection",
         choices=["final", "source_val_uniform_lambda_cvar"],
@@ -215,6 +216,7 @@ def main() -> None:
         "checkpoint_selection": args.checkpoint_selection,
         "selection_lambda_grid": selection_lambda_grid if args.checkpoint_selection != "final" else None,
         "num_lambda_samples": args.num_lambda_samples,
+        "alpha": args.alpha,
     }
     save_manifest(manifest, str(manifest_path))
     manifest = load_manifest(str(manifest_path))
