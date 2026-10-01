@@ -165,6 +165,9 @@ def main() -> None:
     )
     parser.add_argument("--selection_lambda_grid", default="0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1")
     parser.add_argument("--workers", type=int, default=0)
+    parser.add_argument("--pin_memory", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--persistent_workers", action=argparse.BooleanOptionalAction, default=True)
+    parser.add_argument("--prefetch_factor", type=int, default=2)
     parser.add_argument("--manifest", default=None, help="Reuse an existing immutable assignment manifest")
     parser.add_argument("--output_dir", required=True)
     args = parser.parse_args()
@@ -235,7 +238,15 @@ def main() -> None:
     train_datasets = datasets_from_manifest(train_split, manifest, transform, validation=False)
     validation_datasets = datasets_from_manifest(train_split, manifest, transform, validation=True)
     batch_sizes = proportional_batch_sizes(manifest["active_domain_counts"], args.batch_size)
-    batches = InfiniteDomainBatches(train_datasets, batch_sizes, args.seed, args.workers)
+    batches = InfiniteDomainBatches(
+        train_datasets,
+        batch_sizes,
+        args.seed,
+        args.workers,
+        pin_memory=args.pin_memory,
+        persistent_workers=args.persistent_workers,
+        prefetch_factor=args.prefetch_factor,
+    )
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = build_model(args.backbone_mode, weight_version=config["weight_version"]).to(device)
     algorithm = DomainAlgorithm(

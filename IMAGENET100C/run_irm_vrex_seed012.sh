@@ -52,6 +52,10 @@ run_one() {
         --penalty_weight 1000 \
         --erm_pretrain_iters 400 \
         --lr_cos_sched \
+        --workers 1 \
+        --pin_memory \
+        --persistent_workers \
+        --prefetch_factor 2 \
         --checkpoint_selection final \
         --output_dir "$output_dir" >"$log_file" 2>&1; then
         printf 'ERROR seed=%s condition=%s algorithm=%s; see %s\n' "$seed" "$condition" "$algorithm" "$log_file" >&2

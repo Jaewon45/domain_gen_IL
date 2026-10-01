@@ -154,20 +154,35 @@ def proportional_batch_sizes(counts: Mapping[str, int], total_batch_size: int) -
 
 
 class InfiniteDomainBatches:
-    def __init__(self, datasets: Mapping[str, Dataset], batch_sizes: Mapping[str, int], seed: int, workers: int):
+    def __init__(
+        self,
+        datasets: Mapping[str, Dataset],
+        batch_sizes: Mapping[str, int],
+        seed: int,
+        workers: int,
+        pin_memory: bool = True,
+        persistent_workers: bool = True,
+        prefetch_factor: int = 2,
+    ):
         self.datasets = dict(datasets)
         self.loaders = {}
         self.iterators = {}
         for offset, (domain, dataset) in enumerate(self.datasets.items()):
             generator = torch.Generator().manual_seed(int(seed) + offset)
-            loader = DataLoader(
-                dataset,
-                batch_size=int(batch_sizes[domain]),
-                shuffle=True,
-                drop_last=False,
-                num_workers=int(workers),
-                generator=generator,
-            )
+            worker_count = int(workers)
+            loader_kwargs = {
+                "dataset": dataset,
+                "batch_size": int(batch_sizes[domain]),
+                "shuffle": True,
+                "drop_last": False,
+                "num_workers": worker_count,
+                "generator": generator,
+                "pin_memory": bool(pin_memory),
+            }
+            if worker_count > 0:
+                loader_kwargs["persistent_workers"] = bool(persistent_workers)
+                loader_kwargs["prefetch_factor"] = max(1, int(prefetch_factor))
+            loader = DataLoader(**loader_kwargs)
             self.loaders[domain] = loader
             self.iterators[domain] = iter(loader)
 
