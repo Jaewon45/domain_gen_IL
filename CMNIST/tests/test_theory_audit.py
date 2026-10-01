@@ -3,6 +3,7 @@ import unittest
 import numpy as np
 
 from analyze_tail_support import weighted_cvar
+from protocol import canonical_condition, deployment_epsilon, discrete_cvar
 from priority7_theory import cvar, deployment_prior, one_trial, risk_profiles, source_prior
 
 
@@ -44,6 +45,19 @@ class TheoryAuditTests(unittest.TestCase):
         self.assertLess(abs(cvar([0, 1], [0.9, 0.1], 0.9) - 1.0), 1e-12)
         self.assertLess(abs(cvar([0, 10], [0.75, 0.25], 0.5) - 5.0), 1e-12)
         self.assertLess(abs(weighted_cvar([0, 10], [0.75, 0.25], 0.5) - 5.0), 1e-12)
+
+    def test_canonical_conditions_and_epsilon(self):
+        self.assertEqual(canonical_condition("near_missing_tail"), "scarce_tail")
+        self.assertEqual(deployment_epsilon("scarce_tail"), 0.0)
+        self.assertEqual(deployment_epsilon("missing_tail"), 0.25)
+
+    def test_discrete_cvar_rejects_invalid_weights(self):
+        with self.assertRaises(ValueError):
+            discrete_cvar([0.0, 1.0], [0.5, 0.6], 0.5)
+        with self.assertRaises(ValueError):
+            discrete_cvar([0.0, 1.0], [1.1, -0.1], 0.5)
+        with self.assertRaises(ValueError):
+            discrete_cvar([], [], 0.5)
 
 
 if __name__ == "__main__":

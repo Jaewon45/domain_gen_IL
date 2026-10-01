@@ -9,6 +9,7 @@ import os
 import hashlib
 import sys
 import random
+import glob
 import math
 from lib.fast_data_loader import InfiniteDataLoader, FastDataLoader
 from lib import misc
@@ -53,6 +54,8 @@ parser.add_argument('--weight_decay', type=float, default=0)
 parser.add_argument('--dropout_p', type=float, default=0.2)
 parser.add_argument('--erm_pretrain_iters', type=int, default=0)
 parser.add_argument('--eval_freq', type=int, default=50)
+parser.add_argument('--checkpoint_interval', type=int, default=100)
+parser.add_argument('--lambda_eval', type=float, default=0.9)
 
 # Directories and saving
 parser.add_argument('--data_dir', type=str, default="../../data/")
@@ -72,7 +75,8 @@ md5_fname = hashlib.md5(str(args).encode('utf-8')).hexdigest()
 
 # +
 alg_arg_keys = ["algorithm", "penalty_weight", "alpha", "groupdro_eta",
-                "lr_factor_reduction", "lr_cos_sched", "steps", "save_ckpts"]
+                "lr_factor_reduction", "lr_cos_sched", "steps", "save_ckpts",
+                "checkpoint_interval", "lambda_eval"]
 if args.loss_fn == "nll":
     n_targets = 1
     loss_fn = F.binary_cross_entropy_with_logits
@@ -300,9 +304,8 @@ for step in range(start_step, args.steps + 1):
                 results[env_name + '_acc'] = misc.accuracy(algorithm, env_loader, device)
                 results[env_name + '_loss'] = misc.loss(algorithm, env_loader, loss_fn, device)
             else:
-                eval_alpha = alpha_for_eval(i, h_alphas_train)
-                results[env_name + '_acc'] = misc.accuracy(algorithm, env_loader, device, alpha=eval_alpha)
-                results[env_name + '_loss'] = misc.loss(algorithm, env_loader, loss_fn, device, alpha=eval_alpha)
+                results[env_name + '_acc'] = misc.accuracy(algorithm, env_loader, device, alpha=args.lambda_eval)
+                results[env_name + '_loss'] = misc.loss(algorithm, env_loader, loss_fn, device, alpha=args.lambda_eval)
         
         results['mem_gb'] = torch.cuda.max_memory_allocated() / (1024. * 1024. * 1024.)
         results_keys = sorted(results.keys())
@@ -319,6 +322,11 @@ for step in range(start_step, args.steps + 1):
     if step == args.erm_pretrain_iters > 0 and args.save_ckpts:
         torch.save(algorithm.state_dict(), erm_ckpt_pth)
         print("Saved ERM-pretrained model.")
+    if args.save_ckpts and args.checkpoint_interval > 0 and step % args.checkpoint_interval == 0:
+        torch.save(
+            {"args": vars(args), "model_dict": algorithm.state_dict(), "step": step},
+            os.path.join(ckpt_dir, f"{md5_fname}_step{step}.pkl"),
+        )
 # -
 
     if args.checkpoint_selection == 'final':
@@ -332,11 +340,9 @@ all_envs = get_cmnist_datasets(args.data_dir, train_envs=[], test_envs=all_ps, c
 loaders = [FastDataLoader(dataset=env, batch_size=5000, num_workers=args.n_workers)
            for env in all_envs]
 #since you know for ratio > 0.5 the color flips and you would be better off being invariant
-h_alphas_test = [0.0,0.0,0.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]
+h_alphas_test = [args.lambda_eval] * len(all_env_names)
 results = {}
-for ms_name in ["final", "best"]:
-    if ms_name == "best":
-        algorithm.load_state_dict(best_weights)
+for ms_name in ["final"]:
 
     # -------- EVAL --------
     for i, (env_name, env_loader) in enumerate(zip(all_env_names, loaders)):
@@ -344,8 +350,8 @@ for ms_name in ["final", "best"]:
             results[env_name+'_acc_'+ms_name] = misc.accuracy(algorithm, env_loader, device)
             results[env_name+'_loss_'+ms_name] = misc.loss(algorithm, env_loader, loss_fn, device)
         else:
-            results[env_name+'_acc_'+ms_name] = misc.accuracy(algorithm,env_loader,device, alpha=h_alphas_test[i])
-            results[env_name+'_loss_'+ms_name] = misc.loss(algorithm,env_loader,loss_fn,device, alpha=h_alphas_test[i])
+            results[env_name+'_acc_'+ms_name] = misc.accuracy(algorithm,env_loader,device, alpha=args.lambda_eval)
+            results[env_name+'_loss_'+ms_name] = misc.loss(algorithm,env_loader,loss_fn,device, alpha=args.lambda_eval)
     if args.algorithm.lower() in ['erm', 'groupdro']:
         source_losses = [misc.loss(algorithm, loader, loss_fn, device) for loader in train_loaders]
         for env_name, source_loss in zip(train_env_names, source_losses):
@@ -362,6 +368,8 @@ for ms_name in ["final", "best"]:
     if args.save_ckpts:
         ckpt_save_dict = {"args": vars(args), "model_dict": algorithm.state_dict()}
         torch.save(ckpt_save_dict, os.path.join(ckpt_dir, f"{md5_fname}_{ms_name}.pkl"))
+        for checkpoint_path in glob.glob(os.path.join(ckpt_dir, f"{md5_fname}_step*.pkl")):
+            os.remove(checkpoint_path)
 
 
 # +

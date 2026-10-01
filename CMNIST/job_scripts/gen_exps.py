@@ -17,6 +17,8 @@ def build_base_call(args, lr, batch_size, dropout_p):
         f"--output_dir {args.output_dir} "
         f"--exp_name {args.exp_name} "
         f"--checkpoint_selection final "
+        f"--checkpoint_interval 100 "
+        f"--save_ckpts "
         f"--lr {lr} "
         f"--batch_size {batch_size} "
         f"--dropout_p {dropout_p}"
@@ -34,7 +36,7 @@ def generate_reproduce_commands(args, base_call, seeds):
     eqrm_alphas = [-100, -500, -1000, -5000, -10000]
 
     algs_1 = ["groupdro", "sd", "iga"]
-    algs_steps_1 = [(a, 1000) for a in algs_1]
+    algs_steps_1 = [(a, 600) for a in algs_1]
 
     algs_2 = ["irm", "vrex", "eqrm"]
     algs_steps_2 = [(a, 600) for a in algs_2]
@@ -94,9 +96,9 @@ def generate_domain_stress_commands(args, base_call, seeds):
     # E4 lambda_eval -> executed post-training via evaluate_lambda_grid.py
     commands = []
     algorithms = [
-        ("erm", 600, "--erm_pretrain_iters 0"),
+        ("erm", 600, "--erm_pretrain_iters 0 --save_ckpts"),
         ("irm", 600, "--erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts"),
-        ("groupdro", 1000, "--erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts"),
+        ("groupdro", 600, "--erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts"),
         ("iro", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
         ("inftask", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
     ]
@@ -262,9 +264,9 @@ def generate_tail_support_commands(args, base_call, seeds):
     fixed_test_envs = "0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0"
 
     conditions = {
-        "balanced_visible": [2000, 2000, 2000, 2000],
-        "long_tail_visible": [5000, 2000, 800, 200],
-        "near_missing_tail": [5800, 1800, 350, 50],
+        "balanced": [2000, 2000, 2000, 2000],
+        "long_tail": [5000, 2000, 800, 200],
+        "scarce_tail": [5800, 1800, 350, 50],
         "missing_tail": [6000, 1500, 500, 0],
     }
 
@@ -311,9 +313,9 @@ def generate_tail_support_eqrm_vrex_commands(args, base_call, seeds):
     source_envs_text = ",".join(str(env) for env in source_envs)
     fixed_test_envs = "0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0"
     conditions = {
-        "balanced_visible": [2000, 2000, 2000, 2000],
-        "long_tail_visible": [5000, 2000, 800, 200],
-        "near_missing_tail": [5800, 1800, 350, 50],
+        "balanced": [2000, 2000, 2000, 2000],
+        "long_tail": [5000, 2000, 800, 200],
+        "scarce_tail": [5800, 1800, 350, 50],
         "missing_tail": [6000, 1500, 500, 0],
     }
 
@@ -341,7 +343,7 @@ if __name__ == "__main__":
     parser.add_argument(
         '--output_dir',
         type=str,
-        default='../results/cmnist_exp',
+        default='/home/ra95tig/results_final',
         help="Output directory root for experiment artifacts.",
     )
     parser.add_argument('--exp_name', type=str, default="reproduce")

@@ -11,12 +11,13 @@ import numpy as np
 import pandas as pd
 
 from collect_results import load_records
+from protocol import canonical_condition, discrete_cvar
 
 
 DEFAULT_CONDITION_ORDER = [
-    "balanced_visible",
-    "long_tail_visible",
-    "near_missing_tail",
+    "balanced",
+    "long_tail",
+    "scarce_tail",
     "missing_tail",
 ]
 DEFAULT_ALPHAS = [0.5, 0.75, 0.9]
@@ -30,9 +31,9 @@ ALGORITHM_DISPLAY_NAMES = {
 }
 
 CONDITION_DISPLAY_NAMES = {
-    "balanced_visible": "Balanced\nVisible",
-    "long_tail_visible": "Long-Tail\nVisible",
-    "near_missing_tail": "Near-Missing\nTail",
+    "balanced": "Balanced",
+    "long_tail": "Long-Tail",
+    "scarce_tail": "Scarce-Tail",
     "missing_tail": "Missing\nTail",
 }
 
@@ -129,11 +130,11 @@ def parse_count_map(row: pd.Series, source_envs: List[float]) -> Dict[str, int]:
 def infer_condition(row: pd.Series) -> str:
     condition = row.get("tail_support_condition")
     if isinstance(condition, str) and condition:
-        return condition
+        return canonical_condition(condition)
     exp_name = str(row.get("exp_name", ""))
-    for token in DEFAULT_CONDITION_ORDER:
+    for token in ("balanced_visible", "balanced", "long_tail_visible", "long_tail", "near_missing_tail", "scarce_tail", "missing_tail"):
         if token in exp_name:
-            return token
+            return canonical_condition(token)
     return "unknown_condition"
 
 
@@ -173,26 +174,10 @@ def env_metric_columns(frame: pd.DataFrame, suffix: str) -> List[str]:
 def weighted_cvar(losses: np.ndarray, weights: np.ndarray, alpha: float) -> float:
     weights = np.asarray(weights, dtype=float)
     losses = np.asarray(losses, dtype=float)
-    if np.all(weights == 0):
+    active = weights > 0
+    if not np.any(active):
         return float("nan")
-
-    weights = weights / weights.sum()
-    order = np.argsort(losses)
-    sorted_losses = losses[order]
-    sorted_weights = weights[order]
-
-    tail_mass = max(0.0, 1.0 - float(alpha))
-    if tail_mass <= 0.0:
-        return float(sorted_losses[-1])
-
-    cumulative = np.cumsum(sorted_weights)
-    value = 0.0
-    previous = 0.0
-    for loss, current in zip(sorted_losses, cumulative):
-        overlap = max(0.0, min(float(current), 1.0) - max(previous, float(alpha)))
-        value += loss * overlap
-        previous = float(current)
-    return float(value / tail_mass)
+    return discrete_cvar(losses[active].tolist(), weights[active].tolist(), alpha)
 
 
 def metrics_from_rows(group_rows: pd.DataFrame, alphas: List[float]) -> Dict[str, float]:
