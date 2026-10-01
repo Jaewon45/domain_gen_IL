@@ -10,7 +10,7 @@ Options:
   --seed SEED                 Random seed (default: 0)
   --backbone-mode MODE        frozen_feature_pilot or finetune_last_stage
                               (default: finetune_last_stage)
-  --results-root PATH         Output root (default: results/imagenet100c)
+    --results-root PATH         Output root (default: /home/ra95tig/results_final_imagenet100c)
   --python PATH               Python executable (default: python)
   --gpus IDS                  Comma-separated CUDA device IDs (default: 0,1)
   --workers-per-gpu N         Concurrent processes per GPU (default: 1)
@@ -26,7 +26,7 @@ EOF
 
 seed=0
 backbone_mode="finetune_last_stage"
-results_root="results/imagenet100c"
+results_root="/home/ra95tig/results_final_imagenet100c"
 python_bin="python"
 gpu_csv="0,1"
 workers_per_gpu=1
@@ -85,7 +85,7 @@ add_run() {
 }
 
 algorithms=(erm irm vrex eqrm groupdro inftask iro)
-for condition in balanced long_tail near_missing missing; do
+for condition in balanced long_tail scarce_tail missing; do
     for algorithm in "${algorithms[@]}"; do
         add_run "E3b_${condition}" "$algorithm" "--experiment E3b --condition $condition"
     done
