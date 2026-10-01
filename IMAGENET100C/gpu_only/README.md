@@ -24,3 +24,19 @@ The implementation is intentionally an efficiency benchmark, not an exact
 replacement for the CPU ImageNet-C backend. Its GPU corruption operators are
 Torch approximations and must not be used for paper results without a separate
 numerical validation study.
+
+## GPU-native training test
+
+To run an approximate GPU-native E3b training job and save a checkpoint plus
+JSONL history:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python -m IMAGENET100C.gpu_only.train_e3b \
+  --manifest /path/to/E3b_balanced_erm/manifest.json \
+  --algorithm erm --steps 600 --batch-size 64 \
+  --output-dir /tmp/imagenet100c_gpu_erm
+```
+
+Use `--images-per-domain 1000` for a smaller staging pool. The default `0`
+stages every assigned source image. Outputs are deliberately separate from
+paper results and are marked approximate.
