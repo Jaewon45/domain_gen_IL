@@ -152,7 +152,11 @@ def main() -> None:
     parser.add_argument("--learning_rate", type=float, default=3e-4)
     parser.add_argument("--weight_decay", type=float, default=1e-4)
     parser.add_argument("--groupdro_eta", type=float, default=0.1)
-    parser.add_argument("--alpha", type=float, default=0.75, help="EQRM quantile over observed source risks")
+    parser.add_argument("--alpha", type=float, default=0.9, help="EQRM quantile over observed source risks")
+    parser.add_argument("--penalty_weight", type=float, default=1000.0)
+    parser.add_argument("--erm_pretrain_iters", type=int, default=400)
+    parser.add_argument("--lr_cos_sched", action="store_true")
+    parser.add_argument("--lr_factor_reduction", type=float, default=1.0)
     parser.add_argument(
         "--checkpoint_selection",
         choices=["final", "source_val_uniform_lambda_cvar"],
@@ -217,6 +221,13 @@ def main() -> None:
         "selection_lambda_grid": selection_lambda_grid if args.checkpoint_selection != "final" else None,
         "num_lambda_samples": args.num_lambda_samples,
         "alpha": args.alpha,
+        "learning_rate": args.learning_rate,
+        "weight_decay": args.weight_decay,
+        "groupdro_eta": args.groupdro_eta,
+        "penalty_weight": args.penalty_weight,
+        "erm_pretrain_iters": args.erm_pretrain_iters,
+        "lr_cos_sched": args.lr_cos_sched,
+        "lr_factor_reduction": args.lr_factor_reduction,
     }
     save_manifest(manifest, str(manifest_path))
     manifest = load_manifest(str(manifest_path))
@@ -230,7 +241,9 @@ def main() -> None:
     algorithm = DomainAlgorithm(
         args.algorithm, model, learning_rate=args.learning_rate, weight_decay=args.weight_decay,
         groupdro_eta=args.groupdro_eta, num_lambda_samples=args.num_lambda_samples,
-        eqrm_alpha=args.alpha,
+        eqrm_alpha=args.alpha, penalty_weight=args.penalty_weight,
+        erm_pretrain_iters=args.erm_pretrain_iters, lr_cos_sched=args.lr_cos_sched,
+        lr_factor_reduction=args.lr_factor_reduction, total_steps=args.steps,
         seed=args.seed, device=device,
     )
 

@@ -10,6 +10,7 @@ from pathlib import Path
 import pandas as pd
 
 ALPHAS = (0.50, 0.75, 0.90)
+CMNIST_ANCHORS = (0.1, 0.2, 0.5, 0.9)
 CONDITION_LABELS = {
     "balanced_visible": "Balanced",
     "long_tail_visible": "Long-tail",
@@ -32,26 +33,28 @@ def cvar(values, weights, alpha):
 
 
 def audit_condition(frame, condition):
-    x = frame[frame["condition"].eq(condition)].copy()
+    x = frame[
+        frame["condition"].eq(condition)
+        & frame["domain_id"].isin(CMNIST_ANCHORS)
+    ].copy()
     methods = sorted(x["algorithm"].unique())
     seeds = sorted(x["seed"].unique())
     domains = sorted(x["domain_id"].unique())
     assert len(methods) == 7, (condition, methods)
     assert len(seeds) == 5, (condition, seeds)
-    assert len(domains) == 11, (condition, domains)
-    assert all((x.groupby(["algorithm", "seed"]).size() == 11))
+    assert domains == list(CMNIST_ANCHORS), (condition, domains)
+    assert all((x.groupby(["algorithm", "seed"]).size() == 4))
     assert x.test_accuracy.between(0.0, 1.0).all()
 
     observed = set(x.loc[x.train_count > 0, "domain_id"])
-    deployment = x[["domain_id", "deployment_weight"]].drop_duplicates().set_index("domain_id")
-    epsilon = float(deployment.loc[~deployment.index.isin(observed), "deployment_weight"].sum())
+    deployment_weights = {domain: 1.0 / len(CMNIST_ANCHORS) for domain in CMNIST_ANCHORS}
+    epsilon = sum(weight for domain, weight in deployment_weights.items() if domain not in observed)
     records = []
     for _, group in x.groupby(["algorithm", "seed"]):
         assert set(group.loc[group.train_count > 0, "domain_id"]) == observed
-        assert abs(group.deployment_weight.sum() - 1.0) < 1e-12
         observed_rows = group[group.train_count > 0].sort_values("domain_id")
         values = (1.0 - observed_rows.test_accuracy.to_numpy(float)).tolist()
-        observed_pi = observed_rows.deployment_weight.to_numpy(float).tolist()
+        observed_pi = [deployment_weights[domain] for domain in observed_rows.domain_id]
         assert abs(sum(observed_pi) - (1.0 - epsilon)) < 1e-12
         method = str(group.algorithm.iloc[0])
         seed = int(group.seed.iloc[0])

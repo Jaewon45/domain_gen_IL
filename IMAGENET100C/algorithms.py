@@ -1,4 +1,4 @@
-"""ERM, GroupDRO, INF-TASK, and adaptive-beta IRO training objectives."""
+"""ImageNet-100-C training objectives, including CMNIST-aligned transitions."""
 
 from __future__ import annotations
 
@@ -121,6 +121,11 @@ class DomainAlgorithm:
         groupdro_eta: float,
         num_lambda_samples: int,
         eqrm_alpha: float,
+        penalty_weight: float,
+        erm_pretrain_iters: int,
+        lr_cos_sched: bool,
+        lr_factor_reduction: float,
+        total_steps: int,
         seed: int,
         device: torch.device,
     ):
@@ -135,21 +140,66 @@ class DomainAlgorithm:
         self.model = model
         self.device = device
         self.groupdro_eta = float(groupdro_eta)
-        self.penalty_weight = 1000.0
+        self.penalty_weight = float(penalty_weight)
+        self.erm_pretrain_iters = int(erm_pretrain_iters)
+        self.lr_cos_sched = bool(lr_cos_sched)
+        self.lr_factor_reduction = float(lr_factor_reduction)
+        self.total_steps = int(total_steps)
+        if self.penalty_weight <= 0:
+            raise ValueError("penalty_weight must be positive")
+        if self.erm_pretrain_iters < 0:
+            raise ValueError("erm_pretrain_iters must be non-negative")
+        if self.lr_factor_reduction <= 0:
+            raise ValueError("lr_factor_reduction must be positive")
+        if self.total_steps <= self.erm_pretrain_iters:
+            raise ValueError("total_steps must exceed erm_pretrain_iters")
         if not 0.0 <= float(eqrm_alpha) <= 1.0:
             raise ValueError("eqrm_alpha must lie in [0, 1]")
         self.alpha = float(eqrm_alpha)
         self.num_lambda_samples = int(num_lambda_samples)
         self.numpy_rng = np.random.default_rng(seed)
-        self.optimizer = torch.optim.AdamW(
-            [parameter for parameter in model.parameters() if parameter.requires_grad],
-            lr=learning_rate,
-            weight_decay=weight_decay,
-        )
+        self.learning_rate = float(learning_rate)
+        self.weight_decay = float(weight_decay)
+        self.parameters = [parameter for parameter in model.parameters() if parameter.requires_grad]
+        self.optimizer = self._new_optimizer(torch.optim.AdamW, self.learning_rate)
         self.group_weights: Dict[str, float] = {}
         self.beta_sampler = AdaptiveBetaSampler(device) if name == "iro" else None
         self.last_environment_losses: Dict[str, float] = {}
         self.last_lambdas: List[float] = []
+        self.update_count = 0
+        self.erm_gradient_norm: float | None = None
+        self.eqrm_gradient_ratio: float | None = None
+
+    def _new_optimizer(self, optimizer_class, learning_rate: float):
+        return optimizer_class(self.parameters, lr=learning_rate, weight_decay=self.weight_decay)
+
+    def _gradient_norm(self) -> float:
+        norms = [parameter.grad.detach().norm(2) for parameter in self.parameters if parameter.grad is not None]
+        return float(torch.stack(norms).norm(2).detach().cpu()) if norms else 0.0
+
+    def _erm_objective(self, prepared):
+        all_images = torch.cat([images for _, images, _ in prepared])
+        all_targets = torch.cat([targets for _, _, targets in prepared])
+        preference = torch.zeros((all_images.shape[0], 1), device=self.device)
+        return F.cross_entropy(self.model(all_images, preference), all_targets)
+
+    def _activate_penalized_objective(self) -> None:
+        """Match CMNIST's Adam reset at the post-ERM objective transition."""
+        if self.update_count != self.erm_pretrain_iters:
+            return
+        transition_lr = self.learning_rate / self.lr_factor_reduction
+        self.optimizer = self._new_optimizer(torch.optim.Adam, transition_lr)
+
+    def _apply_post_warmup_schedule(self) -> None:
+        if not self.lr_cos_sched or self.update_count <= self.erm_pretrain_iters:
+            return
+        post_warmup_step = self.update_count - self.erm_pretrain_iters
+        post_warmup_total = self.total_steps - self.erm_pretrain_iters
+        lr = (self.learning_rate / self.lr_factor_reduction) * 0.5 * (
+            1.0 + np.cos(np.pi * post_warmup_step / post_warmup_total)
+        )
+        for group in self.optimizer.param_groups:
+            group["lr"] = float(lr)
 
     def _risk_vector(self, minibatches, preference: float):
         value = torch.tensor(float(preference), device=self.device)
@@ -162,16 +212,22 @@ class DomainAlgorithm:
         if not prepared:
             raise ValueError("No active environment minibatches")
         self.model.train()
+        penalized = self.name in {"irm", "vrex", "eqrm"}
+        is_erm_pretrain = penalized and self.update_count < self.erm_pretrain_iters
+        transition = penalized and self.update_count == self.erm_pretrain_iters
+        if transition:
+            self._activate_penalized_objective()
+        if penalized and not is_erm_pretrain:
+            self._apply_post_warmup_schedule()
         self.optimizer.zero_grad()
 
-        if self.name == "erm":
-            all_images = torch.cat([images for _, images, _ in prepared])
-            all_targets = torch.cat([targets for _, _, targets in prepared])
-            preference = torch.zeros((all_images.shape[0], 1), device=self.device)
-            objective = F.cross_entropy(self.model(all_images, preference), all_targets)
+        penalty = None
+        gradient_ratio = None
+        if self.name == "erm" or is_erm_pretrain:
+            objective = self._erm_objective(prepared)
             names, risks = self._risk_vector(prepared, 0.0)
             self.last_lambdas = [0.0]
-        elif self.name in {"irm", "vrex", "eqrm"}:
+        elif penalized:
             names, risks = self._risk_vector(prepared, 0.0)
             if self.name == "irm":
                 scale = torch.ones((), device=self.device, requires_grad=True)
@@ -187,11 +243,30 @@ class DomainAlgorithm:
                 ]
                 penalty = torch.stack(gradients).pow(2).mean()
                 objective = risks_for_penalty.mean() + self.penalty_weight * penalty
+                objective = objective / self.penalty_weight
             elif self.name == "vrex":
                 penalty = (risks - risks.mean()).pow(2).mean()
                 objective = risks.mean() + self.penalty_weight * penalty
+                objective = objective / self.penalty_weight
             else:
                 objective = torch.quantile(risks, self.alpha)
+                if self.erm_pretrain_iters > 0:
+                    if self.eqrm_gradient_ratio is None:
+                        self.optimizer.zero_grad()
+                        objective.backward(retain_graph=True)
+                        eqrm_gradient_norm = self._gradient_norm()
+                        self.optimizer.zero_grad()
+                        # CMNIST normalizes the new EQRM objective by the
+                        # initial ERM gradient norm measured during warm-up.
+                        # The fallback only covers a zero-length warm-up.
+                        erm_gradient_norm = self.erm_gradient_norm
+                        if erm_gradient_norm is None:
+                            risks.mean().backward(retain_graph=True)
+                            erm_gradient_norm = self._gradient_norm()
+                            self.optimizer.zero_grad()
+                        self.eqrm_gradient_ratio = eqrm_gradient_norm / max(erm_gradient_norm, 1e-12)
+                    gradient_ratio = self.eqrm_gradient_ratio
+                    objective = objective / max(gradient_ratio, 1e-12)
             self.last_lambdas = [0.0]
         elif self.name == "groupdro":
             names, risks = self._risk_vector(prepared, 0.0)
@@ -232,7 +307,10 @@ class DomainAlgorithm:
             self.last_lambdas = [float(value) for value in sampled]
 
         objective.backward()
+        if is_erm_pretrain and self.erm_gradient_norm is None:
+            self.erm_gradient_norm = self._gradient_norm()
         self.optimizer.step()
+        self.update_count += 1
         self.last_environment_losses = {
             name: float(value) for name, value in zip(names, risks.detach().cpu())
         }
@@ -240,7 +318,13 @@ class DomainAlgorithm:
             "objective": float(objective.detach().cpu()),
             "environment_losses": dict(self.last_environment_losses),
             "lambdas": list(self.last_lambdas),
+            "training_phase": "erm_pretrain" if is_erm_pretrain else "main",
+            "optimizer_lr": float(self.optimizer.param_groups[0]["lr"]),
         }
+        if penalty is not None:
+            result["penalty"] = float(penalty.detach().cpu())
+        if gradient_ratio is not None:
+            result["eqrm_gradient_ratio"] = float(gradient_ratio)
         if self.beta_sampler is not None:
             result["adaptive_beta"] = self.beta_sampler.state_dict()
         if self.group_weights:
@@ -255,4 +339,11 @@ class DomainAlgorithm:
             "group_weights": self.group_weights,
             "beta_sampler": None if self.beta_sampler is None else self.beta_sampler.state_dict(),
             "num_lambda_samples": self.num_lambda_samples,
+            "update_count": self.update_count,
+            "penalty_weight": self.penalty_weight,
+            "erm_pretrain_iters": self.erm_pretrain_iters,
+            "lr_cos_sched": self.lr_cos_sched,
+            "lr_factor_reduction": self.lr_factor_reduction,
+            "erm_gradient_norm": self.erm_gradient_norm,
+            "eqrm_gradient_ratio": self.eqrm_gradient_ratio,
         }

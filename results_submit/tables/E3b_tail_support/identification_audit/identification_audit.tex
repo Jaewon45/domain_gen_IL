@@ -1,25 +1,40 @@
-% Generated from raw_results_7methods.csv using run-level 0--1 losses
-% and deployment weights.
+% CMNIST rows use the four theory anchors {0.1, 0.2, 0.5, 0.9}; ImageNet100C
+% rows use the four anchor deployment law from the evaluation manifests.
 \begin{table}[t]
 \centering
 \small
-\caption{\textbf{Empirical plug-in identification audit under source support removal.} For each method--seed run, we compute the sharp plug-in deployment-CVaR interval under the observed-support completion model with $0$--$1$ loss ($M=1$). Width is averaged over seven methods and five CMNIST seeds. A method pair is certified only when its run-level intervals are disjoint. In both conditions, $\epsilon>1-\alpha$ for all reported $\alpha$; consequently, every upper endpoint equals $1$, and no pairwise ordering is certified.}
+\caption{\textbf{Empirical plug-in identification audit under source support removal.} For each method--seed run, we compute the sharp plug-in deployment-CVaR interval over the four theory anchors with $0$--$1$ loss ($M=1$). Width is averaged over seven methods and the available seeds. A method pair is certified only when its run-level intervals are disjoint.}
 \label{tab:identification-audit}
-\begin{tabular}{@{}lccc@{}}
+\begin{tabular}{@{}llccc@{}}
 \toprule
-Support condition & $\alpha$ & Mean width & Certified pairs \\
+Dataset & Support condition & $\alpha$ & Mean width & Certified pairs \\
 \midrule
-Missing
-  & $0.50$ & $0.8543$ & $0/105$ \\
-($\epsilon=8/11$)
-  & $0.75$ & $0.7232$ & $0/105$ \\
-  & $0.90$ & $0.6058$ & $0/105$ \\
+CMNIST & Missing ($\epsilon=1/4$)
+  & $0.50$ & $0.3853$ & $0/105$ \\
+CMNIST &
+  & $0.75$ & $0.5893$ & $0/105$ \\
+CMNIST &
+  & $0.90$ & $0.5893$ & $0/105$ \\
 \addlinespace
-Near-missing
-  & $0.50$ & $0.7337$ & $0/105$ \\
-($\epsilon=7/11$)
-  & $0.75$ & $0.5540$ & $0/105$ \\
-  & $0.90$ & $0.3826$ & $0/105$ \\
+CMNIST & Near-missing ($\epsilon=0$)
+  & $0.50$ & $0.0000$ & $105/105$ \\
+CMNIST &
+  & $0.75$ & $0.0000$ & $105/105$ \\
+CMNIST &
+  & $0.90$ & $0.0000$ & $105/105$ \\
+\addlinespace
+ImageNet100C & Missing ($\epsilon=1/4$)
+  & $0.50$ & $0.2271$ & $21/42$ \\
+ImageNet100C &
+  & $0.75$ & $0.4207$ & $0/42$ \\
+ImageNet100C &
+  & $0.90$ & $0.4207$ & $0/42$ \\
+ImageNet100C & Near-missing ($\epsilon=0$)
+  & $0.50$ & $0.0000$ & $42/42$ \\
+ImageNet100C &
+  & $0.75$ & $0.0000$ & $42/42$ \\
+ImageNet100C &
+  & $0.90$ & $0.0000$ & $42/42$ \\
 \bottomrule
 \end{tabular}
 \end{table}

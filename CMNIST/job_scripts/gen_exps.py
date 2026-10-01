@@ -16,6 +16,7 @@ def build_base_call(args, lr, batch_size, dropout_p):
         f"--data_dir {args.data_dir} "
         f"--output_dir {args.output_dir} "
         f"--exp_name {args.exp_name} "
+        f"--checkpoint_selection final "
         f"--lr {lr} "
         f"--batch_size {batch_size} "
         f"--dropout_p {dropout_p}"
@@ -231,7 +232,7 @@ def generate_imbalance_clean_commands(args, base_call, seeds):
 
 def parse_seed_list(seed_list_arg):
     if not seed_list_arg:
-        return list(range(10))
+        return list(range(5))
     return [int(seed.strip()) for seed in seed_list_arg.split(",") if seed.strip()]
 
 
@@ -347,8 +348,8 @@ if __name__ == "__main__":
     parser.add_argument(
         '--seed_list',
         type=str,
-        default='',
-        help='Comma-separated seed list (default: 0-9).',
+        default='0,1,2,3,4',
+        help='Comma-separated seed list (default: 0,1,2,3,4).',
     )
     args = parser.parse_args()
 

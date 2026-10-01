@@ -1,37 +1,35 @@
 #!/usr/bin/env bash
-# Run the registered ImageNet-100-C training matrix across independent GPUs.
+# Run the canonical ImageNet-100-C E3b support-removal matrix across GPUs.
 set -euo pipefail
 
 usage() {
     cat <<'EOF'
-Usage: run_seed_all.sh [options]
+Usage: run_e3b.sh [options]
 
 Options:
   --seed SEED                 Random seed (default: 0)
   --backbone-mode MODE        frozen_feature_pilot or finetune_last_stage
                               (default: finetune_last_stage)
-  --results-root PATH         Output root (default: results/imagenet100c_seedSEED)
+  --results-root PATH         Output root (default: results/imagenet100c)
   --python PATH               Python executable (default: python)
   --gpus IDS                  Comma-separated CUDA device IDs (default: 0,1)
   --workers-per-gpu N         Concurrent processes per GPU (default: 1)
-  --e3b-only                  Run only the four E3b support conditions
-  --offline                   Require Hugging Face data and weights to be cached
-    --dry-run                   Print the GPU assignment for every run and exit
+  --offline                     Require Hugging Face data and weights to be cached
+  --dry-run                     Print the GPU assignment for every run and exit
   -h, --help                  Show this message
 
 Example:
-  nohup bash IMAGENET100C/run_seed_all.sh --seed 1 --gpus 0,1 \
+  nohup bash IMAGENET100C/run_e3b.sh --seed 1 --gpus 0,1 \
     > logs/imagenet100c_seed1.log 2>&1 &
 EOF
 }
 
 seed=0
 backbone_mode="finetune_last_stage"
-results_root=""
+results_root="results/imagenet100c"
 python_bin="python"
 gpu_csv="0,1"
 workers_per_gpu=1
-e3b_only=0
 offline=0
 dry_run=0
 
@@ -43,7 +41,6 @@ while [[ $# -gt 0 ]]; do
         --python) python_bin="$2"; shift 2 ;;
         --gpus) gpu_csv="$2"; shift 2 ;;
         --workers-per-gpu) workers_per_gpu="$2"; shift 2 ;;
-        --e3b-only) e3b_only=1; shift ;;
         --offline) offline=1; shift ;;
         --dry-run) dry_run=1; shift ;;
         -h|--help) usage; exit 0 ;;
@@ -58,9 +55,6 @@ esac
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$repo_root"
-if [[ -z "$results_root" ]]; then
-    results_root="results/imagenet100c_seed${seed}"
-fi
 if [[ "$results_root" != /* ]]; then
     results_root="$repo_root/$results_root"
 fi
@@ -76,7 +70,7 @@ done
 [[ "$workers_per_gpu" =~ ^[1-9][0-9]*$ ]] || { echo "--workers-per-gpu must be a positive integer" >&2; exit 2; }
 
 command -v "$python_bin" >/dev/null || { echo "Python executable not found: $python_bin" >&2; exit 2; }
-mkdir -p "$results_root/logs"
+mkdir -p "$results_root/seed${seed}/logs"
 if [[ $offline -eq 1 ]]; then
     export HF_DATASETS_OFFLINE=1
     export HF_HUB_OFFLINE=1
@@ -91,39 +85,14 @@ add_run() {
 }
 
 algorithms=(erm irm vrex eqrm groupdro inftask iro)
-if [[ $e3b_only -eq 0 ]]; then
-    for algorithm in "${algorithms[@]}"; do
-        add_run "E0" "$algorithm" "--experiment E0"
-    done
-    for source_count in 2 4 8 12; do
-        for algorithm in "${algorithms[@]}"; do
-            add_run "E1_${source_count}types" "$algorithm" "--experiment E1 --source_count $source_count"
-        done
-    done
-    for samples_per_type in 1000 5000 10000; do
-        for algorithm in "${algorithms[@]}"; do
-            add_run "E2_${samples_per_type}pertype" "$algorithm" "--experiment E2 --samples_per_type $samples_per_type"
-        done
-    done
-    for condition in balanced mild_imbalance strong_imbalance; do
-        for algorithm in "${algorithms[@]}"; do
-            add_run "E3_${condition}" "$algorithm" "--experiment E3 --condition $condition"
-        done
-    done
-fi
 for condition in balanced long_tail near_missing missing; do
     for algorithm in "${algorithms[@]}"; do
         add_run "E3b_${condition}" "$algorithm" "--experiment E3b --condition $condition"
     done
 done
-if [[ $e3b_only -eq 0 ]]; then
-    for algorithm in "${algorithms[@]}"; do
-        add_run "severity_support" "$algorithm" "--experiment severity_support"
-    done
-fi
 
 if [[ $dry_run -eq 1 ]]; then
-        printf 'Planned runs: %d across GPUs: %s (%s workers/GPU)\n' "${#runs[@]}" "$gpu_csv" "$workers_per_gpu"
+    printf 'Planned runs: %d across GPUs: %s (%s workers/GPU)\n' "${#runs[@]}" "$gpu_csv" "$workers_per_gpu"
     for run_index in "${!runs[@]}"; do
         IFS='|' read -r tag algorithm experiment_args <<< "${runs[run_index]}"
         printf 'GPU %s: %s_%s %s\n' "${gpus[run_index % ${#gpus[@]}]}" "$tag" "$algorithm" "$experiment_args"
@@ -136,9 +105,9 @@ run_one() {
     local run_index="$2"
     local tag algorithm experiment_args output_directory checkpoint log_file
     IFS='|' read -r tag algorithm experiment_args <<< "${runs[run_index]}"
-    output_directory="$results_root/${tag}_${algorithm}"
+    output_directory="$results_root/seed${seed}/${tag}_${algorithm}"
     checkpoint="$output_directory/checkpoints/final.pt"
-    log_file="$results_root/logs/${tag}_${algorithm}.log"
+    log_file="$results_root/seed${seed}/logs/${tag}_${algorithm}.log"
     if [[ -f "$checkpoint" ]]; then
         printf 'SKIP  %s: %s\n' "$(date --iso-8601=seconds)" "$checkpoint"
         return 0
@@ -151,6 +120,8 @@ run_one() {
     read -r -a experiment_arg_array <<< "$experiment_args"
     if ! CUDA_VISIBLE_DEVICES="$gpu" "$python_bin" -m IMAGENET100C.train \
         --seed "$seed" --algorithm "$algorithm" --backbone_mode "$backbone_mode" \
+        --steps 1000 --batch_size 64 --num_lambda_samples 4 --alpha 0.9 \
+        --penalty_weight 1000 --erm_pretrain_iters 400 --lr_cos_sched \
         --checkpoint_selection final --output_dir "$output_directory" \
         "${experiment_arg_array[@]}" >"$log_file" 2>&1; then
         printf 'ERROR %s: training failed; see %s\n' "$(date --iso-8601=seconds)" "$log_file" >&2

@@ -21,6 +21,4 @@ tables/focused_seed12/
 figures/focused_seed12/
 ```
 
-This bundle contains 18 evaluation records. It is a partial two-seed artifact,
-not the complete seven-method candidate matrix; IRM, INF-TASK, EQRM, and VREx
-focused evaluations are not included here yet.
+This bundle contains 18 evaluation records. It predates the canonical `near_missing` condition and shared IRM/VREx/EQRM transition policy, and is a partial two-seed artifact rather than the complete seven-method candidate matrix; IRM, INF-TASK, EQRM, and VREx focused evaluations are not included here yet.

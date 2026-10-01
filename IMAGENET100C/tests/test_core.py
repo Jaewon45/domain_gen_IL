@@ -66,6 +66,23 @@ class ToyConditional(torch.nn.Module):
 
 
 class CoreTests(unittest.TestCase):
+    @staticmethod
+    def algorithm_kwargs():
+        return {
+            "learning_rate": 1e-3,
+            "weight_decay": 0.0,
+            "groupdro_eta": 0.1,
+            "num_lambda_samples": 2,
+            "eqrm_alpha": 0.9,
+            "penalty_weight": 1000.0,
+            "erm_pretrain_iters": 2,
+            "lr_cos_sched": True,
+            "lr_factor_reduction": 1.0,
+            "total_steps": 6,
+            "seed": 0,
+            "device": torch.device("cpu"),
+        }
+
     def test_experiment_config_budgets_and_nested_type_sets(self):
         config = load_config(str(Path(__file__).parents[1] / "configs" / "experiments.json"))
         _, two_counts, _ = resolve_experiment(config, "E1", "", 2, 1000)
@@ -86,6 +103,9 @@ class CoreTests(unittest.TestCase):
         _, missing_counts, _ = resolve_experiment(config, "E3b", "missing", 4, 1000)
         self.assertEqual(list(missing_counts.values()), [30000, 7500, 2500, 0])
         self.assertEqual(sum(missing_counts.values()), 40000)
+        _, near_missing_counts, _ = resolve_experiment(config, "E3b", "near_missing", 4, 1000)
+        self.assertEqual(list(near_missing_counts.values()), [29000, 9000, 1800, 200])
+        self.assertTrue(all(count > 0 for count in near_missing_counts.values()))
 
     def test_label_range(self):
         validate_label_space(list(range(100)))
@@ -162,26 +182,34 @@ class CoreTests(unittest.TestCase):
 
     def test_groupdro_receives_each_environment_loss(self):
         model = ToyConditional()
-        algorithm = DomainAlgorithm(
-            "groupdro", model, learning_rate=1e-3, weight_decay=0.0,
-            groupdro_eta=0.1, num_lambda_samples=2, seed=0, device=torch.device("cpu"),
-        )
+        algorithm = DomainAlgorithm("groupdro", model, **self.algorithm_kwargs())
         batches = [("a", torch.randn(4, 4), torch.tensor([0, 1, 2, 0])), ("b", torch.randn(3, 4), torch.tensor([1, 2, 0]))]
         result = algorithm.update(batches)
         self.assertEqual(set(result["environment_losses"]), {"a", "b"})
 
     def test_iro_uses_conditional_model_and_adaptive_beta(self):
         model = ToyConditional()
-        algorithm = DomainAlgorithm(
-            "iro", model, learning_rate=1e-3, weight_decay=0.0,
-            groupdro_eta=0.1, num_lambda_samples=2, seed=0, device=torch.device("cpu"),
-        )
+        algorithm = DomainAlgorithm("iro", model, **self.algorithm_kwargs())
         batches = [("a", torch.randn(3, 4), torch.tensor([0, 1, 2])), ("b", torch.randn(3, 4), torch.tensor([1, 2, 0]))]
         result = algorithm.update(batches)
         self.assertGreater(model.lambda_calls, 0)
         self.assertEqual(result["adaptive_beta"]["update_calls"], 1)
         self.assertEqual(len(result["lambdas"]), 2)
         self.assertEqual(set(result["environment_losses"]), {"a", "b"})
+
+    def test_penalized_algorithms_use_erm_warmup_then_main_objective(self):
+        batches = [
+            ("a", torch.randn(4, 4), torch.tensor([0, 1, 2, 0])),
+            ("b", torch.randn(4, 4), torch.tensor([1, 2, 0, 1])),
+        ]
+        for name in ("irm", "vrex", "eqrm"):
+            algorithm = DomainAlgorithm(name, ToyConditional(), **self.algorithm_kwargs())
+            self.assertEqual(algorithm.update(batches)["training_phase"], "erm_pretrain")
+            self.assertEqual(algorithm.update(batches)["training_phase"], "erm_pretrain")
+            result = algorithm.update(batches)
+            self.assertEqual(result["training_phase"], "main")
+            self.assertEqual(algorithm.update_count, 3)
+            self.assertIsInstance(algorithm.optimizer, torch.optim.Adam)
 
     def test_validation_is_declared_final_only(self):
         labels = [label for label in range(100) for _ in range(20)]
@@ -236,4 +264,3 @@ class CoreTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

@@ -1,52 +1,25 @@
-# CMNIST experiments
-This sub-repo contains code for running experiments on the ColoredMNIST dataset of 
-[Arjovsky et al., 2019](https://arxiv.org/abs/1907.02893).
+# CMNIST
 
-<p align="center">
-  <img src="https://github.com/cianeastwood/qrm/blob/main/assets/overview_cmnist.png?raw=true" width="300" alt="CMNIST images" />
-</p>
+The active CMNIST entry point is `train_sandbox.py`. It implements binary Colored MNIST with the FiLMedMLP architecture and supports ERM, IRM, VREx, EQRM, GroupDRO, INF-TASK, and IRO.
 
-## Requirements
-We used Python 3.10. The requirements can then be installed using:
-```
-pip install -r requirements.txt
-```
-
-## Single run
-```
-python train.py --algorithm eqrm --alpha -1000 --save_ckpts --lr_cos_sched
-```
-
-## Reproducing results (multiple runs)
-### 1. Create sweep commands
-Create a text file of commands `job_scripts/reproduce.txt` with the following command, specifying the _absolute_ 
-paths to your data and output directories:
-```sh
-python -m job_scripts.gen_exps --exp_name reproduce --data_dir /my/data/dir --output_dir /my/output/dir
-```
-
-### 2. Run the commands
-Run the commands in the text file. To do so on a local machine (warning: may take a while!), use:
-```sh
-source ./job_scripts/reproduce.txt
-```
-
-To do so via a slurm cluster, the script `job_scripts/submit_jobs.py` may provide a useful starting point, editing where necessary with the details of your cluster. After installing [submitit](https://github.com/facebookincubator/submitit), the following command will then run the commands in the text file:
-```sh
-python -m job_scripts.submit_jobs -c job_scripts/reproduce.txt
-```
-
-### 3. View results
-Results will have been saved to /my/output/dir (due to `--output_dir` and `--exp_name` flags in step 1). View
-with:
+## Setup and checks
 
 ```bash
-python collect_results.py /my/output/dir/results/reproduce
+python -m pip install -r requirements.txt
+python -m unittest discover -s tests -v
+python -m py_compile train_sandbox.py datasets.py algorithms.py
 ```
 
-## Filtering results for analysis
-You can use the flags of `collect_results.py` to filter results, e.g. to view runs that did not use ERM pretraining 
-and had a penalty weight of 10: 
+## Canonical E3b support-removal sweep
+
+The source anchors are `{0.1, 0.2, 0.5, 0.9}`. The generator defaults to seeds `0,1,2,3,4`, uses final checkpoints, and writes all runs to the output root supplied by `--output_dir`.
+
 ```bash
-python collect_results.py /my/output/dir/results/reproduce --arg_values erm_pretrain_iters=0,penalty_weight=10
+python -m job_scripts.gen_exps --exp_name e3b_tail_support --data_dir ../data --output_dir ../results/cmnist/e3b --seed_list 0,1,2,3,4
+python -m job_scripts.gen_exps --exp_name e3b_tail_support_eqrm_vrex --data_dir ../data --output_dir ../results/cmnist/e3b --seed_list 0,1,2,3,4
+source job_scripts/e3b_tail_support.txt
+source job_scripts/e3b_tail_support_eqrm_vrex.txt
+python analyze_tail_support.py ../results/cmnist/e3b/results --output_dir ../results/cmnist/e3b/analysis/eleven_grid_predictive
 ```
+
+The first manifest supplies ERM, IRM, GroupDRO, IRO, and INF-TASK. The second supplies VREx and EQRM under the same source counts, seeds, checkpoint policy, 400-step ERM warm-up, and cosine schedule. The analyser’s 11-grid output is a predictive metric only; do not use it as the four-anchor identification audit. Historical upstream-QRM reproduction commands, including negative EQRM quantile settings, are retained only in `QRM/` and are not part of this protocol.

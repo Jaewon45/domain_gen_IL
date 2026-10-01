@@ -109,7 +109,12 @@ def main():
         weight_decay=1e-4,
         groupdro_eta=0.1,
         num_lambda_samples=4,
-        eqrm_alpha=0.75,
+        eqrm_alpha=0.9,
+        penalty_weight=1000.0,
+        erm_pretrain_iters=400,
+        lr_cos_sched=True,
+        lr_factor_reduction=1.0,
+        total_steps=args.steps,
         seed=int(manifest["global_seed"]),
         device=device,
     )

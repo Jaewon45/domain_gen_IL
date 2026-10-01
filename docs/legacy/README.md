@@ -9,6 +9,7 @@ run instructions.
 - `implementation_theory_audit.md`: historical theory/CVaR audit.
 - `SANITY_CHECKLIST.md`: historical pre-run checklist.
 - `README_IMAGENET_C_LEGACY.md`: retired non-100 ImageNet-C extension plan.
+- `README_EXT_[CMN&ImgC].md` and `README_DATASET_SETUPS_[CMN&ImgC].md`: retired mixed-dataset plans.
 
 Current phase names and result interpretation are in
 [docs/RESULTS.md](../RESULTS.md). The active ImageNet extension is described in

@@ -10,13 +10,13 @@ corruption, resize/crop/normalize, model forward/backward, and optimization run
 on CUDA. JPEG decoding and the one-time fixed-size staging pass remain CPU-side
 and are reported separately.
 
-Example after the current paper training jobs finish:
+Example after a canonical E3b training run finishes:
 
 ```bash
 cd /home/ra95tig/lrz_mount/domgen
 CUDA_VISIBLE_DEVICES=0 /home/ra95tig/anaconda3/envs/domgen/bin/python \
   -m IMAGENET100C.gpu_only.benchmark_e3b \
-  --manifest /home/ra95tig/imagenet100c_results/seed3/E3b_balanced_erm/manifest.json \
+  --manifest results/imagenet100c/seed0/E3b_balanced_erm/manifest.json \
   --steps 1000 --batch-size 64 --output-dir /home/ra95tig/imagenet100c_gpu_benchmark
 ```
 

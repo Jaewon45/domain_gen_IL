@@ -1,216 +1,55 @@
-# ImageNet-100-C external replication
+# ImageNet-100-C support-removal replication
 
-This directory is an optional natural-image supplement to the AISTATS theory,
-synthetic ranking-reversal, and Colored-MNIST evidence. It does not alter the
-CMNIST experiments and does not claim that clean ImageNet-100 has natural
-domains. Domains are constructed from ImageNet-C corruption mechanisms.
+This is an external constructed-domain replication. It does not claim that ImageNet-C corruptions are natural populations, and it is supplementary to the CMNIST evidence.
 
-The current paper claim does not require a full ImageNet-C benchmark. The
-ImageNet result should be labelled **external constructed-domain replication**
-in the supplement, or omitted from the submission if it delays the core paper.
-It must not be presented as a new central theorem test or as a five-method
-reproduction of the CMNIST tables.
+## Fixed protocol
 
-## Focused scientific question
+- Anchors: `gaussian_noise`, `defocus_blur`, `snow`, and `contrast`.
+- Deployment law: uniform over the four anchors.
+- Conditions: `balanced`, `long_tail`, `near_missing`, and `missing`.
+- Methods: ERM, IRM, VREx, EQRM, GroupDRO, INF-TASK, and IRO.
+- Seeds: `0,1,2`.
+- Matrix: `4 conditions × 7 methods × 3 seeds = 84` final checkpoints.
+- Evaluation: 1,000 fixed class-stratified validation images per anchor/severity condition, with severity averaged within anchor.
+- Checkpoint policy: final checkpoint after 1,000 updates; no target validation is used for selection.
 
-The retained ImageNet question is whether the support-removal pattern survives
-on natural images:
+`near_missing` has positive source support at every anchor. `missing` has a zero count at the final anchor and missing mass `epsilon = 1/4` under the stated deployment law.
 
-- observed corruption mechanisms: `gaussian_noise`, `defocus_blur`, `snow`,
-  and `contrast`;
-- deployment law: uniform over those four registered anchors;
-- source conditions: `balanced`, `long_tail`, and `missing`;
-- candidate algorithms: ERM, IRM, GroupDRO, IRO, INF-TASK, EQRM, and VREx;
-- seeds: `0,1,2`;
-- evaluation: 1,000 fixed class-stratified validation images per
-  type/severity condition, shared across models and seeds.
+## Shared transition policy
 
-The candidate matrix is `3 conditions x 7 algorithms x 3 seeds = 63 checkpoints`.
-Each
-checkpoint evaluates the four anchors at severities `1..5`, with severity
-averaging within each anchor. Clean validation is reported separately.
+IRM, VREx, and EQRM use the CMNIST-style transition policy in the shared trainer:
 
-The primary report contains per-anchor error, domain CVaR at
-`alpha = 0.5, 0.75, 0.9`, the partial-identification interval, interval width,
-and whether pairwise rankings are certified. The held-out ImageNet validation
-results are descriptive plug-in deployment results; identification intervals
-use the held-out source-validation subset declared in each manifest.
+- 400 plain-ERM warm-up updates;
+- an AdamW-to-Adam optimizer reset at the objective transition;
+- cosine decay over the post-warm-up updates;
+- `penalty_weight = 1000` and `(risk + penalty_weight × penalty) / penalty_weight` for IRM and VREx;
+- EQRM at quantile `alpha = 0.9`, with its CMNIST-style gradient-ratio scaling after warm-up.
 
-The `near_missing` condition is dropped. E1 domain-count, E2 sample-support,
-E3 visible-imbalance,
-`severity_support`, and E4 lambda-grid studies are stopped as paper runs.
-They remain available as internal controls if a reviewer specifically requests
-them.
+These settings are fixed across conditions and seeds. Check `history.jsonl` for `training_phase`, `optimizer_lr`, IRM/VREx penalties, and the EQRM gradient ratio before interpreting a run. Any checkpoint produced before this transition policy is legacy diagnostic output and must not be combined with the canonical matrix.
 
-## Protocol and dataset contract
+## Setup and canonical runner
 
-The loader uses `clane9/imagenet-100` at the immutable revision in
-`configs/experiments.json`.
-
-- ImageNet-100 `train` supplies source training and a non-overlapping,
-  source-only validation subset.
-- ImageNet-100 `validation` is final evaluation only.
-- Labels remain integer class IDs in `[0,99]`; the task is never binarized.
-- Images are converted to RGB and use the explicit
-  `ResNet50_Weights.IMAGENET1K_V2` transform.
-- Each run writes its dataset revision, class mapping, assignments, counts,
-  seeds, corruption configuration, and transform specification to
-  `manifest.json`.
-
-For the focused extension, source domains are the four registered anchors.
-The missing condition has one zero-count anchor and therefore missing mass
-`epsilon = 1/4`; zero-count environments are omitted from data loaders but
-remain recorded in requested counts. ERM receives proportional per-environment
-batch sizes. GroupDRO and IRO receive a loss for every active environment.
-
-This protocol supports a claim about transfer across missing constructed
-corruption mechanisms. It does not establish robustness to geography,
-acquisition devices, populations, or naturally occurring domains.
-
-## Models and caveat
-
-`finetune_last_stage` is the main setting: ResNet layer 4 and the conditional
-classifier are trained while the remaining backbone and BatchNorm statistics
-stay frozen. The backbone is ImageNet-1k pretrained, and ImageNet-1k contains
-the ImageNet-100 classes and training images. This is transfer learning, not
-representation learning from scratch.
-
-The focused extension uses:
-
-- ERM at lambda 0;
-- GroupDRO at lambda 0;
-- IRO with the existing adaptive-Beta update and
-  `num_lambda_samples=4`.
-
-The old frozen-feature pilot remains an internal smoke test only.
-
-## Commands
-
-Run unit checks first:
+From the repository root:
 
 ```bash
-conda run -n domgen python -m unittest discover -s IMAGENET100C/tests -v
+python -m pip install -r IMAGENET100C/requirements.txt
+python -m unittest discover -s IMAGENET100C/tests -v
+bash IMAGENET100C/run_e3b.sh --seed 0 --results-root results/imagenet100c --gpus 0,1
+bash IMAGENET100C/run_evaluate_e3b.sh --seed 0 --results-root results/imagenet100c --gpus 0,1
 ```
 
-The required loader smoke test is:
-
-```bash
-CUDA_VISIBLE_DEVICES=0 conda run -n domgen python -m IMAGENET100C.train \
-  --experiment E0 --algorithm erm --backbone_mode frozen_feature_pilot \
-  --max_source_images 100 --steps 2 --eval_every 1 --batch_size 16 \
-  --output_dir results/imagenet100c_e0_loader_smoke_linux
-```
-
-The historical full launcher is retained for reproducibility, but do not use it
-for the paper extension:
-
-```bash
-nohup bash IMAGENET100C/run_seed_all.sh \
-  --seed 1 --results-root /home/ra95tig/imagenet100c_results/seed1 \
-  --python /home/ra95tig/anaconda3/envs/domgen/bin/python \
-  --gpus 0,1 --offline \
-  > logs/imagenet100c_seed1_legacy_full.log 2>&1 &
-```
-
-For each of the 27 selected checkpoints, use the focused evaluator command:
-
-```bash
-conda run -n domgen python -m IMAGENET100C.evaluate \
-  /path/to/run/checkpoints/final.pt \
-  --corruption_types gaussian_noise,defocus_blur,snow,contrast \
-  --max_eval_images 1000 --batch_size 64 --workers 0 \
-  --output_dir /path/to/run/evaluation_minimal_anchor1000
-```
-
-Use a new output directory. The evaluator writes `evaluation.jsonl`; it refuses
-to overwrite an existing evaluation directory. The current
-`run_evaluations.sh` is a full 15-type lambda-0 launcher and is intentionally
-not the focused paper command.
-
-## Current execution status
-
-The historical local Windows RTX A1000 run completed the full 64-checkpoint
-training matrix for seed 0. That matrix is retained as an internal diagnostic
-bundle, not as the paper target.
-
-On the remote Linux server, the `domgen` environment uses PyTorch 2.6 with
-CUDA 12.4 on two RTX A6000 GPUs. Seed 1 and seed 2 each completed all 64
-training checkpoints. No seed 3 or 4 training should be launched for this
-submission plan.
-
-The obsolete seed-1 full 15-type evaluation was stopped after 8 completed
-checkpoints. Those JSONL files are preserved but are not part of the focused
-candidate result set.
-
-For seeds 1 and 2, the currently available selected checkpoints are ERM,
-GroupDRO, IRO, and INF-TASK for all three conditions. IRM, EQRM, and VREx are
-missing for both seeds: **18 training checkpoints total** (`3 algorithms x 3
-conditions x 2 seeds`). No focused evaluations have yet been run for INF-TASK,
-IRM, EQRM, or VREx. Seed 0 selected checkpoints are not present on this remote
-filesystem.
-
-The existing `results_submit_img100/` figures are seed-0 pilot/training
-artifacts. They are explicitly marked `pilot_anchor100` where appropriate and
-must not be described as report-grade evidence. No focused multi-seed
-visualizations have been generated yet.
-
-## Remaining work and estimate
-
-Training remaining for the seven-method candidate plan: **18 selected runs for
-seeds 1 and 2**, plus 21 selected runs for seed 0 if its checkpoints are not
-transferred from the completed local bundle. Do not rerun the other legacy
-configurations.
-
-Evaluation remaining:
-
-- seed 0: 21 candidate evaluations if all seven methods are included;
-- seed 1: 21 candidate evaluations, regardless of the 8 obsolete broad evaluations;
-- seed 2: 21 candidate evaluations;
-- total: **63 candidate evaluations** once all missing checkpoints are trained.
-
-The completed broad evaluations show that a full 15-type, 5,000-image
-checkpoint evaluation takes approximately four hours on this remote setup.
-The focused evaluation reduces the work from 75 to 20 corrupted conditions and
-from 5,000 to 1,000 validation images. A first focused checkpoint should be
-benchmarked before finalizing the budget; a planning range is **10-30 minutes
-per focused checkpoint**.
-
-With two independent evaluator processes, the 27-checkpoint focused extension
-is approximately **3-7 wall-clock hours**, plus startup and any queue imbalance.
-This is a planning estimate, not a completed benchmark. It is substantially
-smaller than the abandoned full-matrix plan and is the only ImageNet evaluation
-that should be scheduled for this submission.
-
-After focused JSONL files exist, aggregation can be run with:
-
-```bash
-conda run -n domgen python -m IMAGENET100C.analyze \
-  '/home/ra95tig/imagenet100c_results/seed*/selected/*/evaluation.jsonl' \
-  --output_dir /home/ra95tig/imagenet100c_results/analysis_minimal
-```
-
-The glob above is illustrative: pass the actual focused evaluation JSONL paths
-or a shell-expanded list. `analyze.py` writes `summary.csv`, robust pairwise
-rankings, and `analysis_manifest.json`. A separate multi-seed plotting layer is
-still required for paper figures; the existing pilot plotting script is not a
-substitute because it assumes the old seed-0, 100-image pilot.
-
-## Artifacts and interpretation
-
-A training directory contains:
+Repeat once per seed. The only canonical layout is:
 
 ```text
-manifest.json
-history.jsonl
-checkpoints/final.pt
+results/imagenet100c/
+  seed<seed>/
+    E3b_<condition>_<algorithm>/
+      manifest.json
+      history.jsonl
+      checkpoints/final.pt
+    logs/
 ```
 
-A focused evaluation directory contains `evaluation.jsonl` with clean metrics,
-per-anchor severity metrics, severity-averaged domain losses, CVaR values,
-identification intervals, counts, and the explicit four-anchor deployment law.
+The runner refuses to reuse incomplete run directories and safely skips a directory that already contains `checkpoints/final.pt`.
 
-Do not combine the obsolete 15-type evaluations with focused four-anchor
-results in one table. Do not call the old full matrix report-grade evidence.
-The central AISTATS evidence remains the exact synthetic ranking reversals,
-Colored-MNIST support removal, plug-in intervals, and failed robust-ranking
-certificates.
+The old non-100 ImageNet-C implementation and its plans are archival material under `docs/legacy/`. The GPU-only benchmark is performance instrumentation, not a source of paper checkpoints.

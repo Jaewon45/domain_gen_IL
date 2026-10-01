@@ -1,9 +1,6 @@
 # Report Metadata
 
-This metadata directory belongs to the CMNIST result bundle. For the complete
-CMN/Img100C distinction, phase mapping, provenance rules, and regeneration
-guidance, see [docs/README_CMN_EXPERIMENT_RESULTS.md](../../docs/README_CMN_EXPERIMENT_RESULTS.md)
-and [docs/RESULTS.md](../../docs/RESULTS.md).
+This metadata directory belongs to the CMNIST result bundle. For active provenance and regeneration guidance, see [docs/RESULTS.md](../../docs/RESULTS.md) and [REPRODUCIBILITY.md](../../REPRODUCIBILITY.md).
 
 ## CMN
 
