@@ -291,6 +291,48 @@ def generate_tail_support_commands(args, base_call, seeds):
 
     return commands
 
+
+def generate_tail_support_eqrm_vrex_commands(args, base_call, seeds):
+    """Generate the pre-registered missing-method E3b replication.
+
+    These settings match the native E3b optimizer schedule: 400 ERM warm-up
+    steps, cosine decay, and 600 total steps. VREx uses the existing E3b
+    penalty scale of 1000. EQRM optimizes the 0.9 loss quantile, aligned with
+    the report's primary tail-risk level; the value is a probability because
+    the native Nonparametric.icdf implementation expects q in [0, 1].
+    """
+    commands = []
+    algorithms = [
+        ("vrex", 600, "--erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts"),
+        ("eqrm", 600, "--erm_pretrain_iters 400 --lr_cos_sched --alpha 0.9 --save_ckpts"),
+    ]
+    source_envs = [0.1, 0.2, 0.5, 0.9]
+    source_envs_text = ",".join(str(env) for env in source_envs)
+    fixed_test_envs = "0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0"
+    conditions = {
+        "balanced_visible": [2000, 2000, 2000, 2000],
+        "long_tail_visible": [5000, 2000, 800, 200],
+        "near_missing_tail": [5800, 1800, 350, 50],
+        "missing_tail": [6000, 1500, 500, 0],
+    }
+
+    for seed in seeds:
+        for condition_name, train_env_sizes in conditions.items():
+            head_env, tail_env = _head_tail_envs(source_envs, train_env_sizes)
+            sizes_text = ",".join(str(size) for size in train_env_sizes)
+            for algorithm, steps, extra_args in algorithms:
+                commands.append(
+                    (
+                        f"{base_call} --seed {seed} --algorithm {algorithm} --steps {steps} "
+                        f"--train_envs {source_envs_text} --train_env_sizes {sizes_text} "
+                        f"--test_envs {fixed_test_envs} --tail_support_condition {condition_name} "
+                        f"--tail_support_source_envs {source_envs_text} "
+                        f"--tail_support_tail_env {tail_env} --tail_support_head_env {head_env} "
+                        f"{extra_args}"
+                    ).strip()
+                )
+    return commands
+
 if __name__ == "__main__":
     # Flags
     parser = argparse.ArgumentParser(description='Generate commands for CMNIST experiments.')
@@ -323,6 +365,8 @@ if __name__ == "__main__":
         commands = generate_domain_count_clean_commands(args, base_call, seeds)
     elif args.exp_name == "imbalance_clean":
         commands = generate_imbalance_clean_commands(args, base_call, seeds)
+    elif args.exp_name == "e3b_tail_support_eqrm_vrex":
+        commands = generate_tail_support_eqrm_vrex_commands(args, base_call, seeds)
     elif "tail_support" in args.exp_name:
         commands = generate_tail_support_commands(args, base_call, seeds)
     else:

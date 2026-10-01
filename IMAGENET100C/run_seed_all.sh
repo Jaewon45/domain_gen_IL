@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Run the registered 64-run ImageNet-100-C training matrix across independent GPUs.
+# Run the registered ImageNet-100-C training matrix across independent GPUs.
 set -euo pipefail
 
 usage() {
@@ -13,6 +13,8 @@ Options:
   --results-root PATH         Output root (default: results/imagenet100c_seedSEED)
   --python PATH               Python executable (default: python)
   --gpus IDS                  Comma-separated CUDA device IDs (default: 0,1)
+  --workers-per-gpu N         Concurrent processes per GPU (default: 1)
+  --e3b-only                  Run only the four E3b support conditions
   --offline                   Require Hugging Face data and weights to be cached
     --dry-run                   Print the GPU assignment for every run and exit
   -h, --help                  Show this message
@@ -28,6 +30,8 @@ backbone_mode="finetune_last_stage"
 results_root=""
 python_bin="python"
 gpu_csv="0,1"
+workers_per_gpu=1
+e3b_only=0
 offline=0
 dry_run=0
 
@@ -38,6 +42,8 @@ while [[ $# -gt 0 ]]; do
         --results-root) results_root="$2"; shift 2 ;;
         --python) python_bin="$2"; shift 2 ;;
         --gpus) gpu_csv="$2"; shift 2 ;;
+        --workers-per-gpu) workers_per_gpu="$2"; shift 2 ;;
+        --e3b-only) e3b_only=1; shift ;;
         --offline) offline=1; shift ;;
         --dry-run) dry_run=1; shift ;;
         -h|--help) usage; exit 0 ;;
@@ -67,6 +73,7 @@ fi
 for gpu in "${gpus[@]}"; do
     [[ "$gpu" =~ ^[0-9]+$ ]] || { echo "Invalid CUDA device ID: $gpu" >&2; exit 2; }
 done
+[[ "$workers_per_gpu" =~ ^[1-9][0-9]*$ ]] || { echo "--workers-per-gpu must be a positive integer" >&2; exit 2; }
 
 command -v "$python_bin" >/dev/null || { echo "Python executable not found: $python_bin" >&2; exit 2; }
 mkdir -p "$results_root/logs"
@@ -83,36 +90,40 @@ add_run() {
     runs+=("$tag|$algorithm|$*")
 }
 
-algorithms=(erm groupdro inftask iro)
-for algorithm in "${algorithms[@]}"; do
-    add_run "E0" "$algorithm" "--experiment E0"
-done
-for source_count in 2 4 8 12; do
+algorithms=(erm irm vrex eqrm groupdro inftask iro)
+if [[ $e3b_only -eq 0 ]]; then
     for algorithm in "${algorithms[@]}"; do
-        add_run "E1_${source_count}types" "$algorithm" "--experiment E1 --source_count $source_count"
+        add_run "E0" "$algorithm" "--experiment E0"
     done
-done
-for samples_per_type in 1000 5000 10000; do
-    for algorithm in "${algorithms[@]}"; do
-        add_run "E2_${samples_per_type}pertype" "$algorithm" "--experiment E2 --samples_per_type $samples_per_type"
+    for source_count in 2 4 8 12; do
+        for algorithm in "${algorithms[@]}"; do
+            add_run "E1_${source_count}types" "$algorithm" "--experiment E1 --source_count $source_count"
+        done
     done
-done
-for condition in balanced mild_imbalance strong_imbalance; do
-    for algorithm in "${algorithms[@]}"; do
-        add_run "E3_${condition}" "$algorithm" "--experiment E3 --condition $condition"
+    for samples_per_type in 1000 5000 10000; do
+        for algorithm in "${algorithms[@]}"; do
+            add_run "E2_${samples_per_type}pertype" "$algorithm" "--experiment E2 --samples_per_type $samples_per_type"
+        done
     done
-done
+    for condition in balanced mild_imbalance strong_imbalance; do
+        for algorithm in "${algorithms[@]}"; do
+            add_run "E3_${condition}" "$algorithm" "--experiment E3 --condition $condition"
+        done
+    done
+fi
 for condition in balanced long_tail near_missing missing; do
     for algorithm in "${algorithms[@]}"; do
         add_run "E3b_${condition}" "$algorithm" "--experiment E3b --condition $condition"
     done
 done
-for algorithm in "${algorithms[@]}"; do
-    add_run "severity_support" "$algorithm" "--experiment severity_support"
-done
+if [[ $e3b_only -eq 0 ]]; then
+    for algorithm in "${algorithms[@]}"; do
+        add_run "severity_support" "$algorithm" "--experiment severity_support"
+    done
+fi
 
 if [[ $dry_run -eq 1 ]]; then
-    printf 'Planned runs: %d across GPUs: %s\n' "${#runs[@]}" "$gpu_csv"
+        printf 'Planned runs: %d across GPUs: %s (%s workers/GPU)\n' "${#runs[@]}" "$gpu_csv" "$workers_per_gpu"
     for run_index in "${!runs[@]}"; do
         IFS='|' read -r tag algorithm experiment_args <<< "${runs[run_index]}"
         printf 'GPU %s: %s_%s %s\n' "${gpus[run_index % ${#gpus[@]}]}" "$tag" "$algorithm" "$experiment_args"
@@ -155,9 +166,11 @@ run_one() {
 declare -A pid_gpu
 next_run=0
 for gpu in "${gpus[@]}"; do
-    run_one "$gpu" "$next_run" &
-    pid_gpu[$!]="$gpu"
-    ((next_run += 1))
+    for ((worker = 0; worker < workers_per_gpu && next_run < ${#runs[@]}; worker++)); do
+        run_one "$gpu" "$next_run" &
+        pid_gpu[$!]="$gpu"
+        ((next_run += 1))
+    done
 done
 
 status=0

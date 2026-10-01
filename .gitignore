@@ -26,6 +26,7 @@ cmnist_exp_smoke/
 /domain_stress_main_seed*.log
 /seed*.log
 *.log
+logs/*.pid
 
 # Downloaded raw datasets
 data/MNIST/raw/

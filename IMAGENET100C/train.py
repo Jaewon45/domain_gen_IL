@@ -230,6 +230,7 @@ def main() -> None:
     algorithm = DomainAlgorithm(
         args.algorithm, model, learning_rate=args.learning_rate, weight_decay=args.weight_decay,
         groupdro_eta=args.groupdro_eta, num_lambda_samples=args.num_lambda_samples,
+        eqrm_alpha=args.alpha,
         seed=args.seed, device=device,
     )
 
@@ -292,4 +293,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

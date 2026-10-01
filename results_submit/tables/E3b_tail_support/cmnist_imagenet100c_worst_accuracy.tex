@@ -1,0 +1,22 @@
+% ImageNet100C unavailable cells: erm/near_missing, irm/near_missing, vrex/near_missing, eqrm/near_missing, groupdro/near_missing, inftask/near_missing, iro/near_missing
+\begin{table*}[t]
+\centering
+\small
+\caption{Worst-environment accuracy (\%) under source-support degradation. Entries are mean $\pm$ standard deviation over five CMNIST seeds and two ImageNet100C seeds.}
+\label{tab:support-performance}
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+& \multicolumn{4}{c}{CMNIST (5 seeds)} & \multicolumn{4}{c}{ImageNet100C (2 seeds)} \\
+\cmidrule(lr){2-5}\cmidrule(l){6-9}
+Method & Balanced & Long-tail & Near-missing & Missing & Balanced & Long-tail & Near-missing & Missing \\
+\midrule
+ERM & 57.7 $\pm$ 1.3 & 21.8 $\pm$ 1.5 & 14.8 $\pm$ 1.4 & 15.3 $\pm$ 1.4 & 61.2 $\pm$ 0.6 & 62.5 $\pm$ 0.9 & [TBD] & 61.8 $\pm$ 0.1 \\
+IRM & 62.1 $\pm$ 2.1 & 47.2 $\pm$ 0.8 & 41.8 $\pm$ 2.2 & 37.6 $\pm$ 4.7 & 0.8 $\pm$ 0.1 & 1.0 $\pm$ 0.3 & [TBD] & 1.1 $\pm$ 0.0 \\
+VREx & 62.8 $\pm$ 1.3 & 45.4 $\pm$ 0.6 & 37.4 $\pm$ 3.4 & 39.1 $\pm$ 2.5 & 7.7 $\pm$ 0.9 & 2.8 $\pm$ 0.0 & [TBD] & 4.1 $\pm$ 0.8 \\
+EQRM & 61.7 $\pm$ 1.0 & 38.6 $\pm$ 0.9 & 27.4 $\pm$ 1.0 & 25.3 $\pm$ 1.1 & 55.7 $\pm$ 0.2 & 52.2 $\pm$ 1.0 & [TBD] & 56.0 $\pm$ 0.6 \\
+GroupDRO & 58.7 $\pm$ 1.4 & 25.3 $\pm$ 1.1 & 16.5 $\pm$ 1.0 & 16.1 $\pm$ 1.2 & 54.7 $\pm$ 0.9 & 52.5 $\pm$ 0.1 & [TBD] & 56.4 $\pm$ 1.7 \\
+INF-TASK & 65.3 $\pm$ 1.0 & 53.8 $\pm$ 2.7 & 39.5 $\pm$ 2.9 & 39.7 $\pm$ 2.2 & 57.6 $\pm$ 1.3 & 53.3 $\pm$ 1.0 & [TBD] & 53.4 $\pm$ 1.0 \\
+IRO & 65.6 $\pm$ 0.6 & 53.6 $\pm$ 3.2 & 38.2 $\pm$ 3.0 & 38.3 $\pm$ 2.1 & 57.3 $\pm$ 2.1 & 52.9 $\pm$ 1.5 & [TBD] & 54.3 $\pm$ 0.7 \\
+\bottomrule
+\end{tabular}
+\end{table*}

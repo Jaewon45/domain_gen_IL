@@ -64,7 +64,7 @@ pip install -r requirements.txt
 cd ..
 
 # Note: ImageNet-C requires pretrained ResNet-50 and ImageNet-C data.
-# See IMAGENET_C/README_[ImgC].md for setup (optional, not required for report).
+# See docs/README_IMAGENET100C.md for the optional ImageNet-100-C supplement.
 ```
 
 ### Step 4: Verify Setup
@@ -520,7 +520,7 @@ If experiments fail or produce unexpected results:
 - **Main paper:** [Domain Generalization via Imprecise Learning](https://arxiv.org/abs/...)
 - **Detailed documentation:** See [docs/](../) for phase-by-phase experiment design
 - **Code documentation:** See [CMNIST/README.md](../CMNIST/README.md) for algorithm details
-- **Theory audit:** See [docs/implementation_theory_audit.md](implementation_theory_audit.md) for CVaR and theorem correctness
+- **Theory audit:** See [docs/legacy/implementation_theory_audit.md](legacy/implementation_theory_audit.md) for historical CVaR and theorem checks
 
 ---
 

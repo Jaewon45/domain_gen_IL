@@ -16,14 +16,15 @@ The paper presents a novel approach to domain generalization by contending that 
 
 ![Overview of DGIL](assets/overview.png)
 
-## Quick Start: Reproduce All Results
+## Quick Start
 
-**To regenerate all 8 report items (figures & tables) from scratch:**
+**To reproduce the current experiments and report artifacts:**
 
 👉 **See [docs/QUICKSTART.md](docs/QUICKSTART.md)** for complete step-by-step instructions
 
 - **Smoke test (E0):** ~30 minutes — validate end-to-end pipeline
-- **Full experiments (E1-E4):** ~20-24 hours — generate all results
+- **CMNIST stress experiments:** follow the phase and scope notes in `docs/README_CMN_EXPERIMENT_RESULTS.md`
+- **ImageNet-100-C supplement:** see [`docs/README_IMAGENET100C.md`](docs/README_IMAGENET100C.md)
 - **Theory postprocessing:** ~5 minutes — produce 4 theory outputs
 
 **Requires Python 3.10+** and ~20GB disk space for experiment outputs.
@@ -68,14 +69,11 @@ The codebase currently includes:
 - UCI Bike Rental real-data experiments,
 - simulation code under `sim/` and related folders.
 
-Current extension direction:
-
-- ImageNet-C is the preferred additional-dataset extension.
-- The adopted plan keeps the native 1000-class task, treats corruption type as the primary domain variable, and separates severity as a secondary analysis axis.
-- The initial comparison should use a frozen pretrained ResNet-50 backbone with a trainable head and compare `ERM`, `GroupDRO`, and `IRO`.
-- The extension should use fresh output roots under `results/` and must not overwrite existing CMNIST or prior experiment artifacts.
-
-See [README_EXT_[CMN&ImgC].md](docs/README_EXT_[CMN&ImgC].md) for workflow updates and [README_DATASET_SETUPS_[CMN&ImgC].md](docs/README_DATASET_SETUPS_[CMN&ImgC].md) for the dataset comparison table.
+The active additional-dataset direction is ImageNet-100-C. The older non-100
+ImageNet-C plan is archived under `docs/legacy/` and is not part of the current
+experiment scope. See [`docs/README_IMAGENET100C.md`](docs/README_IMAGENET100C.md)
+for the focused protocol and [`docs/RESULTS.md`](docs/RESULTS.md) for artifact
+interpretation.
 
 ## Contributing
 We welcome contributions from the community. If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request.

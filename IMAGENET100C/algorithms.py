@@ -120,6 +120,7 @@ class DomainAlgorithm:
         weight_decay: float,
         groupdro_eta: float,
         num_lambda_samples: int,
+        eqrm_alpha: float,
         seed: int,
         device: torch.device,
     ):
@@ -135,7 +136,9 @@ class DomainAlgorithm:
         self.device = device
         self.groupdro_eta = float(groupdro_eta)
         self.penalty_weight = 1000.0
-        self.alpha = 0.75
+        if not 0.0 <= float(eqrm_alpha) <= 1.0:
+            raise ValueError("eqrm_alpha must lie in [0, 1]")
+        self.alpha = float(eqrm_alpha)
         self.num_lambda_samples = int(num_lambda_samples)
         self.numpy_rng = np.random.default_rng(seed)
         self.optimizer = torch.optim.AdamW(
@@ -253,4 +256,3 @@ class DomainAlgorithm:
             "beta_sampler": None if self.beta_sampler is None else self.beta_sampler.state_dict(),
             "num_lambda_samples": self.num_lambda_samples,
         }
-

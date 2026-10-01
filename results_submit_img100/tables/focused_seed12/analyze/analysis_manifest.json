@@ -1,0 +1,25 @@
+{
+  "inputs": [
+    "/home/ra95tig/imagenet100c_results/seed1/E3b_balanced_erm/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed1/E3b_balanced_groupdro/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed1/E3b_balanced_iro/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed1/E3b_long_tail_erm/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed1/E3b_long_tail_groupdro/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed1/E3b_long_tail_iro/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed1/E3b_missing_erm/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed1/E3b_missing_groupdro/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed1/E3b_missing_iro/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed2/E3b_balanced_erm/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed2/E3b_balanced_groupdro/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed2/E3b_balanced_iro/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed2/E3b_long_tail_erm/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed2/E3b_long_tail_groupdro/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed2/E3b_long_tail_iro/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed2/E3b_missing_erm/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed2/E3b_missing_groupdro/evaluation_minimal_anchor1000/evaluation.jsonl",
+    "/home/ra95tig/imagenet100c_results/seed2/E3b_missing_iro/evaluation_minimal_anchor1000/evaluation.jsonl"
+  ],
+  "records": 18,
+  "summary_rows": 54,
+  "ranking_rows": 54
+}

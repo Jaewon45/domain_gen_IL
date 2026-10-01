@@ -1,5 +1,9 @@
 # README Extension: [CMN] CMNIST and [ImgC] ImageNet-C Workflow
 
+> The non-100 ImageNet-C plan in this file is historical. The active additional
+> dataset is ImageNet-100-C; use `docs/README_IMAGENET100C.md` and
+> `IMAGENET100C/README.md` for current scope and commands.
+
 This file keeps workflow-specific instructions separate from the existing README files.
 
 ## Environment
@@ -54,7 +58,7 @@ Planned output roots:
 - `results/imagenet_c_support_stress_v1`
 
 Planned implementation surface:
-- `IMAGENET_C/README.md`
+- `docs/README_IMAGENET100C.md`
 - `IMAGENET_C/datasets.py`
 - `IMAGENET_C/features.py`
 - `IMAGENET_C/models.py`
@@ -193,7 +197,8 @@ cd /d %REPO_ROOT%
 dgil_env\Scripts\python.exe IMAGENET_C\evaluate_lambda_grid.py results\imagenet_c_fold_generalization_smoke_v1\ckpts --output_dir results\imagenet_c_fold_generalization_smoke_lambda_v1 --lambda_grid 0.0:1.0:0.1
 ```
 
-See `IMAGENET_C/README.md` for the concrete folder plan, output layout, and run naming convention.
+See `docs/README_IMAGENET100C.md` for the active ImageNet-100-C scope and
+`IMAGENET100C/README.md` for concrete commands and output layout.
 
 ### [ImgC] Preparing Kaggle ImageNet Localization Data
 
