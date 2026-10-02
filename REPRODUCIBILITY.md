@@ -136,6 +136,49 @@ IRM and VREx do not intrinsically use EQRM's quantile alpha. Their manifests
 must not treat a shared `alpha` field as evidence that they trained at an
 EQRM quantile. EQRM's alpha must be recorded because it changes its objective.
 
+### Frozen settings summary
+
+The following settings are the intended final comparison protocols. `total`
+means total optimizer updates, including warm-up; it is not added to the
+warm-up count.
+
+| Dataset / method | Total updates | ERM warm-up | Main updates | Optimizer policy | Method parameters |
+| --- | ---: | ---: | ---: | --- | --- |
+| CMNIST ERM | 600 | 0 | 600 | Adam, lr `1e-4`, weight decay `0`, no schedule | pooled ERM objective |
+| CMNIST GroupDRO | 600 | 400 | 200 | Adam warm-up, reset at transition, cosine after transition | eta `0.1` |
+| CMNIST IRM | 600 | 400 | 200 | Adam warm-up, reset at transition, cosine after transition | penalty `1000` |
+| CMNIST VREx | 600 | 400 | 200 | Adam warm-up, reset at transition, cosine after transition | penalty `1000` |
+| CMNIST EQRM | 600 | 400 | 200 | Adam warm-up, reset at transition, cosine after transition | `eqrm_alpha=0.9` |
+| CMNIST IRO | 600 | 400 | 200 | Adam warm-up, reset at transition, cosine after transition | adaptive preference sampler; `lambda_eval=0.9` |
+| CMNIST INF-TASK | 600 | 400 | 200 | Adam warm-up, reset at transition, cosine after transition | preference sampler; `lambda_eval=0.9` |
+| ImageNet100C ERM | 1000 | 0 | 1000 | AdamW, lr `3e-4`, weight decay `1e-4` | lambda fixed at zero for ERM |
+| ImageNet100C GroupDRO | 1000 | 400 | 600 | AdamW warm-up, reset at transition, cosine after transition | eta `0.1` |
+| ImageNet100C IRM | 1000 | 400 | 600 | AdamW warm-up, reset at transition, cosine after transition | penalty `1000` |
+| ImageNet100C VREx | 1000 | 400 | 600 | AdamW warm-up, reset at transition, cosine after transition | penalty `1000` |
+| ImageNet100C EQRM | 1000 | 400 | 600 | AdamW warm-up, reset at transition, cosine after transition | `eqrm_alpha=0.9` |
+| ImageNet100C IRO | 1000 | 400 | 600 | AdamW warm-up, reset at transition, cosine after transition | adaptive Beta preference sampler; `lambda_eval=0.9` |
+| ImageNet100C INF-TASK | 1000 | 400 | 600 | AdamW warm-up, reset at transition, cosine after transition | preference sampler; `lambda_eval=0.9` |
+
+Shared settings:
+
+```text
+CMNIST architecture       = FiLMedMLP, hidden width 390, dropout 0.2
+CMNIST batch size         = 25000 per active source domain
+ImageNet architecture     = ResNet-50 IMAGENET1K_V2, fine-tune layer4 + head
+ImageNet batch size       = 64 per training update
+ImageNet lambda samples   = 4 for conditional methods
+checkpoint selection      = final
+checkpoint interval       = every 100 updates for new runs
+lambda_eval               = 0.9 for IRO and INF-TASK
+audit_cvar_alpha          = 0.50, 0.75, 0.90, post-training only
+```
+
+The ImageNet 1000-update budget is an independent secondary-replication
+choice. It is not inherited from the CMNIST 600-update budget. The ImageNet
+400-update warm-up and optimizer transition are also adopted frozen settings;
+they must be reported as implementation choices unless a specific ImageNet
+reference implementation is cited.
+
 ## 6. ImageNet-100-C: separate release gate
 
 ImageNet-100-C is an external constructed-domain supplement, not evidence to mix with CMNIST. Its active protocol declares four anchors `gaussian_noise`, `defocus_blur`, `snow`, and `contrast`; uniform four-anchor deployment; four conditions (`balanced`, `long_tail`, `scarce_tail`, `missing`); seven methods; and seeds `0,1,2`. Do not label pilot files under `results_submit_img100/` as report-grade evidence.
