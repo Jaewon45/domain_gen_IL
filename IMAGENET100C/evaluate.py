@@ -82,8 +82,19 @@ def parse_lambda_grid(value: str) -> List[float]:
     return values
 
 
-def evaluate_dataset(model, dataset, device, batch_size: int, workers: int, preference: float):
-    loader = DataLoader(dataset, batch_size=batch_size, shuffle=False, num_workers=workers)
+def evaluate_dataset(model, dataset, device, batch_size: int, workers: int, preference: float, pin_memory: bool = True):
+    worker_count = int(workers)
+    loader_kwargs = {
+        "dataset": dataset,
+        "batch_size": batch_size,
+        "shuffle": False,
+        "num_workers": worker_count,
+        "pin_memory": bool(pin_memory),
+    }
+    if worker_count > 0:
+        loader_kwargs["persistent_workers"] = True
+        loader_kwargs["prefetch_factor"] = 2
+    loader = DataLoader(**loader_kwargs)
     loss_sum = 0.0
     top1_sum = 0
     top5_sum = 0
@@ -91,7 +102,8 @@ def evaluate_dataset(model, dataset, device, batch_size: int, workers: int, pref
     model.eval()
     with torch.no_grad():
         for images, targets in loader:
-            images, targets = images.to(device), targets.to(device)
+            images = images.to(device, non_blocking=pin_memory)
+            targets = targets.to(device, non_blocking=pin_memory)
             lambdas = torch.full((images.shape[0], 1), preference, device=device)
             logits = model(images, lambdas)
             loss_sum += float(F.cross_entropy(logits, targets, reduction="sum"))
@@ -200,6 +212,7 @@ def main() -> None:
     parser.add_argument("--lambda_grid", default="0.0", help="Use 0,0.1,...,1 for E4")
     parser.add_argument("--batch_size", type=int, default=64)
     parser.add_argument("--workers", type=int, default=0)
+    parser.add_argument("--pin_memory", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--max_eval_images", type=int, default=None)
     parser.add_argument(
         "--corruption_types",
@@ -239,16 +252,16 @@ def main() -> None:
 
     records = []
     for preference in lambda_grid:
-        clean = evaluate_dataset(model, clean_dataset, device, args.batch_size, args.workers, preference)
+        clean = evaluate_dataset(model, clean_dataset, device, args.batch_size, args.workers, preference, args.pin_memory)
         source_validation_rows = []
         for domain, dataset in source_validation_datasets.items():
             source_validation_rows.append({
                 "domain": domain,
-                **evaluate_dataset(model, dataset, device, args.batch_size, args.workers, preference),
+                **evaluate_dataset(model, dataset, device, args.batch_size, args.workers, preference, args.pin_memory),
             })
         condition_rows = []
         for (corruption, severity), dataset in conditions.items():
-            metrics = evaluate_dataset(model, dataset, device, args.batch_size, args.workers, preference)
+            metrics = evaluate_dataset(model, dataset, device, args.batch_size, args.workers, preference, args.pin_memory)
             condition_rows.append({"corruption": corruption, "severity": severity, **metrics})
         record = {
             "schema_version": 1,
