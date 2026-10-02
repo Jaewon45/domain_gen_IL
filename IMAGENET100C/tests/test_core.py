@@ -103,7 +103,7 @@ class CoreTests(unittest.TestCase):
         _, missing_counts, _ = resolve_experiment(config, "E3b", "missing", 4, 1000)
         self.assertEqual(list(missing_counts.values()), [30000, 7500, 2500, 0])
         self.assertEqual(sum(missing_counts.values()), 40000)
-        _, near_missing_counts, _ = resolve_experiment(config, "E3b", "near_missing", 4, 1000)
+        _, near_missing_counts, _ = resolve_experiment(config, "E3b", "scarce_tail", 4, 1000)
         self.assertEqual(list(near_missing_counts.values()), [29000, 9000, 1800, 200])
         self.assertTrue(all(count > 0 for count in near_missing_counts.values()))
 
@@ -189,7 +189,9 @@ class CoreTests(unittest.TestCase):
 
     def test_iro_uses_conditional_model_and_adaptive_beta(self):
         model = ToyConditional()
-        algorithm = DomainAlgorithm("iro", model, **self.algorithm_kwargs())
+        kwargs = self.algorithm_kwargs()
+        kwargs["erm_pretrain_iters"] = 0
+        algorithm = DomainAlgorithm("iro", model, **kwargs)
         batches = [("a", torch.randn(3, 4), torch.tensor([0, 1, 2])), ("b", torch.randn(3, 4), torch.tensor([1, 2, 0]))]
         result = algorithm.update(batches)
         self.assertGreater(model.lambda_calls, 0)

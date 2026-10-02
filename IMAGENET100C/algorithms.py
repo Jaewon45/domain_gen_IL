@@ -212,12 +212,12 @@ class DomainAlgorithm:
         if not prepared:
             raise ValueError("No active environment minibatches")
         self.model.train()
-        penalized = self.name in {"irm", "vrex", "eqrm"}
-        is_erm_pretrain = penalized and self.update_count < self.erm_pretrain_iters
-        transition = penalized and self.update_count == self.erm_pretrain_iters
+        warmup_enabled = self.name != "erm"
+        is_erm_pretrain = warmup_enabled and self.update_count < self.erm_pretrain_iters
+        transition = warmup_enabled and self.update_count == self.erm_pretrain_iters
         if transition:
             self._activate_penalized_objective()
-        if penalized and not is_erm_pretrain:
+        if warmup_enabled and not is_erm_pretrain:
             self._apply_post_warmup_schedule()
         self.optimizer.zero_grad()
 
@@ -227,7 +227,7 @@ class DomainAlgorithm:
             objective = self._erm_objective(prepared)
             names, risks = self._risk_vector(prepared, 0.0)
             self.last_lambdas = [0.0]
-        elif penalized:
+        elif self.name in {"irm", "vrex", "eqrm"}:
             names, risks = self._risk_vector(prepared, 0.0)
             if self.name == "irm":
                 scale = torch.ones((), device=self.device, requires_grad=True)
