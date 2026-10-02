@@ -209,7 +209,7 @@ def main() -> None:
     parser.add_argument("checkpoint")
     parser.add_argument("--manifest", default=None)
     parser.add_argument("--output_dir", required=True)
-    parser.add_argument("--lambda_grid", default="0.0", help="Use 0,0.1,...,1 for E4")
+    parser.add_argument("--lambda_grid", default="0.9", help="Use 0,0.1,...,1 only for explicit sensitivity analysis")
     parser.add_argument("--batch_size", type=int, default=64)
     parser.add_argument("--workers", type=int, default=0)
     parser.add_argument("--pin_memory", action=argparse.BooleanOptionalAction, default=True)

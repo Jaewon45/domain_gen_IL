@@ -27,7 +27,7 @@ run_one() {
     if ! CUDA_VISIBLE_DEVICES="$gpu" "$python_bin" -m IMAGENET100C.train \
         --seed "$seed" --algorithm "$algorithm" --backbone_mode finetune_last_stage \
         --experiment E3b --condition "$condition" --steps 1000 --batch_size 64 \
-        --num_lambda_samples 4 --alpha 0.9 --penalty_weight 1000 \
+        --num_lambda_samples 4 --eqrm_alpha 0.9 --penalty_weight 1000 \
         --erm_pretrain_iters 400 --lr_cos_sched --workers 1 --pin_memory \
         --persistent_workers --prefetch_factor 2 --checkpoint_selection final \
         --output_dir "$output_dir" >"$log_file" 2>&1; then

@@ -37,7 +37,7 @@ def main() -> None:
     parser.add_argument("--cache_dir", required=True)
     parser.add_argument("--manifest", default=None)
     parser.add_argument("--output_dir", required=True)
-    parser.add_argument("--lambda_grid", default="0.0")
+    parser.add_argument("--lambda_grid", default="0.9")
     parser.add_argument("--batch_size", type=int, default=64)
     parser.add_argument("--workers", type=int, default=0)
     args = parser.parse_args()

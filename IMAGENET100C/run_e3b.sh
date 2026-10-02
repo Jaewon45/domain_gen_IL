@@ -120,7 +120,7 @@ run_one() {
     read -r -a experiment_arg_array <<< "$experiment_args"
     if ! CUDA_VISIBLE_DEVICES="$gpu" "$python_bin" -m IMAGENET100C.train \
         --seed "$seed" --algorithm "$algorithm" --backbone_mode "$backbone_mode" \
-        --steps 1000 --batch_size 64 --num_lambda_samples 4 --alpha 0.9 \
+        --steps 1000 --batch_size 64 --num_lambda_samples 4 --eqrm_alpha 0.9 \
         --penalty_weight 1000 --erm_pretrain_iters 400 --lr_cos_sched \
         --checkpoint_selection final --output_dir "$output_directory" \
         "${experiment_arg_array[@]}" >"$log_file" 2>&1; then

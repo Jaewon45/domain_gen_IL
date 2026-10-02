@@ -48,7 +48,7 @@ run_one() {
         --steps 1000 \
         --batch_size 64 \
         --num_lambda_samples 4 \
-        --alpha 0.9 \
+        --eqrm_alpha 0.9 \
         --penalty_weight 1000 \
         --erm_pretrain_iters 400 \
         --lr_cos_sched \
