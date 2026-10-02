@@ -136,6 +136,42 @@ IRM and VREx do not intrinsically use EQRM's quantile alpha. Their manifests
 must not treat a shared `alpha` field as evidence that they trained at an
 EQRM quantile. EQRM's alpha must be recorded because it changes its objective.
 
+### ImageNet IRM/VREx optimization alarm
+
+The observed ImageNet IRM/VREx failure signature is a real optimization alarm:
+source losses improve through the 400-update ERM warm-up, then deteriorate when
+the invariant penalty activates and approach the uniform 100-class baseline,
+`log(100)`. For VREx, equalizing all domain risks at a bad common value is a
+natural variance-penalty degeneracy.
+
+Do **not** describe removing a division by `1000` as a rebalancing fix. The
+objectives `(R + 1000 P) / 1000` and `R + 1000 P` differ only by a global
+factor, so their relative risk/penalty weighting is identical. With Adam/AdamW
+this may change little; with SGD it mostly resembles a learning-rate change.
+
+Before a full three-seed ImageNet matrix, use the same step-400 checkpoint and
+minibatch to measure separately for IRM and VREx:
+
+```text
+g_R = grad(mean_risk)
+g_P = grad(raw_penalty)
+||g_R||
+||g_P||
+lambda_penalty * ||g_P|| / ||g_R||
+cosine(g_R, g_P)
+```
+
+Run short 50--100-update source-only probes with method-specific coefficients
+such as `lambda_penalty = 1, 10, 30, 100, 300, 1000`. IRM and VREx must not
+automatically share a coefficient: their penalties have different scales and
+gradients. Record per-domain risks, source/clean accuracy, penalty, gradient
+norms/cosine, prediction entropy, and largest-class frequency.
+
+Current chance-level IRM/VREx ImageNet checkpoints are failed optimization
+runs, not meaningful baselines, until this diagnostic and a corrected probe
+pass. The step-400 discontinuity is the primary signal; legacy alpha metadata,
+lambda evaluation, and checkpoint selection are not its primary explanation.
+
 ### Frozen settings summary
 
 The following settings are the intended final comparison protocols. `total`
