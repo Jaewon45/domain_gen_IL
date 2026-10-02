@@ -21,6 +21,7 @@ Treat a configuration change as a new experiment ID. Do not overwrite a failed r
 - [ ] State whether each update uses equal per-domain batches or pooled examples.  In the current CMNIST runner `--batch_size 25000` is passed to a loader for *each active domain*; this is not a pooled batch of 25,000.
 - [ ] Seed Python, NumPy, PyTorch CPU and CUDA.  For deterministic CMNIST reruns pass `--deterministic`; record any remaining nondeterminism.
 - [ ] Fix a final-checkpoint or source-only validation policy. The default `legacy_test_env_best` policy in `CMNIST/train_sandbox.py` is not acceptable for a deployment-absent test domain; use `--checkpoint_selection final` for submission runs unless a predeclared source-only alternative is implemented.
+- [ ] Keep dataset-specific protocol decisions separate. CMNIST's 600-update budget is not automatically an ImageNet-100-C requirement.
 
 ## 2. CMNIST: data and run-level gates
 
@@ -115,9 +116,29 @@ Publish a configuration table with one row per method.  Verify the code path, no
 
 Use **EQRM** for the implemented empirical method and reserve **QRM** for the population framework.  In `CMNIST/algorithms.py`, IRM, VREx, GroupDRO, and other robust methods have explicit ERM pretraining and optimizer-reset paths; check these against the pinned upstream implementation and make their budgets consistent with the reported protocol.
 
+### Dataset-specific optimizer policies
+
+The CMNIST 400/600 schedule is supported by the CMNIST protocol and is not
+evidence that ImageNet-100-C must use 600 total updates. For ImageNet-100-C,
+the current frozen comparison policy is:
+
+```text
+total_updates = 1000 for every retained method
+erm_warmup_updates = 400 where the method uses the adopted warm-up policy
+EQRM alpha = 0.9, frozen across seeds and support conditions
+lambda_eval = 0.9 for IRO and INF-TASK
+```
+
+The ImageNet warm-up, optimizer reset, cosine schedule, and penalty rescaling
+are adopted implementation choices that must be recorded and validated; they
+are not claims that the seminar paper established these choices for ImageNet.
+IRM and VREx do not intrinsically use EQRM's quantile alpha. Their manifests
+must not treat a shared `alpha` field as evidence that they trained at an
+EQRM quantile. EQRM's alpha must be recorded because it changes its objective.
+
 ## 6. ImageNet-100-C: separate release gate
 
-ImageNet-100-C is an external constructed-domain supplement, not evidence to mix with CMNIST. Its active README declares four anchors `gaussian_noise`, `defocus_blur`, `snow`, and `contrast`; uniform four-anchor deployment; four conditions (`balanced`, `long_tail`, `near_missing`, `missing`); seven methods; and seeds `0,1,2`. Do not label pilot files under `results_submit_img100/` as report-grade evidence.
+ImageNet-100-C is an external constructed-domain supplement, not evidence to mix with CMNIST. Its active protocol declares four anchors `gaussian_noise`, `defocus_blur`, `snow`, and `contrast`; uniform four-anchor deployment; four conditions (`balanced`, `long_tail`, `scarce_tail`, `missing`); seven methods; and seeds `0,1,2`. Do not label pilot files under `results_submit_img100/` as report-grade evidence.
 
 Choose exactly one outcome before submission:
 
@@ -130,7 +151,7 @@ For a completed protocol, retain hashes/manifests for the ImageNet-100 revision 
 python -m unittest discover -s IMAGENET100C/tests -v
 ```
 
-IRM, VREx, or EQRM near chance in the Balanced condition is an optimization or protocol alarm, not missing-support evidence. Confirm the 400-step ERM warm-up, optimizer reset, post-warm-up schedule, and method-specific objective diagnostics in `history.jsonl` before interpreting a row.
+IRM, VREx, or EQRM near chance in the Balanced condition is an optimization or protocol alarm, not missing-support evidence. Confirm the adopted 400-step ERM warm-up, optimizer reset, post-warm-up schedule, penalty scaling, EQRM alpha, and method-specific objective diagnostics in `history.jsonl` before interpreting a row. Do not describe these ImageNet choices as paper-mandated corrections without a source/reference-code citation.
 
 ## 7. Final sign-off
 
@@ -138,6 +159,7 @@ IRM, VREx, or EQRM near chance in the Balanced condition is an optimization or p
 - [ ] CMNIST deployment law, support mask, audit loss, alpha grid, CVaR boundary rule, and ranking tolerance are written in the paper/supplement.
 - [ ] The audit epsilon checks pass exactly: `0, 0, 0, 1/4` for the four E3b conditions under the selected four-anchor law.
 - [ ] All method configurations, lambda values, checkpoint rules, seed values, hardware, and software versions are published.
+- [ ] ImageNet uses one common total-update budget across retained methods; no CMNIST 600-update assumption is silently transplanted into ImageNet.
 - [ ] No result combines CMNIST’s 11-grid predictive metric with its four-anchor identification audit, or combines ImageNet pilot artifacts with focused results.
 - [ ] A clean environment can run the unit tests, a deterministic CMNIST smoke run, analysis, table verification, and the audit from the frozen artifacts.
 
