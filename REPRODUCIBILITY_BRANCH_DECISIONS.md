@@ -192,7 +192,7 @@ same 400-step warm-up:
 ERM:                 1000 ERM updates; erm_shared_schedule=False
 IRM / VREx / EQRM:   400 ERM warm-up + 600 method-specific updates
 GroupDRO / IRO / INF-TASK:
-                     1000 method-specific updates; no ERM warm-up
+                     400 ERM warm-up + 600 method-specific updates
 ```
 
 Cosine decay is retained only where the frozen method manifest enables it. The

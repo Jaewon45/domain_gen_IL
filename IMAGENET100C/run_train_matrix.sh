@@ -77,7 +77,7 @@ run_one() {
       method_shared_schedule=0
       ;;
     groupdro|iro|inftask)
-      method_pretrain_iters=0
+      method_pretrain_iters=400
       method_lr_cos_sched=1
       method_shared_schedule=0
       ;;
