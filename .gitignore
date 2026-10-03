@@ -1,0 +1,20 @@
+# Python caches and bytecode
+__pycache__/
+*.py[cod]
+
+# Runtime experiment outputs
+/results/
+/logs/
+/ckpts/
+
+# Generated CMNIST command files and per-job logs
+CMNIST/job_scripts/e3b_tail_support*.txt
+CMNIST/job_scripts/e3b_tail_support*_logs/
+
+# Local legacy/submission artifacts
+/results_submit_img100/
+
+# Model and experiment artifacts
+*.pt
+*.pkl
+*.log

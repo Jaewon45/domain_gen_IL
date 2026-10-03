@@ -41,13 +41,15 @@ def evaluate_source_domains(model, datasets, device, batch_size, workers):
 def main():
     p=argparse.ArgumentParser()
     p.add_argument('--manifest',required=True); p.add_argument('--checkpoint',required=True); p.add_argument('--output-dir',required=True)
-    p.add_argument('--method', choices=('irm', 'vrex'), required=True); p.add_argument('--penalty-weight',type=float,required=True)
+    p.add_argument('--method', choices=('irm', 'vrex', 'groupdro'), required=True); p.add_argument('--penalty-weight',type=float,default=1.0)
+    p.add_argument('--groupdro-eta',type=float,default=None)
     p.add_argument('--steps',type=int,default=100); p.add_argument('--seed',type=int,required=True)
     p.add_argument('--num-lambda-samples',type=int,default=4)
     p.add_argument('--iro-sampler-learning-rate',type=float,default=1e-6)
     p.add_argument('--workers',type=int,default=1); p.add_argument('--batch-size',type=int,default=64)
     args=p.parse_args()
     if args.penalty_weight <= 0 or args.steps <= 0: raise ValueError('penalty-weight and steps must be positive')
+    if args.method == 'groupdro' and (args.groupdro_eta is None or args.groupdro_eta <= 0): raise ValueError('groupdro requires a positive groupdro-eta')
     torch.manual_seed(args.seed); np.random.seed(args.seed); random.seed(args.seed)
     device=torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     m=load_manifest(args.manifest)
@@ -61,13 +63,13 @@ def main():
     batches=InfiniteDomainBatches(datasets,proportional_batch_sizes(m['active_domain_counts'],args.batch_size),args.seed,args.workers,pin_memory=True,persistent_workers=args.workers > 0,prefetch_factor=2)
     base=torch.load(args.checkpoint,map_location='cpu',weights_only=False)
     model=build_model(base['model_mode'], weight_version=base['weight_version']).to(device); model.load_state_dict(base['model_state'])
-    alg=DomainAlgorithm(args.method,model,learning_rate=3e-4,weight_decay=1e-4,groupdro_eta=.1,num_lambda_samples=args.num_lambda_samples,eqrm_alpha=.9,penalty_weight=args.penalty_weight,erm_pretrain_iters=0,lr_cos_sched=False,lr_factor_reduction=1,total_steps=args.steps,seed=args.seed,device=device,iro_sampler_learning_rate=args.iro_sampler_learning_rate)
+    alg=DomainAlgorithm(args.method,model,learning_rate=3e-4,weight_decay=1e-4,groupdro_eta=args.groupdro_eta or .1,num_lambda_samples=args.num_lambda_samples,eqrm_alpha=.9,penalty_weight=args.penalty_weight,erm_pretrain_iters=0,lr_cos_sched=False,lr_factor_reduction=1,total_steps=args.steps,seed=args.seed,device=device,iro_sampler_learning_rate=args.iro_sampler_learning_rate)
     records=[]
     for step in range(1,args.steps+1):
         update=alg.update(batches.next(step)); records.append({'method':args.method,'penalty_weight':args.penalty_weight,'step':step,**update})
     source_rows=evaluate_source_domains(model,validation_datasets,device,args.batch_size,args.workers)
     summary={'source_validation_mean_accuracy':float(np.mean([row['accuracy'] for row in source_rows])), 'source_validation_worst_accuracy':float(np.min([row['accuracy'] for row in source_rows])), 'source_validation_mean_cross_entropy':float(np.mean([row['cross_entropy'] for row in source_rows])), 'source_validation_mean_prediction_entropy':float(np.mean([row['prediction_entropy'] for row in source_rows])), 'source_validation_largest_predicted_class_fraction':float(max(row['largest_predicted_class_fraction'] for row in source_rows)), 'final_raw_penalty':records[-1].get('penalty'), 'final_domain_loss_spread':float(np.ptp(list(records[-1]['environment_losses'].values())))}
-    provenance={'schema_version':1,'kind':'source_only_penalty_calibration','method':args.method,'seed':args.seed,'condition':'balanced','penalty_weight':args.penalty_weight,'num_lambda_samples':args.num_lambda_samples,'iro_sampler_learning_rate':args.iro_sampler_learning_rate,'penalty_anneal_iters':400,'total_updates':400+args.steps,'warmup_updates':400,'main_updates':args.steps,'hyperparameter_selection':'source_validation_balanced','selection_rule':'maximize worst-source validation accuracy; break ties by mean source-validation accuracy; reject numerical instability or degenerate classifiers','checkpoint_selection':'final','checkpoint':str(Path(args.checkpoint).resolve()),'checkpoint_manifest':str(Path(args.manifest).resolve()),'checkpoint_manifest_id':m['manifest_id'],'target_or_clean_imagenet_loaded':False,'source_validation_domain_rows':source_rows,'training_summary':summary}
+    provenance={'schema_version':1,'kind':'source_only_calibration','method':args.method,'seed':args.seed,'condition':'balanced','penalty_weight':args.penalty_weight,'groupdro_eta':args.groupdro_eta,'num_lambda_samples':args.num_lambda_samples,'iro_sampler_learning_rate':args.iro_sampler_learning_rate,'penalty_anneal_iters':400,'total_updates':400+args.steps,'warmup_updates':400,'main_updates':args.steps,'hyperparameter_selection':'source_validation_balanced','selection_rule':'maximize worst-source validation accuracy; break ties by mean source-validation accuracy; reject numerical instability or degenerate classifiers','checkpoint_selection':'final','checkpoint':str(Path(args.checkpoint).resolve()),'checkpoint_manifest':str(Path(args.manifest).resolve()),'checkpoint_manifest_id':m['manifest_id'],'target_or_clean_imagenet_loaded':False,'source_validation_domain_rows':source_rows,'training_summary':summary}
     torch.save({'method':args.method,'penalty_weight':args.penalty_weight,'model_state':copy.deepcopy(model.state_dict()),'provenance':provenance},out/'final.pt')
     with (out/'history.jsonl').open('w') as f:
       for r in records: f.write(json.dumps(r,sort_keys=True)+'\n')

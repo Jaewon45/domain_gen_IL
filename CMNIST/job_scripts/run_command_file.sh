@@ -6,14 +6,16 @@ command_file=""
 gpus="0"
 workers_per_gpu=1
 skip_lines=0
+skip_completed=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --command-file) command_file="$2"; shift 2 ;;
     --gpus) gpus="$2"; shift 2 ;;
     --workers-per-gpu) workers_per_gpu="$2"; shift 2 ;;
     --skip-lines) skip_lines="$2"; shift 2 ;;
+    --skip-completed) skip_completed=1; shift ;;
     -h|--help)
-      echo "Usage: $0 --command-file FILE [--gpus 0,1] [--workers-per-gpu N] [--skip-lines N]"
+      echo "Usage: $0 --command-file FILE [--gpus 0,1] [--workers-per-gpu N] [--skip-lines N] [--skip-completed]"
       exit 0 ;;
     *) echo "Unknown option: $1" >&2; exit 2 ;;
   esac
@@ -36,7 +38,11 @@ for index in "${!commands[@]}"; do
     active=$((active - 1))
   done
   gpu="${gpu_list[$((slot % ${#gpu_list[@]}))]}"
-  ( CUDA_VISIBLE_DEVICES="$gpu" bash -lc "${commands[index]}" ) >"$log_dir/job_$((index + 1)).log" 2>&1 &
+  job_log="$log_dir/job_$((index + 1)).log"
+  if [[ "$skip_completed" -eq 1 && -f "$job_log" ]] && grep -q '^final accuracies:' "$job_log"; then
+    continue
+  fi
+  ( CUDA_VISIBLE_DEVICES="$gpu" bash -lc "${commands[index]}" ) >"$job_log" 2>&1 &
   active=$((active + 1))
   slot=$((slot + 1))
 done

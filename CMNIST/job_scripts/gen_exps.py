@@ -12,7 +12,7 @@ def write_commands(output_path, commands):
 
 def build_base_call(args, lr, batch_size, dropout_p):
     return (
-        f"python train_sandbox.py "
+        f"python CMNIST/train_sandbox.py "
         f"--data_dir {args.data_dir} "
         f"--output_dir {args.output_dir} "
         f"--results_root {args.results_root} "
@@ -379,6 +379,6 @@ if __name__ == "__main__":
     else:
         commands = generate_reproduce_commands(args, base_call, seeds)
 
-    output_path = f"job_scripts/{args.exp_name}.txt"
+    output_path = f"CMNIST/job_scripts/{args.exp_name}.txt"
     write_commands(output_path, commands)
     print(f"Total num experiments = {len(commands)}")
