@@ -380,6 +380,7 @@ with open(os.path.join(results_dir, f"{md5_fname}.jsonl"), 'a') as f:
 
 manifest = {
     "schema_version": 1,
+    "arguments": vars(args),
     "algorithm": args.algorithm.lower(),
     "seed": args.seed,
     "train_envs": [float(p) for p in train_env_ps],
