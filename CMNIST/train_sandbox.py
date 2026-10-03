@@ -60,6 +60,9 @@ parser.add_argument('--lambda_eval', type=float, default=0.9)
 # Directories and saving
 parser.add_argument('--data_dir', type=str, default="../../data/")
 parser.add_argument('--output_dir', type=str, default="../../cmnist_exp")
+parser.add_argument('--results_root', type=str, default=None)
+parser.add_argument('--logs_root', type=str, default=None)
+parser.add_argument('--ckpts_root', type=str, default=None)
 parser.add_argument('--exp_name', type=str, default="reproduce")
 parser.add_argument('--save_ckpts', action='store_true')
 
@@ -127,9 +130,13 @@ train_env_names = [str(p) for p in train_env_ps]
 test_env_names = [str(p) for p in test_env_ps]
 
 # --------  LOGGING --------
-logs_dir = os.path.join(args.output_dir, "logs", args.exp_name)
-results_dir = os.path.join(args.output_dir, "results", args.exp_name)
-ckpt_dir = os.path.join(args.output_dir, "ckpts")
+run_hash = hashlib.md5(str(args).encode('utf-8')).hexdigest()
+results_base = args.results_root or os.path.join(args.output_dir, "results")
+logs_base = args.logs_root or os.path.join(args.output_dir, "logs")
+ckpts_base = args.ckpts_root or os.path.join(args.output_dir, "ckpts")
+logs_dir = os.path.join(logs_base, args.exp_name, run_hash)
+results_dir = os.path.join(results_base, args.exp_name)
+ckpt_dir = os.path.join(ckpts_base, args.exp_name, run_hash)
 os.makedirs(logs_dir, exist_ok=True)
 os.makedirs(results_dir, exist_ok=True)
 os.makedirs(ckpt_dir, exist_ok=True)
@@ -402,7 +409,7 @@ manifest = {
     "final_checkpoint": final_checkpoint_path,
     "result_file": os.path.join(results_dir, f"{md5_fname}.jsonl"),
 }
-manifest_path = os.path.join(args.output_dir, "manifest.json")
+manifest_path = os.path.join(results_dir, f"{md5_fname}.manifest.json")
 with open(manifest_path, 'w') as f:
     json.dump(manifest, f, indent=2, sort_keys=True)
 

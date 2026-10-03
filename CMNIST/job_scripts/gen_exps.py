@@ -15,6 +15,9 @@ def build_base_call(args, lr, batch_size, dropout_p):
         f"python train_sandbox.py "
         f"--data_dir {args.data_dir} "
         f"--output_dir {args.output_dir} "
+        f"--results_root {args.results_root} "
+        f"--logs_root {args.logs_root} "
+        f"--ckpts_root {args.ckpts_root} "
         f"--exp_name {args.exp_name} "
         f"--checkpoint_selection final "
         f"--checkpoint_interval 100 "
@@ -341,9 +344,12 @@ if __name__ == "__main__":
     parser.add_argument(
         '--output_dir',
         type=str,
-        default='/home/ra95tig/results_final',
+        default='results/CMNIST',
         help="Output directory root for experiment artifacts.",
     )
+    parser.add_argument('--results_root', type=str, default='results/CMNIST')
+    parser.add_argument('--logs_root', type=str, default='logs/CMNIST')
+    parser.add_argument('--ckpts_root', type=str, default='ckpts/CMNIST')
     parser.add_argument('--exp_name', type=str, default="reproduce")
     parser.add_argument(
         '--seed_list',

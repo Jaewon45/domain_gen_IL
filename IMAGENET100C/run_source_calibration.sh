@@ -6,7 +6,8 @@ cd "$repo_root"
 python_bin="python"
 manifest=""
 checkpoint=""
-output_root="results/imagenet100c_source_calibration"
+output_root="results/ImgNet/source_calibration"
+logs_root="logs/ImgNet/source_calibration"
 seed=42
 methods="irm,vrex"
 penalties="0.1,0.3,1,3"
@@ -19,6 +20,7 @@ while [[ $# -gt 0 ]]; do
     --manifest) manifest="$2"; shift 2 ;;
     --checkpoint) checkpoint="$2"; shift 2 ;;
     --output-root) output_root="$2"; shift 2 ;;
+    --logs-root) logs_root="$2"; shift 2 ;;
     --seed) seed="$2"; shift 2 ;;
     --methods) methods="$2"; shift 2 ;;
     --penalties) penalties="$2"; shift 2 ;;
@@ -33,17 +35,20 @@ done
 [[ -n "$checkpoint" && -f "$checkpoint" ]] || { echo "--checkpoint is required" >&2; exit 2; }
 [[ "$seed" =~ ^[0-9]+$ ]] || { echo "--seed must be numeric" >&2; exit 2; }
 [[ "$output_root" = /* ]] || output_root="$repo_root/$output_root"
+[[ "$logs_root" = /* ]] || logs_root="$repo_root/$logs_root"
 IFS=',' read -r -a method_list <<< "$methods"
 IFS=',' read -r -a penalty_list <<< "$penalties"
 for method in "${method_list[@]}"; do
   for penalty in "${penalty_list[@]}"; do
     tag="${penalty//./p}"
     output_dir="$output_root/seed${seed}_${method}_penalty${tag}"
+    log_file="$logs_root/seed${seed}_${method}_penalty${tag}.log"
     [[ -e "$output_dir" ]] && { echo "Output exists: $output_dir" >&2; exit 1; }
+    mkdir -p "$(dirname "$log_file")"
     "$python_bin" -m IMAGENET100C.investigate_VRExIRM.probe \
       --manifest "$manifest" --checkpoint "$checkpoint" --output-dir "$output_dir" \
       --method "$method" --penalty-weight "$penalty" --steps "$steps" --seed "$seed" \
       --num-lambda-samples "$num_lambda_samples" \
-      --iro-sampler-learning-rate "$iro_sampler_learning_rate"
+      --iro-sampler-learning-rate "$iro_sampler_learning_rate" >"$log_file" 2>&1
   done
 done

@@ -240,3 +240,47 @@ Do not add these to the reproducibility source branch:
 - generated figures and report tables.
 
 Those artifacts remain useful locally for diagnosis, but the controlled branch should contain source, tests, manifests/configuration, and concise protocol documentation.
+
+## Runtime Storage and Reporting
+
+The reusable runners use this repository-local layout by default:
+
+```text
+results/
+  CMNIST/
+  ImgNet/
+logs/
+  CMNIST/
+  ImgNet/
+ckpts/
+  CMNIST/
+  ImgNet/
+job_scripts/
+  CMNIST/
+  ImgNet/
+```
+
+CMNIST records, logs, and checkpoints are namespaced by experiment and run
+hash. ImageNet records are namespaced by seed, E3b condition, and algorithm.
+Calibration outputs are under `results/ImgNet/source_calibration` and are not
+source-controlled.
+
+The unified reporting entry point is:
+
+```bash
+python scripts/report_e3b.py
+```
+
+It writes raw seed-level CSVs, mean/standard-deviation summaries, LaTeX tables,
+and plots under:
+
+```text
+results/reports/E3b/
+  CMNIST/
+  ImgNet/
+  simulation/
+```
+
+The simulation section inventories deterministic synthetic-identification CSV
+outputs and creates an identification-width plot when the standard
+`identification_width_by_alpha.csv` output is present.
