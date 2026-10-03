@@ -36,8 +36,8 @@ for index in "${!checkpoints[@]}"; do
   output_dir="$run_dir/evaluation_anchor1000"
   log_file="$logs_root/seed${seed}_$(basename "$run_dir")_evaluation.log"
   [[ -f "$output_dir/evaluation.jsonl" ]] && continue
+  [[ -e "$output_dir" ]] && rm -rf "$output_dir"
   gpu="${gpu_list[$((index % ${#gpu_list[@]}))]}"
-  mkdir -p "$output_dir"
   mkdir -p "$(dirname "$log_file")"
   CUDA_VISIBLE_DEVICES="$gpu" "$python_bin" -m IMAGENET100C.evaluate "$checkpoint" \
     --corruption_types gaussian_noise,defocus_blur,snow,contrast \
