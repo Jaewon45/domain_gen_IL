@@ -26,6 +26,20 @@ ba391b9  Record complete CMNIST protocol arguments in manifest
 
 ImageNet100C source, protocol configuration, and tests were added separately in commit `45e1c2c`. GPU-only pipelines, launcher families, checkpoints, logs, generated evaluations, and large artifacts are not part of the reproducibility source branch.
 
+Reusable runners were added separately for the agreed operational workflows:
+
+```text
+CMNIST/job_scripts/run_command_file.sh
+IMAGENET100C/run_train_matrix.sh
+IMAGENET100C/run_evaluate_seed.sh
+IMAGENET100C/run_source_calibration.sh
+```
+
+The source-calibration runner defaults to seed `42` and accepts the manifest,
+checkpoint, methods, penalty grid, output root, and sampler settings through
+CLI options. Calibration checkpoints, histories, manifests, and logs are runtime
+outputs only and must not be committed.
+
 ## Singh Reference Lineage
 
 ### Earlier Singh implementation
