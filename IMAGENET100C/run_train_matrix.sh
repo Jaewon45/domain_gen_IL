@@ -17,7 +17,7 @@ num_lambda_samples=4
 iro_sampler_learning_rate=1e-6
 erm_pretrain_iters=400
 lr_cos_sched=1
-erm_shared_schedule=1
+erm_shared_schedule=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --python) python_bin="$2"; shift 2 ;;
@@ -56,15 +56,35 @@ for seed in "${seed_list[@]}"; do
   done
 done
 run_one() {
-  local gpu="$1" spec="$2" seed condition algorithm output_dir
+  local gpu="$1" spec="$2" seed condition algorithm output_dir log_file
   IFS='|' read -r seed condition algorithm <<< "$spec"
   output_dir="$results_root/seed${seed}/E3b_${condition}_${algorithm}"
   log_file="$logs_root/seed${seed}_E3b_${condition}_${algorithm}.log"
   [[ -f "$output_dir/checkpoints/final.pt" ]] && return 0
   [[ ! -e "$output_dir" ]] || { echo "Incomplete output exists: $output_dir" >&2; return 1; }
-  args=(--seed "$seed" --algorithm "$algorithm" --backbone_mode finetune_last_stage --experiment E3b --condition "$condition" --steps "$steps" --batch_size "$batch_size" --num_lambda_samples "$num_lambda_samples" --iro_sampler_learning_rate "$iro_sampler_learning_rate" --eqrm_alpha 0.9 --penalty_weight 1000 --erm_pretrain_iters "$erm_pretrain_iters" --workers "$workers" --checkpoint_selection final --output_dir "$output_dir")
-  [[ "$lr_cos_sched" -eq 1 ]] && args+=(--lr_cos_sched)
-  [[ "$erm_shared_schedule" -eq 1 ]] && args+=(--erm_shared_schedule)
+  method_pretrain_iters="$erm_pretrain_iters"
+  method_lr_cos_sched="$lr_cos_sched"
+  method_shared_schedule="$erm_shared_schedule"
+  case "$algorithm" in
+    erm)
+      method_pretrain_iters=0
+      method_lr_cos_sched=0
+      method_shared_schedule=0
+      ;;
+    irm|vrex|eqrm)
+      method_pretrain_iters=400
+      method_lr_cos_sched=1
+      method_shared_schedule=0
+      ;;
+    groupdro|iro|inftask)
+      method_pretrain_iters=0
+      method_lr_cos_sched=1
+      method_shared_schedule=0
+      ;;
+  esac
+  args=(--seed "$seed" --algorithm "$algorithm" --backbone_mode finetune_last_stage --experiment E3b --condition "$condition" --steps "$steps" --batch_size "$batch_size" --num_lambda_samples "$num_lambda_samples" --iro_sampler_learning_rate "$iro_sampler_learning_rate" --eqrm_alpha 0.9 --penalty_weight 1000 --erm_pretrain_iters "$method_pretrain_iters" --workers "$workers" --checkpoint_selection final --output_dir "$output_dir")
+  [[ "$method_lr_cos_sched" -eq 1 ]] && args+=(--lr_cos_sched)
+  [[ "$method_shared_schedule" -eq 1 ]] && args+=(--erm_shared_schedule)
   mkdir -p "$(dirname "$log_file")"
   CUDA_VISIBLE_DEVICES="$gpu" "$python_bin" -m IMAGENET100C.train "${args[@]}" >"$log_file" 2>&1
 }

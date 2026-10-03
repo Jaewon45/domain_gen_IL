@@ -185,9 +185,20 @@ The paper specifies adaptive `Q_t` initialized at Beta(1,1), not this particular
 
 ### Cosine schedule
 
-The cosine schedule is a training protocol setting. It is enabled only when the ImageNet manifest/launcher requests it. It is not a property of IRO, INF-TASK, or the deployment law.
+The ImageNet frozen schedule is method-specific; all methods do not receive the
+same 400-step warm-up:
 
-The ERM schedule must be declared explicitly because inherited CMNIST behavior excluded ERM from the robust-method warm-up/cosine path. An ERM shared-schedule control was added separately for ImageNet comparison.
+```text
+ERM:                 1000 ERM updates; erm_shared_schedule=False
+IRM / VREx / EQRM:   400 ERM warm-up + 600 method-specific updates
+GroupDRO / IRO / INF-TASK:
+                     1000 method-specific updates; no ERM warm-up
+```
+
+Cosine decay is retained only where the frozen method manifest enables it. The
+generic ImageNet runner encodes this schedule explicitly per algorithm. The
+ERM shared-schedule control remains available for a separate comparison, but is
+not part of the frozen ImageNet matrix.
 
 ## IRO and INF-TASK Interpretation
 
