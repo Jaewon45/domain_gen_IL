@@ -2,21 +2,32 @@
 """Script for generating commands/jobs."""
 import argparse
 
-if __name__ == "__main__":
-    # Flags
-    parser = argparse.ArgumentParser(description='Generate commands for CMNIST experiments.')
-    parser.add_argument('--data_dir', type=str, required=True, help="Absolute path to data directory.")
-    parser.add_argument('--output_dir', type=str, required=True, help="Absolute path to output directory.")
-    parser.add_argument('--exp_name', type=str, default="reproduce")
-    args = parser.parse_args()
 
-    # Base settings
-    lr = 1e-4
-    batch_size = 25000
-    dropout_p = 0.2
-    seeds = list(range(10))
+def write_commands(output_path, commands):
+    with open(output_path, "w") as output_file:
+        for index, command in enumerate(commands):
+            end = "" if index == len(commands) - 1 else "\n"
+            output_file.write(command + end)
 
-    # Algorithm settings
+
+def build_base_call(args, lr, batch_size, dropout_p):
+    return (
+        f"python train_sandbox.py "
+        f"--data_dir {args.data_dir} "
+        f"--output_dir {args.output_dir} "
+        f"--exp_name {args.exp_name} "
+        f"--checkpoint_selection final "
+        f"--checkpoint_interval 100 "
+        f"--save_ckpts "
+        f"--lr {lr} "
+        f"--batch_size {batch_size} "
+        f"--dropout_p {dropout_p}"
+    )
+
+
+def generate_reproduce_commands(args, base_call, seeds):
+    commands = []
+
     erm_pretr_steps = [0, 400]
     erm_total_steps = [400, 600, 1000]
     penalties = [1000, 5000, 10000, 50000, 100000]
@@ -24,48 +35,32 @@ if __name__ == "__main__":
     group_dro_etas = [0.001, 0.01, 0.1, 0.5, 1.0]
     eqrm_alphas = [-100, -500, -1000, -5000, -10000]
 
-    # Algorithm total steps
     algs_1 = ["groupdro", "sd", "iga"]
-    algs_steps_1 = [(a, 1000) for a in algs_1]              # 1000 for GroupDRO, SD, IGA (1)
+    algs_steps_1 = [(a, 600) for a in algs_1]
 
     algs_2 = ["irm", "vrex", "eqrm"]
-    algs_steps_2 = [(a, 600) for a in algs_1]               # 600 for IRM, VREX, QRM (2)
+    algs_steps_2 = [(a, 600) for a in algs_2]
 
     algs_steps = algs_steps_1 + algs_steps_2
     algs_settings = [(a, pretr_s, total_s) for (a, total_s) in algs_steps for pretr_s in erm_pretr_steps]
 
-    # ERM and Oracle total steps
-    train_envs = ["default", "gray"]                        # ERM and Oracle (grayscale train envs)
+    train_envs = ["default", "gray"]
     erm_settings = [(e, s) for e in train_envs for s in erm_total_steps]
 
-    # Create file of commands and base command
-    output_file = open(f"job_scripts/{args.exp_name}.txt", "w")
-    base_call = (
-        f"python train.py "
-        f"--data_dir {args.data_dir} "
-        f"--output_dir {args.output_dir} "
-        f"--exp_name {args.exp_name} "
-        f"--lr {lr} "
-        f"--batch_size {batch_size} "
-        f"--dropout_p {dropout_p}"
-    )
-
-    # Print command lines to file
     for seed in seeds:
-        # Create job calls for erm and erm_grayscale (oracle)
         for envs, steps in erm_settings:
-            erm_call = (
-                f"{base_call} "
-                f"--seed {seed} "
-                f"--erm_pretrain_iters 0 "
-                f"--algorithm erm "
-                f"--train_envs {envs} "
-                f"--steps {steps}"
+            commands.append(
+                (
+                    f"{base_call} "
+                    f"--seed {seed} "
+                    f"--erm_pretrain_iters 0 "
+                    f"--algorithm erm "
+                    f"--train_envs {envs} "
+                    f"--steps {steps}"
+                ).strip()
             )
-            print(erm_call, file=output_file)
 
-        # Create job calls for all other algs
-        for i, (alg, pretr_steps, total_steps) in enumerate(algs_settings):
+        for alg, pretr_steps, total_steps in algs_settings:
             alg_base_call = (
                 f"{base_call} "
                 f"--seed {seed} "
@@ -87,16 +82,297 @@ if __name__ == "__main__":
                 raise ValueError(f"Invalid algorithm selected {alg}.")
 
             for alg_setting in alg_settings:
-                alg_call = (
-                    f"{alg_base_call} "
-                    f"{alg_setting}"
-                )
-                if seed == seeds[-1] and i == (len(algs_settings) - 1) and alg_setting == alg_settings[-1]:
-                    # last line, no newline "\n"
-                    print(alg_call.strip(), file=output_file, end="")
-                else:
-                    print(alg_call.strip(), file=output_file)
+                commands.append(f"{alg_base_call} {alg_setting}".strip())
 
-    output_file.close()
-    output_file = open(f"job_scripts/{args.exp_name}.txt", "r")
-    print(f'Total num experiments = {len(output_file.readlines())}')
+    return commands
+
+
+def generate_domain_stress_commands(args, base_call, seeds):
+    # Phase intent mapping used across the stress sweep:
+    # E0 reproduction -> baseline reduced reproduction setting
+    # E1 domain_count -> vary number of train environments
+    # E2 sample_size -> vary per-domain sample budget (balanced)
+    # E3 imbalance -> vary per-domain size skew pattern
+    # E4 lambda_eval -> executed post-training via evaluate_lambda_grid.py
+    commands = []
+    algorithms = [
+        ("erm", 600, "--erm_pretrain_iters 0 --save_ckpts"),
+        ("irm", 600, "--erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts"),
+        ("groupdro", 600, "--erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts"),
+        ("iro", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+        ("inftask", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+    ]
+
+    phase1_train_envs = {
+        "2": "0.1,0.2",
+        "4": "0.01,0.12,0.5,0.99",
+        "8": "0.01,0.12,0.0,0.0,0.14,0.5,0.7,0.99",
+    }
+    phase2_sample_budgets = {
+        "balanced": "2000,2000,2000,2000",
+    }
+    phase3_imbalance_budgets = {
+        "balanced": "2000,2000,2000,2000",
+        "long_tail": "5000,2000,800,200",
+        "scarce_tail": "5800,1800,350,50",
+        "missing_tail": "6000,1500,500,0",
+    }
+
+    for seed in seeds:
+        for phase_name, train_envs in phase1_train_envs.items():
+            for algorithm, steps, extra_args in algorithms:
+                commands.append(
+                    (
+                        f"{base_call} "
+                        f"--seed {seed} "
+                        f"--algorithm {algorithm} "
+                        f"--steps {steps} "
+                        f"--train_envs {train_envs} "
+                        f"{extra_args}"
+                    ).strip()
+                )
+
+        fixed_train_envs = phase1_train_envs["4"]
+        for budget_name, train_env_sizes in phase2_sample_budgets.items():
+            for algorithm, steps, extra_args in algorithms:
+                commands.append(
+                    (
+                        f"{base_call} "
+                        f"--seed {seed} "
+                        f"--algorithm {algorithm} "
+                        f"--steps {steps} "
+                        f"--train_envs {fixed_train_envs} "
+                        f"--train_env_sizes {train_env_sizes} "
+                        f"{extra_args}"
+                    ).strip()
+                )
+
+        for imbalance_name, train_env_sizes in phase3_imbalance_budgets.items():
+            for algorithm, steps, extra_args in algorithms:
+                commands.append(
+                    (
+                        f"{base_call} "
+                        f"--seed {seed} "
+                        f"--algorithm {algorithm} "
+                        f"--steps {steps} "
+                        f"--train_envs {fixed_train_envs} "
+                        f"--train_env_sizes {train_env_sizes} "
+                        f"{extra_args}"
+                    ).strip()
+                )
+
+    return commands
+
+
+def generate_domain_count_clean_commands(args, base_call, seeds):
+    """Generate a clean E1 ablation with fixed total source budget."""
+    commands = []
+    algorithms = [
+        ("erm", 600, "--erm_pretrain_iters 0"),
+        ("irm", 600, "--erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts"),
+        ("groupdro", 1000, "--erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts"),
+        ("iro", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+        ("inftask", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+    ]
+    train_envs_by_count = {
+        "2": "0.1,0.9",
+        "4": "0.1,0.2,0.5,0.9",
+        "6": "0.1,0.2,0.3,0.5,0.7,0.9",
+        "8": "0.1,0.2,0.3,0.4,0.6,0.7,0.8,0.9",
+    }
+    fixed_test_envs = "0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0"
+
+    for seed in seeds:
+        for train_envs in train_envs_by_count.values():
+            for algorithm, steps, extra_args in algorithms:
+                commands.append(
+                    (
+                        f"{base_call} "
+                        f"--seed {seed} "
+                        f"--algorithm {algorithm} "
+                        f"--steps {steps} "
+                        f"--train_envs {train_envs} "
+                        f"--test_envs {fixed_test_envs} "
+                        f"{extra_args}"
+                    ).strip()
+                )
+    return commands
+
+
+def generate_imbalance_clean_commands(args, base_call, seeds):
+    """Generate mirrored fixed-total-budget E3 imbalance conditions."""
+    commands = []
+    algorithms = [
+        ("erm", 600, "--erm_pretrain_iters 0"),
+        ("irm", 600, "--erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts"),
+        ("groupdro", 1000, "--erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts"),
+        ("iro", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+        ("inftask", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+    ]
+    source_envs = "0.1,0.2,0.5,0.9"
+    test_envs = "0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0"
+    conditions = {
+        "balanced": "2000,2000,2000,2000",
+        "long_tail": "5000,2000,800,200",
+        "scarce_tail": "5800,1800,350,50",
+        "missing_tail": "6000,1500,500,0",
+    }
+    for seed in seeds:
+        for condition, sizes in conditions.items():
+            for algorithm, steps, extra_args in algorithms:
+                commands.append(
+                    (
+                        f"{base_call} --seed {seed} --algorithm {algorithm} --steps {steps} "
+                        f"--train_envs {source_envs} --train_env_sizes {sizes} "
+                        f"--test_envs {test_envs} --exp_name {args.exp_name} {extra_args}"
+                    ).strip()
+                )
+    return commands
+
+
+def parse_seed_list(seed_list_arg):
+    if not seed_list_arg:
+        return list(range(5))
+    return [int(seed.strip()) for seed in seed_list_arg.split(",") if seed.strip()]
+
+
+def _head_tail_envs(train_env_values, train_env_sizes):
+    pairs = list(zip(train_env_values, train_env_sizes))
+    min_count = min(train_env_sizes)
+    max_count = max(train_env_sizes)
+    tail_candidates = [env for env, count in pairs if count == min_count]
+    head_candidates = [env for env, count in pairs if count == max_count]
+    tail_env = max(tail_candidates)
+    head_env = min(head_candidates)
+    return head_env, tail_env
+
+
+def generate_tail_support_commands(args, base_call, seeds):
+    commands = []
+    algorithms = [
+        ("erm", 600, "--erm_pretrain_iters 0"),
+        ("irm", 600, "--erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts"),
+        ("groupdro", 1000, "--erm_pretrain_iters 400 --lr_cos_sched --groupdro_eta 0.1 --save_ckpts"),
+        ("iro", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+        ("inftask", 600, "--erm_pretrain_iters 400 --lr_cos_sched --save_ckpts"),
+    ]
+
+    source_envs = [0.1, 0.2, 0.5, 0.9]
+    source_envs_text = ",".join(str(env) for env in source_envs)
+    fixed_test_envs = "0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0"
+
+    conditions = {
+        "balanced": [2000, 2000, 2000, 2000],
+        "long_tail": [5000, 2000, 800, 200],
+        "scarce_tail": [5800, 1800, 350, 50],
+        "missing_tail": [6000, 1500, 500, 0],
+    }
+
+    for seed in seeds:
+        for condition_name, train_env_sizes in conditions.items():
+            head_env, tail_env = _head_tail_envs(source_envs, train_env_sizes)
+            sizes_text = ",".join(str(size) for size in train_env_sizes)
+            for algorithm, steps, extra_args in algorithms:
+                commands.append(
+                    (
+                        f"{base_call} "
+                        f"--seed {seed} "
+                        f"--algorithm {algorithm} "
+                        f"--steps {steps} "
+                        f"--train_envs {source_envs_text} "
+                        f"--train_env_sizes {sizes_text} "
+                        f"--test_envs {fixed_test_envs} "
+                        f"--tail_support_condition {condition_name} "
+                        f"--tail_support_source_envs {source_envs_text} "
+                        f"--tail_support_tail_env {tail_env} "
+                        f"--tail_support_head_env {head_env} "
+                        f"{extra_args}"
+                    ).strip()
+                )
+
+    return commands
+
+
+def generate_tail_support_eqrm_vrex_commands(args, base_call, seeds):
+    """Generate the pre-registered missing-method E3b replication.
+
+    These settings match the native E3b optimizer schedule: 400 ERM warm-up
+    steps, cosine decay, and 600 total steps. VREx uses the existing E3b
+    penalty scale of 1000. EQRM optimizes the 0.9 loss quantile, aligned with
+    the report's primary tail-risk level; the value is a probability because
+    the native Nonparametric.icdf implementation expects q in [0, 1].
+    """
+    commands = []
+    algorithms = [
+        ("vrex", 600, "--erm_pretrain_iters 400 --lr_cos_sched --penalty_weight 1000 --save_ckpts"),
+        ("eqrm", 600, "--erm_pretrain_iters 400 --lr_cos_sched --alpha 0.9 --save_ckpts"),
+    ]
+    source_envs = [0.1, 0.2, 0.5, 0.9]
+    source_envs_text = ",".join(str(env) for env in source_envs)
+    fixed_test_envs = "0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0"
+    conditions = {
+        "balanced": [2000, 2000, 2000, 2000],
+        "long_tail": [5000, 2000, 800, 200],
+        "scarce_tail": [5800, 1800, 350, 50],
+        "missing_tail": [6000, 1500, 500, 0],
+    }
+
+    for seed in seeds:
+        for condition_name, train_env_sizes in conditions.items():
+            head_env, tail_env = _head_tail_envs(source_envs, train_env_sizes)
+            sizes_text = ",".join(str(size) for size in train_env_sizes)
+            for algorithm, steps, extra_args in algorithms:
+                commands.append(
+                    (
+                        f"{base_call} --seed {seed} --algorithm {algorithm} --steps {steps} "
+                        f"--train_envs {source_envs_text} --train_env_sizes {sizes_text} "
+                        f"--test_envs {fixed_test_envs} --tail_support_condition {condition_name} "
+                        f"--tail_support_source_envs {source_envs_text} "
+                        f"--tail_support_tail_env {tail_env} --tail_support_head_env {head_env} "
+                        f"{extra_args}"
+                    ).strip()
+                )
+    return commands
+
+if __name__ == "__main__":
+    # Flags
+    parser = argparse.ArgumentParser(description='Generate commands for CMNIST experiments.')
+    parser.add_argument('--data_dir', type=str, required=True, help="Absolute path to data directory.")
+    parser.add_argument(
+        '--output_dir',
+        type=str,
+        default='/home/ra95tig/results_final',
+        help="Output directory root for experiment artifacts.",
+    )
+    parser.add_argument('--exp_name', type=str, default="reproduce")
+    parser.add_argument(
+        '--seed_list',
+        type=str,
+        default='0,1,2,3,4',
+        help='Comma-separated seed list (default: 0,1,2,3,4).',
+    )
+    args = parser.parse_args()
+
+    # Base settings
+    lr = 1e-4
+    batch_size = 25000
+    dropout_p = 0.2
+    seeds = parse_seed_list(args.seed_list)
+    base_call = build_base_call(args, lr, batch_size, dropout_p)
+
+    if args.exp_name == "domain_stress":
+        commands = generate_domain_stress_commands(args, base_call, seeds)
+    elif args.exp_name == "domain_count_clean":
+        commands = generate_domain_count_clean_commands(args, base_call, seeds)
+    elif args.exp_name == "imbalance_clean":
+        commands = generate_imbalance_clean_commands(args, base_call, seeds)
+    elif args.exp_name == "e3b_tail_support_eqrm_vrex":
+        commands = generate_tail_support_eqrm_vrex_commands(args, base_call, seeds)
+    elif "tail_support" in args.exp_name:
+        commands = generate_tail_support_commands(args, base_call, seeds)
+    else:
+        commands = generate_reproduce_commands(args, base_call, seeds)
+
+    output_path = f"job_scripts/{args.exp_name}.txt"
+    write_commands(output_path, commands)
+    print(f"Total num experiments = {len(commands)}")
