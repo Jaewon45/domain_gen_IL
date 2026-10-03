@@ -1,0 +1,295 @@
+import argparse
+import os
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from collect_results import load_records
+
+
+ALGORITHM_DISPLAY_NAMES = {
+    "erm": "ERM",
+    "irm": "IRM",
+    "groupdro": "GroupDRO",
+    "iro": "IRO",
+    "inftask": "InfTask",
+    "vrex": "VREx",
+    "iga": "IGA",
+    "sd": "SD",
+    "eqrm": "EQRM",
+}
+
+
+BRIGHT_BAR_COLORS = [
+    "#4C78A8",
+    "#F58518",
+    "#54A24B",
+    "#E45756",
+    "#72B7B2",
+    "#EECA3B",
+    "#B279A2",
+    "#FF9DA6",
+]
+
+
+def apply_plot_style():
+    # Use significantly larger defaults so exported figures are report-ready.
+    plt.rcParams.update({
+        "font.size": 22,
+        "axes.titlesize": 24,
+        "axes.labelsize": 22,
+        "xtick.labelsize": 18,
+        "ytick.labelsize": 18,
+        "legend.fontsize": 18,
+        "figure.titlesize": 24,
+    })
+
+
+def format_algorithm_name(name):
+    key = str(name).strip().lower()
+    return ALGORITHM_DISPLAY_NAMES.get(key, reportable_text(name))
+
+
+def reportable_text(value):
+    text = str(value).replace("_", " ").strip()
+    token_map = {
+        "acc": "accuracy",
+        "avg": "average",
+        "lambda": "Lambda",
+    }
+    words = []
+    for token in text.split():
+        lower = token.lower()
+        if lower in token_map:
+            words.append(token_map[lower])
+            continue
+        if lower in ALGORITHM_DISPLAY_NAMES:
+            words.append(ALGORITHM_DISPLAY_NAMES[lower])
+            continue
+        words.append(token.capitalize())
+    return " ".join(words)
+
+
+def format_tick_value(value):
+    if isinstance(value, str):
+        return reportable_text(value)
+    if isinstance(value, float) and value.is_integer():
+        return str(int(value))
+    return str(value)
+
+
+def build_frame(results_dir, algorithms=None):
+    records = load_records(results_dir)
+    frame = pd.DataFrame.from_records(records)
+    if algorithms is not None:
+        frame = frame[frame["algorithm"].isin(algorithms)]
+    return frame
+
+
+def ensure_output_dir(output_dir):
+    os.makedirs(output_dir, exist_ok=True)
+
+
+def env_metric_columns(frame, suffix):
+    env_columns = []
+    for column in frame.columns:
+        if not column.endswith(suffix):
+            continue
+        prefix = column.split("_")[0]
+        try:
+            float(prefix)
+        except ValueError:
+            continue
+        env_columns.append(column)
+    return sorted(env_columns, key=lambda value: float(value.split("_")[0]))
+
+
+def plot_e0_accuracy(frame, output_dir):
+    phase_frame = frame[frame["phase"].isin(["reproduction", "validation_smoke"])]
+    if phase_frame.empty:
+        return None
+
+    acc_columns = env_metric_columns(phase_frame, "_acc_best")
+    if not acc_columns:
+        return None
+
+    plt.figure(figsize=(8, 5))
+    for algorithm, algorithm_frame in phase_frame.groupby("algorithm"):
+        row = algorithm_frame.iloc[0]
+        xs = [float(column.split("_")[0]) for column in acc_columns]
+        ys = [row[column] for column in acc_columns]
+        plt.plot(xs, ys, marker="o", label=format_algorithm_name(algorithm))
+
+    plt.xlabel("Test environment e")
+    plt.ylabel("Accuracy")
+    plt.title("E0 / Validation accuracy across test environments")
+    plt.legend()
+    plt.tight_layout()
+    output_path = os.path.join(output_dir, "e0_accuracy_by_test_env.png")
+    plt.savefig(output_path, dpi=200)
+    plt.close()
+    return output_path
+
+
+def plot_grouped_metric(frame, phase_name, x_column, y_column, output_name, title, xlabel, output_dir):
+    phase_frame = frame[frame["phase"] == phase_name].copy()
+    if phase_frame.empty or x_column not in phase_frame.columns or y_column not in phase_frame.columns:
+        return None
+
+    phase_frame = phase_frame.dropna(subset=[x_column, y_column])
+    if phase_frame.empty:
+        return None
+
+    grouped = (phase_frame.groupby([x_column, "algorithm"])[y_column]
+               .mean()
+               .reset_index())
+    pivot = grouped.pivot(index=x_column, columns="algorithm", values=y_column).sort_index()
+    if pivot.empty:
+        return None
+
+    pivot.columns = [format_algorithm_name(column) for column in pivot.columns]
+
+    bar_colors = BRIGHT_BAR_COLORS[:len(pivot.columns)]
+    ax = pivot.plot(kind="bar", figsize=(11, 6), color=bar_colors)
+    ax.set_title(reportable_text(title))
+    ax.set_xlabel(reportable_text(xlabel))
+    ax.set_ylabel(reportable_text(y_column))
+    ax.set_xticklabels([format_tick_value(value) for value in pivot.index], rotation=0, ha="center")
+    if phase_name == "domain_count":
+        ax.legend(loc="lower right")
+    elif phase_name == "imbalance":
+        ax.legend(loc="lower left")
+    else:
+        ax.legend(loc="best")
+    plt.tight_layout()
+    output_path = os.path.join(output_dir, output_name)
+    plt.savefig(output_path, dpi=200)
+    plt.close()
+    return output_path
+
+
+def plot_imbalance_environment_curves(frame, output_dir):
+    phase_frame = frame[frame["phase"] == "imbalance"].copy()
+    if phase_frame.empty:
+        return None
+    acc_columns = env_metric_columns(phase_frame, "_acc_best")
+    if not acc_columns:
+        return None
+    phase_frame["condition"] = phase_frame["train_env_sizes"].astype(str)
+    selected_conditions = [
+        "[2000, 2000, 2000, 2000]",
+        "[1000, 1000, 1000, 5000]",
+        "[5000, 1000, 1000, 1000]",
+    ]
+    phase_frame = phase_frame[phase_frame["condition"].isin(selected_conditions)]
+    if phase_frame.empty:
+        return None
+
+    figure, axes = plt.subplots(1, 3, figsize=(18, 5), sharey=True)
+    x_values = [float(column.split("_")[0]) for column in acc_columns]
+    for axis, condition in zip(axes, selected_conditions):
+        condition_frame = phase_frame[phase_frame["condition"] == condition]
+        for algorithm, algorithm_frame in condition_frame.groupby("algorithm"):
+            values = algorithm_frame[acc_columns].mean(axis=0).to_numpy()
+            axis.plot(x_values, values, marker="o", label=format_algorithm_name(algorithm))
+        axis.set_title(condition.replace("[", "").replace("]", ""))
+        axis.set_xlabel("Test environment e")
+        axis.grid(alpha=0.25)
+    axes[0].set_ylabel("Accuracy")
+    axes[-1].legend(loc="best", fontsize=10)
+    figure.suptitle("E3 fixed-budget imbalance: accuracy across test environments")
+    figure.tight_layout()
+    output_path = os.path.join(output_dir, "e3_imbalance_accuracy_by_test_env.png")
+    figure.savefig(output_path, dpi=200)
+    plt.close(figure)
+    return output_path
+
+
+def plot_lambda_risk(lambda_results_dir, output_dir):
+    lambda_records = load_records(lambda_results_dir)
+    frame = pd.DataFrame.from_records(lambda_records)
+    if frame.empty or "lambda_eval" not in frame.columns or "aggregated_risk" not in frame.columns:
+        return None
+
+    plt.figure(figsize=(8, 5))
+    for algorithm, algorithm_frame in frame.groupby("algorithm"):
+        grouped = algorithm_frame.groupby("lambda_eval")["aggregated_risk"].mean().reset_index().sort_values("lambda_eval")
+        plt.plot(
+            grouped["lambda_eval"],
+            grouped["aggregated_risk"],
+            marker="o",
+            label=format_algorithm_name(algorithm),
+        )
+
+    plt.xlabel("Lambda")
+    plt.ylabel("Aggregated risk")
+    plt.title("E4 aggregated risk over lambda")
+    plt.legend()
+    plt.tight_layout()
+    output_path = os.path.join(output_dir, "e4_lambda_aggregated_risk.png")
+    plt.savefig(output_path, dpi=200)
+    plt.close()
+    return output_path
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Plot CMNIST stress-test summaries.")
+    parser.add_argument("results_dir")
+    parser.add_argument("--output_dir", default="plots")
+    parser.add_argument("--lambda_results_dir", default=None)
+    parser.add_argument("--algorithms", nargs="+", default=None)
+    parser.add_argument("--metric", default="worst_domain_acc_best")
+    args = parser.parse_args()
+
+    apply_plot_style()
+    ensure_output_dir(args.output_dir)
+    frame = build_frame(args.results_dir, args.algorithms)
+
+    generated = []
+    for output_path in [
+        plot_e0_accuracy(frame, args.output_dir),
+        plot_grouped_metric(
+            frame,
+            "domain_count",
+            "n_train_domains",
+            args.metric,
+            "e1_domain_count_worst_domain_accuracy.png",
+            "E1 worst-domain accuracy by number of training domains",
+            "Number of training domains",
+            args.output_dir,
+        ),
+        plot_grouped_metric(
+            frame,
+            "sample_size",
+            "sample_size_per_domain",
+            args.metric,
+            "e2_sample_size_worst_domain_accuracy.png",
+            "E2 worst-domain accuracy by samples per domain",
+            "Samples per domain",
+            args.output_dir,
+        ),
+        plot_grouped_metric(
+            frame,
+            "imbalance",
+            "imbalance_type",
+            args.metric,
+            "e3_imbalance_worst_domain_accuracy.png",
+            "E3 worst-domain accuracy by imbalance condition",
+            "Imbalance condition",
+            args.output_dir,
+        ),
+        plot_imbalance_environment_curves(frame, args.output_dir),
+    ]:
+        if output_path is not None:
+            generated.append(output_path)
+
+    if args.lambda_results_dir is not None:
+        lambda_output = plot_lambda_risk(args.lambda_results_dir, args.output_dir)
+        if lambda_output is not None:
+            generated.append(lambda_output)
+
+    if generated:
+        for path in generated:
+            print(f"Generated {path}")
+    else:
+        print("No plots were generated from the provided inputs.")
