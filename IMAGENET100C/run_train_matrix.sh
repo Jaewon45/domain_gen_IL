@@ -21,6 +21,8 @@ groupdro_eta=0.1
 erm_pretrain_iters=400
 lr_cos_sched=1
 erm_shared_schedule=0
+workers_per_gpu=1
+reset_incomplete=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --python) python_bin="$2"; shift 2 ;;
@@ -43,6 +45,8 @@ while [[ $# -gt 0 ]]; do
     --no-lr-cos-sched) lr_cos_sched=0; shift ;;
     --erm-shared-schedule) erm_shared_schedule=1; shift ;;
     --no-erm-shared-schedule) erm_shared_schedule=0; shift ;;
+    --workers-per-gpu) workers_per_gpu="$2"; shift 2 ;;
+    --reset-incomplete) reset_incomplete=1; shift ;;
     -h|--help)
       sed -n '2,18p' "$0"; exit 0 ;;
     *) echo "Unknown option: $1" >&2; exit 2 ;;
@@ -50,6 +54,7 @@ while [[ $# -gt 0 ]]; do
 done
 [[ "$results_root" = /* ]] || results_root="$repo_root/$results_root"
 [[ "$logs_root" = /* ]] || logs_root="$repo_root/$logs_root"
+[[ "$workers_per_gpu" =~ ^[1-9][0-9]*$ ]] || { echo "Invalid --workers-per-gpu" >&2; exit 2; }
 mkdir -p "$results_root"
 IFS=',' read -r -a gpu_list <<< "$gpus"
 IFS=',' read -r -a seed_list <<< "$seeds"
@@ -67,7 +72,14 @@ run_one() {
   output_dir="$results_root/seed${seed}/E3b_${condition}_${algorithm}"
   log_file="$logs_root/seed${seed}_E3b_${condition}_${algorithm}.log"
   [[ -f "$output_dir/checkpoints/final.pt" ]] && return 0
-  [[ ! -e "$output_dir" ]] || { echo "Incomplete output exists: $output_dir" >&2; return 1; }
+  if [[ -e "$output_dir" ]]; then
+    if [[ "$reset_incomplete" -eq 1 ]]; then
+      rm -rf "$output_dir"
+    else
+      echo "Incomplete output exists: $output_dir" >&2
+      return 1
+    fi
+  fi
   method_pretrain_iters="$erm_pretrain_iters"
   method_lr_cos_sched="$lr_cos_sched"
   method_shared_schedule="$erm_shared_schedule"
@@ -101,7 +113,7 @@ active=0
 next_run=0
 failed=0
 while [[ "$next_run" -lt "${#runs[@]}" || "$active" -gt 0 ]]; do
-  while [[ "$next_run" -lt "${#runs[@]}" && "$active" -lt $(( ${#gpu_list[@]} )) ]]; do
+  while [[ "$next_run" -lt "${#runs[@]}" && "$active" -lt $(( ${#gpu_list[@]} * workers_per_gpu )) ]]; do
     gpu="${gpu_list[$((next_run % ${#gpu_list[@]}))]}"
     run_one "$gpu" "${runs[next_run]}" &
     active=$((active + 1)); next_run=$((next_run + 1))
