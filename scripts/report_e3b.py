@@ -16,6 +16,11 @@ def write_summary(raw: pd.DataFrame, output: Path, dataset: str) -> None:
     raw.to_csv(output / "raw_results.csv", index=False)
     if raw.empty:
         return
+    condition_order = ["balanced", "long_tail", "scarce_tail", "missing_tail"]
+    if "condition" in raw.columns:
+        raw["condition"] = pd.Categorical(raw["condition"], categories=condition_order, ordered=True)
+        raw = raw.sort_values(["condition", "algorithm", "seed"], na_position="last")
+        raw.to_csv(output / "raw_results.csv", index=False)
     group_columns = [column for column in ("algorithm", "condition") if column in raw]
     metric_columns = [column for column in ("mean_accuracy", "worst_accuracy", "clean_accuracy") if column in raw]
     summary = raw.groupby(group_columns, dropna=False)[metric_columns].agg(["mean", "std", "count"]).reset_index()
