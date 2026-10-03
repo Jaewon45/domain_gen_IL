@@ -24,7 +24,7 @@ The accepted CMNIST commits are:
 ba391b9  Record complete CMNIST protocol arguments in manifest
 ```
 
-ImageNet100C source, protocol configuration, and tests remain a separate pending extension. Checkpoints, logs, generated evaluations, and large artifacts are not part of the reproducibility source branch.
+ImageNet100C source, protocol configuration, and tests were added separately in commit `45e1c2c`. GPU-only pipelines, launcher families, checkpoints, logs, generated evaluations, and large artifacts are not part of the reproducibility source branch.
 
 ## Singh Reference Lineage
 
@@ -150,7 +150,7 @@ Keeping 4 is reasonable if the protocol:
 
 The more notable inconsistency is within the later CMNIST lineage itself: IRO uses 10 while INF-TASK uses 5. CMNIST's 5 versus ImageNet-100-C's 4 is a minor, defensible port-level compute choice.
 
-The final ImageNet protocol should record:
+The ImageNet protocol now records:
 
 ```text
 num_lambda_samples = 4
@@ -204,9 +204,9 @@ The implementation should log for IRO and INF-TASK:
 
 These logging changes do not alter the training objective.
 
-## Required ImageNet Tests
+## Completed ImageNet Tests
 
-The ImageNet test extension should prove:
+The ImageNet test extension proves:
 
 1. IRO's sampler update uses the full parameter-gradient tuple, not only the first parameter gradient.
 2. A toy IRO case can depart from Beta(1,1) when given an intentionally larger test learning rate.
