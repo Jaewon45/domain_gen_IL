@@ -171,12 +171,13 @@ class VREx(ERM):
         # VREx objective
         all_x = torch.cat([x for x, y in minibatches])
         all_logits = self.network(all_x)
-        losses = torch.zeros(len(minibatches))
+        losses = []
         all_logits_idx = 0
         for i, (x, y) in enumerate(minibatches):
             logits = all_logits[all_logits_idx:all_logits_idx + x.shape[0]]
             all_logits_idx += x.shape[0]
-            losses[i] = self.loss_fn(logits, y)
+            losses.append(self.loss_fn(logits, y))
+        losses = torch.stack(losses)
 
         mean = losses.mean()
         penalty = ((losses - mean) ** 2).mean()
@@ -238,7 +239,11 @@ class GroupDRO(ERM):
         self.optimizer.step()
 
         self.update_count += 1
-        return {'loss': loss.item()}
+        return {
+            'loss': loss.item(),
+            'group_losses': losses.detach().cpu().tolist(),
+            'group_weights': self.q.detach().cpu().tolist(),
+        }
 
 
 class IGA(ERM):
