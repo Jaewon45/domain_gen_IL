@@ -80,7 +80,7 @@ def imagenet_records(root: Path) -> pd.DataFrame:
             rows.append({
                 "dataset": "ImageNet100C",
                 "algorithm": record.get("algorithm"),
-                "condition": record.get("condition"),
+                "condition": "missing_tail" if record.get("condition") == "missing" else record.get("condition"),
                 "seed": record.get("seed"),
                 "mean_accuracy": 1.0 - float(record["mean_domain_error"]),
                 "worst_accuracy": 1.0 - float(record["worst_domain_error"]),
