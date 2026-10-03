@@ -4,6 +4,7 @@ import glob
 import pandas as pd
 import os
 import ast
+import math
 from functools import partial
 
 
@@ -62,15 +63,166 @@ def filter_df_dict_column(row, dict_column_name, filter_dict):
     return True
 
 
-def build_table(dirname, test_env_ms=0.9, test_envs_print=(), ms_type="best",
-                algs=None, arg_values=None, latex=False, standard_error=False):
-    records = []
-    for fname in glob.glob(os.path.join(dirname, "*.jsonl")):
-        with open(fname, "r") as f:
-            if os.path.getsize(fname) != 0:
-                records.append(f.readline().strip())
+def _as_list(value):
+    if value is None:
+        return None
+    if isinstance(value, float) and math.isnan(value):
+        return None
+    if isinstance(value, tuple):
+        return list(value)
+    if isinstance(value, list):
+        return value
+    return [value]
 
-    df = pd.read_json("\n".join(records), lines=True)
+
+def _normalize_env_sizes(args_dict):
+    if "train_env_sizes_parsed" in args_dict:
+        value = args_dict["train_env_sizes_parsed"]
+        if value is None:
+            return None
+        return [int(size) for size in value]
+
+    raw_sizes = args_dict.get("train_env_sizes", "")
+    if raw_sizes in [None, ""]:
+        return None
+    return [int(size) for size in str(raw_sizes).split(",")]
+
+
+def _infer_phase(exp_name, train_env_sizes):
+    exp_name = (exp_name or "").lower()
+    if any(token in exp_name for token in ["e3b", "tail_support", "e2_tail_support"]):
+        return "tail_support"
+    if "smoke_domain_stress" in exp_name:
+        return "validation_smoke"
+    if any(token in exp_name for token in ["e0", "repro"]):
+        return "reproduction"
+    if any(token in exp_name for token in ["e1", "phase1", "domain_count", "domains"]):
+        return "domain_count"
+    if any(token in exp_name for token in ["e2", "phase2", "sample_size", "balanced_sizes"]):
+        return "sample_size"
+    if any(token in exp_name for token in ["e3", "phase3", "imbalance"]):
+        return "imbalance"
+    if any(token in exp_name for token in ["e4", "lambda"]):
+        return "lambda_eval"
+    # Fallback for generic experiment names (e.g., "domain_stress"):
+    # - no explicit sizes -> E1 domain_count
+    # - uniform sizes: distinguish E2 (sample_size) vs E3 balanced (imbalance)
+    #   E2 uses 4000 or 8000 (in addition to 2000)
+    #   E3 balanced uses only 2000
+    # - non-uniform sizes -> E3 imbalance (mild/strong)
+    if train_env_sizes is None:
+        return "domain_count"
+    if len(set(train_env_sizes)) == 1:
+        # Uniform sizes: E2 if value is 4000+ (indicates sample_size sweep), 
+        # else E3 (balanced variant of imbalance)
+        size_val = train_env_sizes[0]
+        if size_val >= 4000:
+            return "sample_size"
+        return "imbalance"
+    return "imbalance"
+
+
+def _infer_sample_size_per_domain(train_env_sizes):
+    if not train_env_sizes:
+        return None
+    if len(set(train_env_sizes)) == 1:
+        return int(train_env_sizes[0])
+    return None
+
+
+def _infer_imbalance_type(train_env_sizes):
+    if not train_env_sizes:
+        return None
+    unique_sizes = sorted(set(train_env_sizes))
+    if len(unique_sizes) == 1:
+        return "balanced"
+
+    if len(train_env_sizes) == 4:
+        if train_env_sizes == [3500, 1500, 1500, 1500]:
+            return "first_heavy_mild"
+        if train_env_sizes == [1500, 1500, 1500, 3500]:
+            return "last_heavy_mild"
+        if train_env_sizes == [5000, 1000, 1000, 1000]:
+            return "first_heavy_strong"
+        if train_env_sizes == [1000, 1000, 1000, 5000]:
+            return "last_heavy_strong"
+
+    min_size = min(train_env_sizes)
+    max_size = max(train_env_sizes)
+    if min_size <= 0:
+        return "custom_imbalance"
+
+    ratio = max_size / min_size
+    # Current stress grid is severity-based and last-domain heavy:
+    # mild_imbalance: 2x (e.g., 2000,2000,2000,4000)
+    # strong_imbalance: 5x (e.g., 2000,2000,2000,10000)
+    if math.isclose(ratio, 2.0):
+        return "mild_imbalance"
+    if math.isclose(ratio, 5.0):
+        return "strong_imbalance"
+    return "custom_imbalance"
+
+
+def _derive_accuracy_summaries(record):
+    for ms_type in ["best", "final"]:
+        acc_keys = [key for key in record.keys() if key.endswith(f"_acc_{ms_type}")]
+        if not acc_keys:
+            continue
+        acc_values = [record[key] for key in acc_keys]
+        record[f"avg_domain_acc_{ms_type}"] = sum(acc_values) / len(acc_values)
+        record[f"worst_domain_acc_{ms_type}"] = min(acc_values)
+        record[f"best_domain_acc_{ms_type}"] = max(acc_values)
+
+
+def enrich_record(record):
+    args_dict = dict(record.get("args", {}))
+    train_env_ps = _as_list(args_dict.get("train_env_ps"))
+    train_env_sizes = _normalize_env_sizes(args_dict)
+    exp_name = args_dict.get("exp_name", "")
+
+    record["exp_name"] = exp_name
+    record["train_envs"] = train_env_ps
+    record["train_env_sizes"] = train_env_sizes
+    record["n_train_domains"] = len(train_env_ps) if train_env_ps is not None else None
+    record["sample_size_per_domain"] = _infer_sample_size_per_domain(train_env_sizes)
+    record["imbalance_type"] = _infer_imbalance_type(train_env_sizes)
+    record["phase"] = _infer_phase(exp_name, train_env_sizes)
+    record["tail_support_condition"] = record.get("tail_support_condition") or args_dict.get("tail_support_condition")
+
+    _derive_accuracy_summaries(record)
+    return record
+
+
+def load_records(dirname):
+    records = []
+    pattern = os.path.join(dirname, "**", "*.jsonl")
+    for fname in glob.glob(pattern, recursive=True):
+        if os.path.getsize(fname) == 0:
+            continue
+        with open(fname, "r") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                records.append(enrich_record(json.loads(line)))
+    return records
+
+
+def print_grouped_metric(df, group_by, metric):
+    if metric not in df.columns:
+        raise ValueError(f"Metric '{metric}' not found. Available columns include: {sorted(df.columns)}")
+
+    grouped = (df.groupby(group_by)[metric]
+                 .agg(["mean", "std", "count"])
+                 .reset_index()
+                 .sort_values(group_by))
+    print(grouped.to_string(index=False))
+
+
+def build_table(dirname, test_env_ms=0.9, test_envs_print=(), ms_type="final",
+                algs=None, arg_values=None, latex=False, standard_error=False):
+    records = load_records(dirname)
+    df = pd.DataFrame.from_records(records)
     if algs is not None:
         df = df.query(f"algorithm in {algs}")
     if arg_values is not None:
@@ -121,6 +273,8 @@ if __name__ == "__main__":
     parser.add_argument("dirname")
     parser.add_argument("--latex", action="store_true")
     parser.add_argument('--algorithms', nargs='+', default=None)
+    parser.add_argument('--group_by', nargs='+', default=None)
+    parser.add_argument('--metric', type=str, default="worst_domain_acc_final")
     parser.add_argument('--arg_values', type=str, default=None)
     parser.add_argument('--model_selection_env', type=float, default=0.9)
     parser.add_argument('--model_selection_type', type=str, default="final", choices=["best", "final"])
@@ -139,9 +293,20 @@ if __name__ == "__main__":
     else:
         test_envs_print = [float(p) for p in args.test_envs_print.split(",")]
 
-    table_data, table_headers, table_hparams = build_table(args.dirname, args.model_selection_env, test_envs_print,
-                                                           args.model_selection_type, args.algorithms, args.arg_values,
-                                                           args.latex)
+    if args.group_by is not None:
+        records = load_records(args.dirname)
+        df = pd.DataFrame.from_records(records)
+        if args.algorithms is not None:
+            df = df.query(f"algorithm in {args.algorithms}")
+        if args.arg_values is not None:
+            filter_fn = partial(filter_df_dict_column, dict_column_name='args', filter_dict=args.arg_values)
+            mask = df.apply(filter_fn, axis=1)
+            df = df[mask]
+        print_grouped_metric(df, args.group_by, args.metric)
+    else:
+        table_data, table_headers, table_hparams = build_table(args.dirname, args.model_selection_env, test_envs_print,
+                                                               args.model_selection_type, args.algorithms, args.arg_values,
+                                                               args.latex)
 
-    print_table(table_data, table_headers, latex=args.latex)
-    print_table_hparams(table_hparams)
+        print_table(table_data, table_headers, latex=args.latex)
+        print_table_hparams(table_hparams)
