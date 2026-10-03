@@ -10,6 +10,7 @@ import hashlib
 import sys
 import random
 import math
+import json
 from lib.fast_data_loader import InfiniteDataLoader, FastDataLoader
 from lib import misc
 import algorithms as algorithms
@@ -23,7 +24,14 @@ parser = argparse.ArgumentParser(description='Colored MNIST')
 parser.add_argument('--train_envs', type=str, default='0.01, 0.12, 0.0, 0.0, 0.99, 0.5, 0.7, 0.01, 0.0, 0.0, 0.14')
 parser.add_argument('--test_envs', type=str, default='0.1,0.5,0.9')     # test envs to log/print
 parser.add_argument('--test_env_ms', type=str, default='0.9')               # test env for selecting best model
+parser.add_argument('--checkpoint_selection', type=str, default='final', choices=['legacy_test_env_best', 'final'])
+parser.add_argument('--train_env_sizes', type=str, default='')
+parser.add_argument('--train_env_size_mode', type=str, default='random', choices=['random', 'first'])
 parser.add_argument('--full_resolution', action='store_true')
+parser.add_argument('--tail_support_condition', type=str, default='')
+parser.add_argument('--tail_support_source_envs', type=str, default='')
+parser.add_argument('--tail_support_tail_env', type=float, default=None)
+parser.add_argument('--tail_support_head_env', type=float, default=None)
 
 # Network architecture
 parser.add_argument('--network', type=str, default="FiLMedMLP")
@@ -46,6 +54,8 @@ parser.add_argument('--weight_decay', type=float, default=0)
 parser.add_argument('--dropout_p', type=float, default=0.2)
 parser.add_argument('--erm_pretrain_iters', type=int, default=0)
 parser.add_argument('--eval_freq', type=int, default=50)
+parser.add_argument('--checkpoint_interval', type=int, default=100)
+parser.add_argument('--lambda_eval', type=float, default=0.9)
 
 # Directories and saving
 parser.add_argument('--data_dir', type=str, default="../../data/")
@@ -60,12 +70,13 @@ parser.add_argument('--n_workers', type=int, default=0)
 
 # --------  SETUP --------
 default_args = argparse.Namespace(n_workers=0, other_arg='default')
-args = parser.parse_args(args=[], namespace=default_args)
+args = parser.parse_args(namespace=default_args)
 md5_fname = hashlib.md5(str(args).encode('utf-8')).hexdigest()
 
 # +
 alg_arg_keys = ["algorithm", "penalty_weight", "alpha", "groupdro_eta",
-                "lr_factor_reduction", "lr_cos_sched", "steps", "save_ckpts"]
+                "lr_factor_reduction", "lr_cos_sched", "steps", "save_ckpts",
+                "checkpoint_interval", "lambda_eval"]
 if args.loss_fn == "nll":
     n_targets = 1
     loss_fn = F.binary_cross_entropy_with_logits
@@ -83,6 +94,34 @@ elif args.train_envs == 'gray':
 else:
     train_env_ps = tuple(float(e) for e in args.train_envs.split(","))
 
+metric_env = str(args.test_env_ms)
+metric_env_candidates = [str(p) for p in test_env_ps]
+if metric_env not in metric_env_candidates:
+    metric_env = metric_env_candidates[-1] if metric_env_candidates else "0.9"
+    print(
+        f"Warning: --test_env_ms={args.test_env_ms} is not in --test_envs={args.test_envs}; "
+        f"using {metric_env} instead."
+    )
+args.test_env_ms = metric_env
+
+if args.train_env_sizes:
+    train_env_sizes = tuple(int(size) for size in args.train_env_sizes.split(","))
+    if len(train_env_sizes) != len(train_env_ps):
+        raise ValueError(
+            "train_env_sizes must match the number of train_envs. "
+            f"Got {len(train_env_sizes)} sizes for {len(train_env_ps)} train environments."
+        )
+else:
+    train_env_sizes = None
+
+args.train_env_sizes_parsed = train_env_sizes
+if args.tail_support_source_envs:
+    args.tail_support_source_envs_parsed = tuple(
+        float(e) for e in args.tail_support_source_envs.split(",")
+    )
+else:
+    args.tail_support_source_envs_parsed = tuple(train_env_ps)
+
 args.train_env_ps = train_env_ps
 train_env_names = [str(p) for p in train_env_ps]
 test_env_names = [str(p) for p in test_env_ps]
@@ -94,6 +133,7 @@ ckpt_dir = os.path.join(args.output_dir, "ckpts")
 os.makedirs(logs_dir, exist_ok=True)
 os.makedirs(results_dir, exist_ok=True)
 os.makedirs(ckpt_dir, exist_ok=True)
+recovery_checkpoint_paths = []
 
 sys.stdout = misc.Tee(os.path.join(logs_dir, 'out.txt'))
 sys.stderr = misc.Tee(os.path.join(logs_dir, 'err.txt'))
@@ -119,12 +159,47 @@ else:
     device = "cpu"
 
 # --------  DATA LOADING --------
-envs = get_cmnist_datasets(args.data_dir, train_envs=train_env_ps, test_envs=test_env_ps, label_noise_rate = 0.25, 
-                           cuda=(device == "cuda"), int_target=int_target, subsample=not args.full_resolution)
-train_envs, test_envs = envs[:len(train_env_ps)], envs[len(train_env_ps):]
+envs = get_cmnist_datasets(args.data_dir, train_envs=train_env_ps, test_envs=test_env_ps, label_noise_rate = 0.25,
+                           cuda=(device == "cuda"), int_target=int_target, subsample=not args.full_resolution,
+                           train_env_sizes=train_env_sizes, train_env_size_mode=args.train_env_size_mode)
+train_envs_full, test_envs = envs[:len(train_env_ps)], envs[len(train_env_ps):]
+train_env_ps_active = list(train_env_ps)
+train_envs = list(train_envs_full)
+
+if train_env_sizes is not None:
+    active_indices = [index for index, size in enumerate(train_env_sizes) if size > 0]
+    dropped_indices = [index for index, size in enumerate(train_env_sizes) if size == 0]
+    if not active_indices:
+        raise ValueError("All training environment sizes are zero; at least one source domain must be visible.")
+    if dropped_indices:
+        train_envs = [train_envs_full[index] for index in active_indices]
+        train_env_ps_active = [train_env_ps[index] for index in active_indices]
+        dropped_envs = [train_env_ps[index] for index in dropped_indices]
+        print(f"Dropped zero-sized training environments: {dropped_envs}")
+
 input_shape = train_envs[0].tensors[0].size()[1:]
-n_train_samples = train_envs[0].tensors[0].size()[0]
-steps_per_epoch = n_train_samples / args.batch_size
+train_env_sample_counts = [env.tensors[0].size(0) for env in train_envs]
+n_train_samples = sum(train_env_sample_counts)
+steps_per_epoch = n_train_samples / (args.batch_size * len(train_envs))
+print(f"Train environment sample counts: {train_env_sample_counts}")
+
+train_env_count_map = {str(p): 0 for p in args.tail_support_source_envs_parsed}
+for env_p, env_count in zip(train_env_ps_active, train_env_sample_counts):
+    train_env_count_map[str(env_p)] = int(env_count)
+
+train_total_for_prior = sum(train_env_count_map.values())
+if train_total_for_prior > 0:
+    empirical_prior_map = {
+        env_name: float(count) / float(train_total_for_prior)
+        for env_name, count in train_env_count_map.items()
+    }
+else:
+    empirical_prior_map = {env_name: 0.0 for env_name in train_env_count_map}
+
+print(f"Requested train environments: {list(train_env_ps)}")
+print(f"Active train environments: {train_env_ps_active}")
+print(f"Train domain count map: {train_env_count_map}")
+print(f"Empirical training prior map: {empirical_prior_map}")
 
 train_loaders = [FastDataLoader(dataset=env, batch_size=args.batch_size, num_workers=args.n_workers)
                  for env in train_envs]
@@ -179,7 +254,6 @@ def adjust_learning_rate(optimizer, current_step, lr, total_steps):
 
 # +
 # -------- UPDATES --------
-h_alphas_train = [0.0,1.0,1.0]
 results = {}
 best_acc, best_weights = 0., copy.deepcopy(algorithm.state_dict())
 start_time, step_since_eval = time.time(), 0
@@ -219,8 +293,8 @@ for step in range(start_step, args.steps + 1):
                 results[env_name + '_acc'] = misc.accuracy(algorithm, env_loader, device)
                 results[env_name + '_loss'] = misc.loss(algorithm, env_loader, loss_fn, device)
             else:
-                results[env_name + '_acc'] = misc.accuracy(algorithm, env_loader, device, alpha=h_alphas_train[i])
-                results[env_name + '_loss'] = misc.loss(algorithm, env_loader, loss_fn, device, alpha=h_alphas_train[i])
+                results[env_name + '_acc'] = misc.accuracy(algorithm, env_loader, device, alpha=args.lambda_eval)
+                results[env_name + '_loss'] = misc.loss(algorithm, env_loader, loss_fn, device, alpha=args.lambda_eval)
         
         results['mem_gb'] = torch.cuda.max_memory_allocated() / (1024. * 1024. * 1024.)
         results_keys = sorted(results.keys())
@@ -229,7 +303,7 @@ for step in range(start_step, args.steps + 1):
         misc.print_row([results[key] for key in results_keys], colwidth=12)
 
         start_time, step_since_eval = time.time(), 0
-        if results[args.test_env_ms + '_acc'] > best_acc:
+        if args.checkpoint_selection == 'legacy_test_env_best' and results[args.test_env_ms + '_acc'] > best_acc:
             best_acc = results[args.test_env_ms + '_acc']
             best_weights = copy.deepcopy(algorithm.state_dict())
 
@@ -237,6 +311,13 @@ for step in range(start_step, args.steps + 1):
     if step == args.erm_pretrain_iters > 0 and args.save_ckpts:
         torch.save(algorithm.state_dict(), erm_ckpt_pth)
         print("Saved ERM-pretrained model.")
+    if args.save_ckpts and args.checkpoint_interval > 0 and step % args.checkpoint_interval == 0:
+        recovery_path = os.path.join(ckpt_dir, f"{md5_fname}_step{step}.pkl")
+        torch.save(
+            {"args": vars(args), "model_dict": algorithm.state_dict(), "step": step},
+            recovery_path,
+        )
+        recovery_checkpoint_paths.append(recovery_path)
 # -
 
 # -------- FINAL EVAL ON ALL ENVS AND HELD-OUT TEST SET --------
@@ -247,11 +328,9 @@ all_envs = get_cmnist_datasets(args.data_dir, train_envs=[], test_envs=all_ps, c
 loaders = [FastDataLoader(dataset=env, batch_size=5000, num_workers=args.n_workers)
            for env in all_envs]
 #since you know for ratio > 0.5 the color flips and you would be better off being invariant
-h_alphas_test = [0.0,0.0,0.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0]
+h_alphas_test = [args.lambda_eval] * len(all_env_names)
 results = {}
-for ms_name in ["final", "best"]:
-    if ms_name == "best":
-        algorithm.load_state_dict(best_weights)
+for ms_name in ["final"]:
 
     # -------- EVAL --------
     for i, (env_name, env_loader) in enumerate(zip(all_env_names, loaders)):
@@ -259,8 +338,8 @@ for ms_name in ["final", "best"]:
             results[env_name+'_acc_'+ms_name] = misc.accuracy(algorithm, env_loader, device)
             results[env_name+'_loss_'+ms_name] = misc.loss(algorithm, env_loader, loss_fn, device)
         else:
-            results[env_name+'_acc_'+ms_name] = misc.accuracy(algorithm,env_loader,device, alpha=h_alphas_test[i])
-            results[env_name+'_loss_'+ms_name] = misc.loss(algorithm,env_loader,loss_fn,device, alpha=h_alphas_test[i])
+            results[env_name+'_acc_'+ms_name] = misc.accuracy(algorithm, env_loader, device, alpha=args.lambda_eval)
+            results[env_name+'_loss_'+ms_name] = misc.loss(algorithm, env_loader, loss_fn, device, alpha=args.lambda_eval)
     # -------- PRINT -------- 
     misc.cvar(algorithm, loaders, loss_fn, device, all_ps, args.algorithm.lower() not in ['iro', 'inftask'])
     print(f"\n{ms_name} accuracies:")
@@ -269,9 +348,9 @@ for ms_name in ["final", "best"]:
     misc.print_row([round(results[k], 3) for k in results_print_keys], colwidth=5)
 
     # -------- SAVE CHECKPOINT --------
-    if args.save_ckpts:
-        ckpt_save_dict = {"args": vars(args), "model_dict": algorithm.state_dict()}
-        torch.save(ckpt_save_dict, os.path.join(ckpt_dir, f"{md5_fname}_{ms_name}.pkl"))
+    ckpt_save_dict = {"args": vars(args), "model_dict": algorithm.state_dict()}
+    final_checkpoint_path = os.path.join(ckpt_dir, f"{md5_fname}_{ms_name}.pkl")
+    torch.save(ckpt_save_dict, final_checkpoint_path)
 
 
 # +
@@ -288,9 +367,47 @@ else:
 results["seed"] = args.seed
 results["args_id"] = args_id
 results["args"] = vars(args_no_seed)
+results["tail_support_condition"] = args.tail_support_condition if args.tail_support_condition else None
+results["tail_support_source_envs"] = [float(e) for e in args.tail_support_source_envs_parsed]
+results["tail_support_train_count_map"] = train_env_count_map
+results["tail_support_empirical_prior_map"] = empirical_prior_map
+results["tail_support_train_envs_active"] = [float(p) for p in train_env_ps_active]
+results["tail_support_tail_env"] = args.tail_support_tail_env
+results["tail_support_head_env"] = args.tail_support_head_env
 
 with open(os.path.join(results_dir, f"{md5_fname}.jsonl"), 'a') as f:
     f.write(json.dumps(results, sort_keys=True) + "\n")
+
+manifest = {
+    "schema_version": 1,
+    "algorithm": args.algorithm.lower(),
+    "seed": args.seed,
+    "train_envs": [float(p) for p in train_env_ps],
+    "train_env_sizes": None if train_env_sizes is None else [int(size) for size in train_env_sizes],
+    "train_env_size_mode": args.train_env_size_mode,
+    "active_train_envs": [float(p) for p in train_env_ps_active],
+    "active_train_counts": train_env_sample_counts,
+    "test_envs": [float(p) for p in test_env_ps],
+    "checkpoint_selection": args.checkpoint_selection,
+    "checkpoint_interval": args.checkpoint_interval,
+    "lambda_eval": args.lambda_eval,
+    "steps": args.steps,
+    "erm_pretrain_iters": args.erm_pretrain_iters,
+    "lr_cos_sched": args.lr_cos_sched,
+    "tail_support_condition": args.tail_support_condition or None,
+    "tail_support_source_envs": [float(e) for e in args.tail_support_source_envs_parsed],
+    "tail_support_tail_env": args.tail_support_tail_env,
+    "tail_support_head_env": args.tail_support_head_env,
+    "final_checkpoint": final_checkpoint_path,
+    "result_file": os.path.join(results_dir, f"{md5_fname}.jsonl"),
+}
+manifest_path = os.path.join(args.output_dir, "manifest.json")
+with open(manifest_path, 'w') as f:
+    json.dump(manifest, f, indent=2, sort_keys=True)
+
+for recovery_path in recovery_checkpoint_paths:
+    if os.path.exists(recovery_path):
+        os.remove(recovery_path)
 # -
 
 
