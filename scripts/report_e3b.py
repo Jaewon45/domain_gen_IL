@@ -22,7 +22,15 @@ def write_summary(raw: pd.DataFrame, output: Path, dataset: str) -> None:
     summary.columns = ["_".join(str(part) for part in column if part).rstrip("_") for column in summary.columns]
     summary.to_csv(output / "summary_by_condition.csv", index=False)
     with (output / "summary_by_condition.tex").open("w", encoding="utf-8") as handle:
-        handle.write(summary.to_latex(index=False, float_format=lambda value: f"{value:.4f}"))
+        columns = list(summary.columns)
+        handle.write("\\begin{tabular}{" + "l" * len(columns) + "}\n\\toprule\n")
+        handle.write(" & ".join(str(column).replace("_", "\\_") for column in columns) + " \\\\\n\\midrule\n")
+        for row in summary.itertuples(index=False, name=None):
+            values = []
+            for value in row:
+                values.append(f"{value:.4f}" if isinstance(value, float) else str(value).replace("_", "\\_"))
+            handle.write(" & ".join(values) + " \\\\\n")
+        handle.write("\\bottomrule\n\\end{tabular}\n")
     for metric in metric_columns:
         import matplotlib.pyplot as plt
         pivot = raw.groupby(["condition", "algorithm"], dropna=False)[metric].mean().unstack()
