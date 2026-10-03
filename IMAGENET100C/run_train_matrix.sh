@@ -15,6 +15,9 @@ batch_size=64
 workers=1
 num_lambda_samples=4
 iro_sampler_learning_rate=1e-6
+irm_penalty=0.3
+vrex_penalty=0.3
+groupdro_eta=0.1
 erm_pretrain_iters=400
 lr_cos_sched=1
 erm_shared_schedule=0
@@ -32,6 +35,9 @@ while [[ $# -gt 0 ]]; do
     --workers) workers="$2"; shift 2 ;;
     --num-lambda-samples) num_lambda_samples="$2"; shift 2 ;;
     --iro-sampler-learning-rate) iro_sampler_learning_rate="$2"; shift 2 ;;
+    --irm-penalty) irm_penalty="$2"; shift 2 ;;
+    --vrex-penalty) vrex_penalty="$2"; shift 2 ;;
+    --groupdro-eta) groupdro_eta="$2"; shift 2 ;;
     --erm-pretrain-iters) erm_pretrain_iters="$2"; shift 2 ;;
     --lr-cos-sched) lr_cos_sched=1; shift ;;
     --no-lr-cos-sched) lr_cos_sched=0; shift ;;
@@ -65,6 +71,7 @@ run_one() {
   method_pretrain_iters="$erm_pretrain_iters"
   method_lr_cos_sched="$lr_cos_sched"
   method_shared_schedule="$erm_shared_schedule"
+  method_penalty=1000
   case "$algorithm" in
     erm)
       method_pretrain_iters=0
@@ -75,6 +82,8 @@ run_one() {
       method_pretrain_iters=400
       method_lr_cos_sched=1
       method_shared_schedule=0
+      [[ "$algorithm" == "irm" ]] && method_penalty="$irm_penalty"
+      [[ "$algorithm" == "vrex" ]] && method_penalty="$vrex_penalty"
       ;;
     groupdro|iro|inftask)
       method_pretrain_iters=400
@@ -82,7 +91,7 @@ run_one() {
       method_shared_schedule=0
       ;;
   esac
-  args=(--seed "$seed" --algorithm "$algorithm" --backbone_mode finetune_last_stage --experiment E3b --condition "$condition" --steps "$steps" --batch_size "$batch_size" --num_lambda_samples "$num_lambda_samples" --iro_sampler_learning_rate "$iro_sampler_learning_rate" --eqrm_alpha 0.9 --penalty_weight 1000 --erm_pretrain_iters "$method_pretrain_iters" --workers "$workers" --checkpoint_selection final --output_dir "$output_dir")
+  args=(--seed "$seed" --algorithm "$algorithm" --backbone_mode finetune_last_stage --experiment E3b --condition "$condition" --steps "$steps" --batch_size "$batch_size" --num_lambda_samples "$num_lambda_samples" --iro_sampler_learning_rate "$iro_sampler_learning_rate" --eqrm_alpha 0.9 --penalty_weight "$method_penalty" --groupdro_eta "$groupdro_eta" --erm_pretrain_iters "$method_pretrain_iters" --workers "$workers" --checkpoint_selection final --output_dir "$output_dir")
   [[ "$method_lr_cos_sched" -eq 1 ]] && args+=(--lr_cos_sched)
   [[ "$method_shared_schedule" -eq 1 ]] && args+=(--erm_shared_schedule)
   mkdir -p "$(dirname "$log_file")"
