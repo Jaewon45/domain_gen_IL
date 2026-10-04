@@ -32,8 +32,13 @@ def write_summary(raw: pd.DataFrame, output: Path, dataset: str) -> None:
         handle.write(" & ".join(str(column).replace("_", "\\_") for column in columns) + " \\\\\n\\midrule\n")
         for row in summary.itertuples(index=False, name=None):
             values = []
-            for value in row:
-                values.append(f"{value:.4f}" if isinstance(value, float) else str(value).replace("_", "\\_"))
+            for column, value in zip(columns, row):
+                if isinstance(value, float) and (column.endswith("_mean") or column.endswith("_std")):
+                    values.append(f"{100.0 * value:.2f}")
+                elif isinstance(value, float):
+                    values.append(f"{value:.0f}")
+                else:
+                    values.append(str(value).replace("_", "\\_"))
             handle.write(" & ".join(values) + " \\\\\n")
         handle.write("\\bottomrule\n\\end{tabular}\n")
     for metric in metric_columns:
