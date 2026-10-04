@@ -216,9 +216,10 @@ def generate_imbalance_clean_commands(args, base_call, seeds):
     test_envs = "0.0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1.0"
     conditions = {
         "balanced": "2000,2000,2000,2000",
-        "long_tail": "5000,2000,800,200",
-        "scarce_tail": "5800,1800,350,50",
-        "missing_tail": "6000,1500,500,0",
+        "last_heavy_mild": "1500,1500,1500,3500",
+        "first_heavy_mild": "3500,1500,1500,1500",
+        "last_heavy_strong": "1000,1000,1000,5000",
+        "first_heavy_strong": "5000,1000,1000,1000",
     }
     for seed in seeds:
         for condition, sizes in conditions.items():
