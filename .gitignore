@@ -3,7 +3,9 @@ __pycache__/
 *.py[cod]
 
 # Runtime experiment outputs
-/results/
+/results/*
+!/results/reports/
+!/results/reports/**
 /logs/
 /ckpts/
 
