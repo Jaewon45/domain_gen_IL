@@ -2,6 +2,11 @@
 
 This is an external constructed-domain replication. It does not claim that ImageNet-C corruptions are natural populations, and it is supplementary to the CMNIST evidence.
 
+The self-contained training-details record is in
+`IMAGENET100C/FINAL_RUN_TRAINING_DETAILS.md`; the generated method-level
+hyperparameter table is
+`results/reports/E3b/ImgNet/imagenet100c_hyperparameters.tex`.
+
 ## Fixed protocol
 
 - Anchors: `gaussian_noise`, `defocus_blur`, `snow`, and `contrast`.
